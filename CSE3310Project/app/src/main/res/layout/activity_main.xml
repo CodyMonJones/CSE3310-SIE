@@ -4,18 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/seir"
+    tools:context="MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/LoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login and Registration"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
@@ -29,11 +33,12 @@
         android:hint="Enter Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textColorHint="#795548"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/LoginTitle"
         app:layout_constraintVertical_bias="0.151" />
 
     <EditText
@@ -46,9 +51,10 @@
         android:ems="10"
         android:hint="Enter Password"
         android:inputType="textPassword"
+        android:textColorHint="#795548"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.637"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
         app:layout_constraintVertical_bias="0.0" />
