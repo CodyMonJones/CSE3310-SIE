@@ -20,16 +20,98 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/RegistrationEmail"
+        android:id="@+id/RegistrationFirstName"
         android:layout_below="@+id/RegistrationText"
-        android:hint="Email"
-        android:textColorHint="@color/white"
-        />
+        android:layout_margin="10dp"
+        android:hint="First Name"
+        android:padding="10dp"
+        android:background="#30ffffff"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/RegistrationLastName"
+        android:layout_below="@+id/RegistrationFirstName"
+        android:layout_margin="10dp"
+        android:hint="Last Name"
+        android:padding="10dp"
+        android:background="#30ffffff"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RegistrationEmail"
+        android:layout_below="@+id/RegistrationLastName"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:hint="Email"
+        android:background="#30ffffff"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RegistrationPhoneNumber"
+        android:layout_below="@+id/RegistrationEmail"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:hint="Phone Number"
+        android:background="#30ffffff"
+        android:textColorHint="@color/white"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RegistrationMavID"
+        android:layout_margin="10dp"
+        android:padding="10dp"
         android:hint="Mav ID"
-        android:layout_below="@id/RegistrationEmail"/>
+        android:background="#30ffffff"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_below="@id/RegistrationPhoneNumber"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RegistrationPassword"
+        android:layout_below="@+id/RegistrationMavID"
+        android:inputType="textPassword"
+        android:background="#30ffffff"
+        android:hint="Password"
+        android:textColorHint="@color/white"
+        android:layout_margin="10dp"
+        android:padding="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RegistrationPassword"
+        android:layout_margin="10dp">
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/CancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginRight="20dp"
+            android:text="Cancel"
+            android:backgroundTint="@color/UTA_ORANGE" />
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/SubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="20dp"
+            android:text="Submit"
+            android:backgroundTint="@color/UTA_ORANGE"/>
+    </LinearLayout>
+
 
 </RelativeLayout>
