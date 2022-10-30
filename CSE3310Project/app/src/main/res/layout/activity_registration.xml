@@ -24,6 +24,7 @@
         android:layout_below="@+id/RegistrationText"
         android:layout_margin="10dp"
         android:hint="First Name"
+        android:inputType="textPersonName"
         android:padding="10dp"
         android:background="#30ffffff"
         android:textColor="@color/white"
@@ -36,6 +37,7 @@
         android:layout_below="@+id/RegistrationFirstName"
         android:layout_margin="10dp"
         android:hint="Last Name"
+        android:inputType="textPersonName"
         android:padding="10dp"
         android:background="#30ffffff"
         android:textColor="@color/white"
@@ -49,6 +51,7 @@
         android:layout_margin="10dp"
         android:padding="10dp"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:background="#30ffffff"
         android:textColorHint="@color/white"
         android:textColor="@color/white" />
@@ -61,7 +64,9 @@
         android:layout_margin="10dp"
         android:padding="10dp"
         android:hint="Phone Number"
+        android:inputType="number"
         android:background="#30ffffff"
+        android:textColor="@color/white"
         android:textColorHint="@color/white"/>
 
     <EditText
@@ -71,6 +76,7 @@
         android:layout_margin="10dp"
         android:padding="10dp"
         android:hint="Mav ID"
+        android:inputType="number"
         android:background="#30ffffff"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
@@ -84,6 +90,7 @@
         android:inputType="textPassword"
         android:background="#30ffffff"
         android:hint="Password"
+        android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:layout_margin="10dp"
         android:padding="10dp" />
