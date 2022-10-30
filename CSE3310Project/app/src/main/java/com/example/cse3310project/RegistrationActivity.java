@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -97,7 +98,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             Log.d("TEST", "boxesFilled =" + boxesFilled);
 
-            submitButton.setEnabled(true);
+            submitButton.setEnabled(boxesFilled);
         }
 
         @Override
@@ -130,7 +131,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 user.put("phoneNumber", newUser.phoneNumber);
                 user.put("MavID", newUser.MavID);
 
-                db.collection("users").add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(RegistrationActivity.this, "User Registered", Toast.LENGTH_LONG).show();

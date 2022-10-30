@@ -9,6 +9,7 @@ public class User implements Serializable
     String email = "";
     int MavID;
     String phoneNumber;
+    String password;
 
     public void setFname(String fname) {
         this.fname = fname;
