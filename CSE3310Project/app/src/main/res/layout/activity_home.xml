@@ -8,12 +8,39 @@
     android:background="@color/UTA_BLUE"
     tools:context=".HomeActivity">
 
-    <com.google.android.material.navigationrail.NavigationRailView
-        android:id="@+id/navigation_rail"
-        android:layout_width="wrap_content"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:menu="@menu/navigation_railway_menu" />
+        tools:openDrawer="start">
 
-    
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
+                android:fitsSystemWindows="true">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="Student Exchange Center"
+                    app:navigationIcon="@drawable/ic_baseline_menu_24"
+                    style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp" />
+            </com.google.android.material.appbar.AppBarLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_rail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/navigation_view"
+            app:headerLayout="@layout/navigation_header"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </RelativeLayout>
 
