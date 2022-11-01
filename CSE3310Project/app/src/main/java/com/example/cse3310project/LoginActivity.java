@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     MaterialButton registerButton;
 
     FirebaseFirestore db;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         email = (EditText) findViewById(R.id.Email);
         password = (EditText)  findViewById(R.id.Password);
@@ -56,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginButton.setOnClickListener(this);
 
+        loginButton.setEnabled(false);
     }
 
     private class emailWatcher implements TextWatcher
@@ -94,42 +99,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.LoginButton:
-                // Create a new user with a first and last name
-                Map<String, Object> user = new HashMap<>();
-                user.put("first", "Ada");
-                user.put("last", "Lovelace");
-                user.put("born", 1815);
-
-                // Add a new document with a generated ID
-                db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(LoginActivity.this, "SUCCESS", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, "FAILED", Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-                db.collection("users")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                    }
-                                } else {
-                                    Log.w(TAG, "Error getting documents.", task.getException());
-                                }
-                            }
-                        });
+                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                        Intent showHomepage = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(showHomepage);
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
                 break;
         }
     }
