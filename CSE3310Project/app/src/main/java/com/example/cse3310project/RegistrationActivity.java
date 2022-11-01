@@ -15,11 +15,18 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -34,6 +41,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText password;
 
     FirebaseFirestore db;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         password.addTextChangedListener(new editBoxListener());
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private class editBoxListener implements TextWatcher
@@ -90,9 +99,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             }
 
-            boolean boxesFilled = !userFirstName.isEmpty() && !userLastName.isEmpty()
+            boolean boxesFilled = !userFirstName.isEmpty()
+                                && !userLastName.isEmpty()
                                 && !userEmail.isEmpty()
-                                && userPhoneNumber.isEmpty()
+                                && !userPhoneNumber.isEmpty()
                                 && userMavID != 0
                                 && !userPassword.isEmpty();
 
@@ -121,8 +131,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.SubmitButton:
                 User newUser= new User(firstName.getText().toString(), lastName.getText().toString(),
-                                        email.getText().toString(), Integer.parseInt(MavID.getText().toString()),
-                                        phoneNumber.getText().toString());
+                        email.getText().toString(), Integer.parseInt(MavID.getText().toString()),
+                        phoneNumber.getText().toString());
 
                 HashMap<String, Object> user = new HashMap<>();
                 user.put("fname", newUser.fname);
@@ -131,18 +141,37 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 user.put("phoneNumber", newUser.phoneNumber);
                 user.put("MavID", newUser.MavID);
 
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
+
+                user.put("creationDate", currentDateandTime);
+
 
                 db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(RegistrationActivity.this, "User Registered", Toast.LENGTH_LONG).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegistrationActivity.this, "User was not Registered", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Toast.makeText(RegistrationActivity.this, "User Registered", Toast.LENGTH_LONG).show();
+                        Intent showHomePage = new Intent(RegistrationActivity.this, HomeActivity.class);
+                        startActivity(showHomePage);
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
                 break;
         }
     }
