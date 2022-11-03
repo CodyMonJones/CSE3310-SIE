@@ -5,12 +5,15 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -52,39 +55,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = (EditText)  findViewById(R.id.Password);
         loginButton = (MaterialButton) findViewById(R.id.LoginButton);
 
-        email.addTextChangedListener(new emailWatcher());
-        password.addTextChangedListener(new emailWatcher());
-
         registerButton = (MaterialButton) findViewById(R.id.RegisterButton);
         registerButton.setOnClickListener(this);
 
         loginButton.setOnClickListener(this);
 
-        loginButton.setEnabled(false);
-    }
-
-    private class emailWatcher implements TextWatcher
-    {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-            String userEmail = email.getText().toString();
-            String userPassword = password.getText().toString();
-
-            loginButton.setEnabled(!userEmail.isEmpty() && !userPassword.isEmpty());
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) 
-        {
-
-        }
+        loginButton.setEnabled(true);
     }
 
     @Override
@@ -99,21 +75,70 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.LoginButton:
-                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                        Intent showHomepage = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(showHomepage);
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                if(email.getText().toString().isEmpty())
+                {
+                    email.setError("Email Required");
+                    showKeyboard(email);
+                    email.requestFocus();
+                    return;
+                }
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())
+                {
+                    email.setError("Invalid email");
+                    showKeyboard(email);
+                    email.requestFocus();
+                    return;
+                }
+
+                if(password.getText().toString().isEmpty())
+                {
+                    password.setError("Password Required");
+                    showKeyboard(password);
+                    password.requestFocus();
+                    return;
+                }
+
+                if(password.getText().toString().length() < 6)
+                {
+                    password.setError("Password too short must be 6 characters long");
+                    showKeyboard(password);
+                    password.requestFocus();
+                    return;
+                }
+
+
+                loginUser();
                 break;
         }
+    }
+
+    public void loginUser()
+    {
+        mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                Intent showHomepage = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(showHomepage);
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void showKeyboard(final EditText ettext){
+        ettext.requestFocus();
+        ettext.postDelayed(new Runnable(){
+                               @Override public void run(){
+                                   InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                   keyboard.showSoftInput(ettext,0);
+                               }
+                           }
+                ,200);
     }
 }
