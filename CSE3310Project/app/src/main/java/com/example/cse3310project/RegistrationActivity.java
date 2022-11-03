@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
@@ -68,7 +69,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        submitButton.setEnabled(false);
+        submitButton.setEnabled(true);
     }
 
     @Override
@@ -83,8 +84,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.SubmitButton:
-
-
                 if(firstName.getText().toString().isEmpty())
                 {
                     firstName.setError("Must enter a first name");
