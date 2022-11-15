@@ -6,29 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cse3310project.Discussion.DiscussionPost;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -158,14 +152,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     {
         User newUser= new User(firstName.getText().toString(), lastName.getText().toString(),
                 email.getText().toString(), Integer.parseInt(MavID.getText().toString()),
-                phoneNumber.getText().toString());
+                phoneNumber.getText().toString(), new ArrayList<DiscussionPost>());
 
         HashMap<String, Object> user = new HashMap<>();
-        user.put("fname", newUser.fname);
-        user.put("lname", newUser.lname);
-        user.put("email", newUser.email);
-        user.put("phoneNumber", newUser.phoneNumber);
-        user.put("MavID", newUser.MavID);
+        user.put("fname", newUser.getFname());
+        user.put("lname", newUser.getLname());
+        user.put("email", newUser.getEmail());
+        user.put("phoneNumber", newUser.getPhoneNumber());
+        user.put("MavID", newUser.getMavID());
+        user.put("DiscussionPosts", newUser.getDiscussionPosts());
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());

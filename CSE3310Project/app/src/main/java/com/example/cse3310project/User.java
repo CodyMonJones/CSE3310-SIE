@@ -1,15 +1,21 @@
 package com.example.cse3310project;
 
+import com.example.cse3310project.Discussion.DiscussionPost;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable
 {
-    String fname = "";
-    String lname = "";
-    String email = "";
-    int MavID;
-    String phoneNumber;
-    String password;
+    private String fname = "";
+    private String lname = "";
+    private String email = "";
+    private int MavID;
+    private String phoneNumber;
+    private String password;
+    private ArrayList<DiscussionPost> discussionPosts;
+    private String profile_picture;
+
 
     public void setFname(String fname) {
         this.fname = fname;
@@ -31,6 +37,8 @@ public class User implements Serializable
         this.phoneNumber = phoneNumber;
     }
 
+    public void setDiscussionPosts(ArrayList<DiscussionPost> posts) { this.discussionPosts = posts; }
+
     public String getFname() {
         return fname;
     }
@@ -51,12 +59,18 @@ public class User implements Serializable
         return phoneNumber;
     }
 
-    public User(String firstName, String lastName, String email, int Mav, String phone)
+    public ArrayList<DiscussionPost> getDiscussionPosts()
+    {
+        return discussionPosts;
+    }
+
+    public User(String firstName, String lastName, String email, int Mav, String phone, ArrayList<DiscussionPost> usersPosts)
     {
         this.fname = firstName;
         this.lname = lastName;
         this.email = email;
         this.MavID = Mav;
         this.phoneNumber = phone;
+        this.discussionPosts = usersPosts;
     }
 }
