@@ -1,94 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/UTA_BLUE"
+    android:id="@+id/drawerLayout"
     tools:context=".EmailActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/UTA_BLUE">
+        <ImageButton
+            android:id="@+id/TabButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/UTA_ORANGE"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_menu_24"
+            app:tint="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/TabButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:scaleType="fitCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_menu_24"
-        app:tint="#FFFFFF" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Search"
+            android:layout_width="410dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/UTA_ORANGE"
+            android:backgroundTintMode="add"
+            android:drawableStart="?android:attr/actionModeWebSearchDrawable"
+            android:drawableTint="@color/white"
+            android:hint="Search email..."
+            android:textColor="#FDFCFC"
+            android:textColorHighlight="#673AB7"
+            android:textColorHint="#6DFFFFFF"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EmailHeader" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/Search"
-        android:layout_width="410dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:backgroundTintMode="add"
-        android:drawableStart="?android:attr/actionModeWebSearchDrawable"
-        android:drawableTint="@color/white"
-        android:hint="Search email..."
-        android:textColor="#FDFCFC"
-        android:textColorHighlight="#673AB7"
-        android:textColorHint="#6DFFFFFF"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailHeader" />
+        <ImageButton
+            android:id="@+id/NewEmailButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/UTA_ORANGE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            app:tint="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/NewEmailButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        app:tint="#FFFFFF" />
+        <Button
+            android:id="@+id/EmailHeader"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:backgroundTint="#00477E"
+            android:clickable="false"
+            android:text="EMAILS"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/NewEmailButton"
+            app:layout_constraintStart_toEndOf="@+id/TabButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/EmailHeader"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:backgroundTint="#00477E"
-        android:clickable="false"
-        android:text="EMAILS"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/NewEmailButton"
-        app:layout_constraintStart_toEndOf="@+id/TabButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/EmailMenuButton"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/UTA_ORANGE"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_dialog_email"
+            app:tint="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/EmailMenuButton"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        app:tint="#FFFFFF" />
+        <ImageButton
+            android:id="@+id/MessageMenuButton"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/UTA_ORANGE"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/EmailMenuButton"
+            app:layout_constraintStart_toEndOf="@+id/ContactsMenuButton"
+            app:srcCompat="@android:drawable/sym_action_chat"
+            app:tint="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/MessageMenuButton"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/EmailMenuButton"
-        app:layout_constraintStart_toEndOf="@+id/ContactsMenuButton"
-        app:srcCompat="@android:drawable/sym_action_chat"
-        app:tint="#FFFFFF" />
+        <ImageButton
+            android:id="@+id/ContactsMenuButton"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/UTA_ORANGE"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_groups_24"
+            app:tint="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/ContactsMenuButton"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_groups_24"
-        app:tint="#FFFFFF" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+    android:id="@+id/navigationMenu"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    app:menu="@menu/navigation_view"
+    app:headerLayout="@layout/navigation_header"/>
+</androidx.drawerlayout.widget.DrawerLayout>
