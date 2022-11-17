@@ -8,11 +8,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.cse3310project.Discussion.DiscussionForum;
 import com.google.android.material.navigation.NavigationView;
 
 public class drawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +42,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
 
         switch (item.getItemId()){
             case R.id.Home:
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, DiscussionForum.class));
                 overridePendingTransition(0, 0);
                 break;
 
