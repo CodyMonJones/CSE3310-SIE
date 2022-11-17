@@ -1,12 +1,15 @@
 package com.example.cse3310project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MessagesActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -23,11 +26,19 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
         newmsg = (ImageButton) findViewById(R.id.NewMessageButton);
         contacts = (ImageButton) findViewById(R.id.ContactsMenuButton);
         email = (ImageButton) findViewById(R.id.EmailMenuButton);
+        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         tab.setOnClickListener(this);
         newmsg.setOnClickListener(this);
         contacts.setOnClickListener(this);
         email.setOnClickListener(this);
+
+        findViewById(R.id.TabButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
     }
 
