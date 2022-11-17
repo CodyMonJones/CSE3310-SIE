@@ -176,7 +176,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 userRef.set(newUser);
                 userRef.update("userID", mAuth.getCurrentUser().getUid());
 
-                Intent showHomePage = new Intent(RegistrationActivity.this, DiscussionForum.class);
+                Intent showHomePage = new Intent(RegistrationActivity.this, HomeActivity.class);
                 startActivity(showHomePage);
                 finish();
             }
