@@ -85,12 +85,8 @@
 
         <activity
             android:name=".HomeActivity"
-<<<<<<< HEAD
-            android:exported="false" />
 
-=======
             android:exported="true" />
->>>>>>> 6746762 (fixed navigation and activity view)
         <activity
             android:name=".LoginActivity"
             android:exported="true" >
