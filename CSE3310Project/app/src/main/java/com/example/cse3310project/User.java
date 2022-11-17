@@ -1,15 +1,62 @@
 package com.example.cse3310project;
 
+import com.example.cse3310project.Discussion.DiscussionPost;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable
 {
-    String fname = "";
-    String lname = "";
-    String email = "";
-    int MavID;
-    String phoneNumber;
-    String password;
+    private String fname = "";
+    private String lname = "";
+    private String email = "";
+    private int MavID;
+    private String phoneNumber;
+    private ArrayList<String> discussionPostsIDs;
+    private ArrayList<String> transactionItemIDs;
+    private String profile_picture;
+    private String creationDate;
+    private String userID;
+
+    public ArrayList<String> getDiscussionPostsIDs() {
+        return discussionPostsIDs;
+    }
+
+    public void setDiscussionPostsIDs(ArrayList<String> discussionPostsIDs) {
+        this.discussionPostsIDs = discussionPostsIDs;
+    }
+
+    public ArrayList<String> getTransactionItemIDs() {
+        return transactionItemIDs;
+    }
+
+    public void setTransactionItemIDs(ArrayList<String> transactionItemIDs) {
+        this.transactionItemIDs = transactionItemIDs;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(String profile_picture) {
+        this.profile_picture = profile_picture;
+    }
 
     public void setFname(String fname) {
         this.fname = fname;
@@ -51,6 +98,8 @@ public class User implements Serializable
         return phoneNumber;
     }
 
+
+
     public User(String firstName, String lastName, String email, int Mav, String phone)
     {
         this.fname = firstName;
@@ -58,5 +107,8 @@ public class User implements Serializable
         this.email = email;
         this.MavID = Mav;
         this.phoneNumber = phone;
+        this.discussionPostsIDs = null;
+        this.transactionItemIDs = null;
+        this.profile_picture = null;
     }
 }

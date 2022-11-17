@@ -6,29 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cse3310project.Discussion.DiscussionForum;
+import com.example.cse3310project.Discussion.DiscussionPost;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -46,6 +42,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText password;
 
     FirebaseFirestore db;
+    FirebaseStorage storage;
     FirebaseAuth mAuth;
 
     @Override
@@ -68,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
 
         submitButton.setEnabled(true);
     }
@@ -84,6 +82,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.SubmitButton:
+
+
+
                 if(firstName.getText().toString().isEmpty())
                 {
                     firstName.setError("Must enter a first name");
@@ -160,34 +161,22 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 email.getText().toString(), Integer.parseInt(MavID.getText().toString()),
                 phoneNumber.getText().toString());
 
-        HashMap<String, Object> user = new HashMap<>();
-        user.put("fname", newUser.fname);
-        user.put("lname", newUser.lname);
-        user.put("email", newUser.email);
-        user.put("phoneNumber", newUser.phoneNumber);
-        user.put("MavID", newUser.MavID);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        user.put("creationDate", currentDateandTime);
-
-
-        db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+        newUser.setCreationDate(currentDateandTime);
 
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(RegistrationActivity.this, "User Registered", Toast.LENGTH_LONG).show();
-                Intent showHomePage = new Intent(RegistrationActivity.this, HomeActivity.class);
+
+                DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
+                userRef.set(newUser);
+                userRef.update("userID", mAuth.getCurrentUser().getUid());
+
+                Intent showHomePage = new Intent(RegistrationActivity.this, DiscussionForum.class);
                 startActivity(showHomePage);
                 finish();
             }

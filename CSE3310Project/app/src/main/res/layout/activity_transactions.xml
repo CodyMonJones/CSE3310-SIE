@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- Below lines were in main branch before
+    I made latest merge, commented them out bcuz
+    I do not recognize them. - AJ
+
+    android:layout_height="match_parent"
+    tools:context=".TransactionsActivity" -->
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
