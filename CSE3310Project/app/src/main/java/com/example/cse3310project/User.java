@@ -12,10 +12,51 @@ public class User implements Serializable
     private String email = "";
     private int MavID;
     private String phoneNumber;
-    private String password;
-    private ArrayList<DiscussionPost> discussionPosts;
+    private ArrayList<String> discussionPostsIDs;
+    private ArrayList<String> transactionItemIDs;
     private String profile_picture;
+    private String creationDate;
+    private String userID;
 
+    public ArrayList<String> getDiscussionPostsIDs() {
+        return discussionPostsIDs;
+    }
+
+    public void setDiscussionPostsIDs(ArrayList<String> discussionPostsIDs) {
+        this.discussionPostsIDs = discussionPostsIDs;
+    }
+
+    public ArrayList<String> getTransactionItemIDs() {
+        return transactionItemIDs;
+    }
+
+    public void setTransactionItemIDs(ArrayList<String> transactionItemIDs) {
+        this.transactionItemIDs = transactionItemIDs;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(String profile_picture) {
+        this.profile_picture = profile_picture;
+    }
 
     public void setFname(String fname) {
         this.fname = fname;
@@ -37,8 +78,6 @@ public class User implements Serializable
         this.phoneNumber = phoneNumber;
     }
 
-    public void setDiscussionPosts(ArrayList<DiscussionPost> posts) { this.discussionPosts = posts; }
-
     public String getFname() {
         return fname;
     }
@@ -59,18 +98,17 @@ public class User implements Serializable
         return phoneNumber;
     }
 
-    public ArrayList<DiscussionPost> getDiscussionPosts()
-    {
-        return discussionPosts;
-    }
 
-    public User(String firstName, String lastName, String email, int Mav, String phone, ArrayList<DiscussionPost> usersPosts)
+
+    public User(String firstName, String lastName, String email, int Mav, String phone)
     {
         this.fname = firstName;
         this.lname = lastName;
         this.email = email;
         this.MavID = Mav;
         this.phoneNumber = phone;
-        this.discussionPosts = usersPosts;
+        this.discussionPostsIDs = null;
+        this.transactionItemIDs = null;
+        this.profile_picture = null;
     }
 }

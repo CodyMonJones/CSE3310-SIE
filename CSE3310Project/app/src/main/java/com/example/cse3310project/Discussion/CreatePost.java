@@ -1,22 +1,37 @@
 package com.example.cse3310project.Discussion;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cse3310project.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.OAuthCredential;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,13 +41,17 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
     private EditText postBody, postTitle;
     private MaterialButton cancelButton, postButton;
     private FirebaseFirestore postDatabase;
-    //private FirebaseUser mAuth;
+    private FirebaseAuth currentUserAuthentication;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
+
+        currentUserAuthentication = FirebaseAuth.getInstance();
+        currentUser = currentUserAuthentication.getCurrentUser();
 
         postDatabase = FirebaseFirestore.getInstance();
 
@@ -53,7 +72,7 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
 
         dateCreated.setText(currentDateandTime);
 
-        //username.setText(mAuth.getEmail());
+        checkUser();
     }
 
     @Override
@@ -95,7 +114,7 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
                 pb = postBody.getText().toString();
                 creationDate = dateCreated.getText().toString();
 
-                uploadPost(new DiscussionPost(pt, pb, creationDate));
+                uploadPost(new DiscussionPost(pt, pb, creationDate, currentUser.getEmail()));
 
                 this.finish();
                 break;
@@ -106,6 +125,10 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
     {
         DocumentReference reference = postDatabase.collection("Posts").document();
         post.setUniqueID(reference.getId());
+        post.setTimestamp(Timestamp.now());
+
+        DocumentReference userRef = postDatabase.collection("Users").document(currentUser.getUid());
+        userRef.update("discussionPostsIDs", FieldValue.arrayUnion(post.getUniqueID()));
 
         reference.set(post);
     }
@@ -119,5 +142,17 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
                                }
                            }
                 ,200);
+    }
+
+    public void checkUser()
+    {
+        if(currentUser != null)
+        {
+            username.setText(currentUser.getEmail());
+        }
+        else
+        {
+            Toast.makeText(this, "User not signed in", Toast.LENGTH_SHORT).show();
+        }
     }
 }

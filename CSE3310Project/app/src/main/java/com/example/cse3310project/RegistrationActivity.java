@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cse3310project.Discussion.DiscussionForum;
 import com.example.cse3310project.Discussion.DiscussionPost;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText password;
 
     FirebaseFirestore db;
+    FirebaseStorage storage;
     FirebaseAuth mAuth;
 
     @Override
@@ -62,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
 
         submitButton.setEnabled(true);
     }
@@ -78,6 +82,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.SubmitButton:
+
+
+
                 if(firstName.getText().toString().isEmpty())
                 {
                     firstName.setError("Must enter a first name");
@@ -152,37 +159,24 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     {
         User newUser= new User(firstName.getText().toString(), lastName.getText().toString(),
                 email.getText().toString(), Integer.parseInt(MavID.getText().toString()),
-                phoneNumber.getText().toString(), new ArrayList<DiscussionPost>());
+                phoneNumber.getText().toString());
 
-        HashMap<String, Object> user = new HashMap<>();
-        user.put("fname", newUser.getFname());
-        user.put("lname", newUser.getLname());
-        user.put("email", newUser.getEmail());
-        user.put("phoneNumber", newUser.getPhoneNumber());
-        user.put("MavID", newUser.getMavID());
-        user.put("DiscussionPosts", newUser.getDiscussionPosts());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        user.put("creationDate", currentDateandTime);
-
-
-        db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+        newUser.setCreationDate(currentDateandTime);
 
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(RegistrationActivity.this, "User Registered", Toast.LENGTH_LONG).show();
-                Intent showHomePage = new Intent(RegistrationActivity.this, HomeActivity.class);
+
+                DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
+                userRef.set(newUser);
+                userRef.update("userID", mAuth.getCurrentUser().getUid());
+
+                Intent showHomePage = new Intent(RegistrationActivity.this, DiscussionForum.class);
                 startActivity(showHomePage);
                 finish();
             }

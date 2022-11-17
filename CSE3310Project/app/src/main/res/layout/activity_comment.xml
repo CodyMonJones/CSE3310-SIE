@@ -1,9 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/UTA_BLUE"
     tools:context=".Discussion.CommentActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp"
+        android:background="@color/UTA_BLUE">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/Linear_Layout_Post_Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linear_layout_border"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/Profile_Picture_Post_Header"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/circle"
+                    app:srcCompat="@drawable/prof_img" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Post_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="0.5"
+                        android:text="{POST TITLE}"
+                        android:textAllCaps="true"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/Username_Discussion_Forum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/Post_Title"
+                        android:text="username" />
+
+                    <TextView
+                        android:id="@+id/Post_Creation_Date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/Username_Discussion_Forum"
+                        android:text="{MM/DD/YYYY}"
+                        android:textSize="10dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/Post_Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Linear_Layout_Post_Header"
+                android:layout_margin="10dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non magna ac quam rhoncus semper et vel mauris. Ut efficitur faucibus nisl. Maecenas ut euismod sem, a lacinia eros. Duis varius dui vel luctus malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent malesuada consectetur sapien, eget mattis nunc viverra ut. Fusce tincidunt lectus quis magna consectetur lobortis. Proin at sem vehicula tellus placerat volutpat. Aenean mollis egestas velit, id rhoncus nisi tempus at. Curabitur sodales, est in rhoncus consectetur, ex sem feugiat eros, sit amet mattis sem turpis in velit. " />
+
+            <LinearLayout
+                android:id="@+id/Button_Layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Post_Body"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="72dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/Like_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/UTA_ORANGE"
+                    android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
+                    android:text="LIKE" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/Dislike_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/UTA_ORANGE"
+                    android:drawableLeft="@drawable/ic_baseline_thumb_down_24"
+                    android:text="DISLIKE" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Comment_Section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Post"
+        android:layout_margin="10dp" />
+</RelativeLayout>

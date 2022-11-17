@@ -55,16 +55,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView postTitle, postBody, postCreationDate;
+        TextView postTitle, postBody, postCreationDate, username;
         MaterialButton likeButton, dislikeButton, commentButton;
         CardView cv;
 
         ViewHolder(View itemView)
         {
             super(itemView);
-            postTitle = (TextView) itemView.findViewById(R.id.Post_Title);
-            postBody = (TextView) itemView.findViewById(R.id.Post_Body);
-            postCreationDate = (TextView) itemView.findViewById(R.id.Post_Creation_Date);
+            postTitle = itemView.findViewById(R.id.Post_Title);
+            postBody = itemView.findViewById(R.id.Post_Body);
+            postCreationDate = itemView.findViewById(R.id.Post_Creation_Date);
+            username = itemView.findViewById(R.id.Username_Discussion_Forum);
             likeButton = itemView.findViewById(R.id.Like_Button);
             dislikeButton = itemView.findViewById(R.id.Dislike_Button);
             commentButton = itemView.findViewById(R.id.Comment_Button);
@@ -109,12 +110,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     break;
 
                 case R.id.cv:
-                    Toast.makeText(context.getApplicationContext(), "You clicked on the post", Toast.LENGTH_SHORT).show();
+                    goToCommentActivity();
                     break;
 
                 case R.id.Comment_Button:
-                    Intent commentActivity = new Intent(context.getApplicationContext(), CommentActivity.class);
-                    context.startActivity(commentActivity);
+                    goToCommentActivity();
+                    break;
             }
         }
 
@@ -123,6 +124,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             postTitle.setText(post.getPostTitle());
             postBody.setText(post.getPostBody());
             postCreationDate.setText(post.getPostCreationDate());
+            username.setText(post.getPostUsername());
         }
 
         void updateData(DiscussionPost post)
@@ -132,6 +134,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
             ref.update("dislikes", post.getDislikes());
             notifyDataSetChanged();
+        }
+
+        void goToCommentActivity()
+        {
+            Intent commentActivity = new Intent(context.getApplicationContext(), CommentActivity.class);
+            context.startActivity(commentActivity);
         }
     }
 }

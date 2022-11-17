@@ -10,10 +10,10 @@ import android.view.View;
 
 public class HomeActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6c7efa8512aa1593d9efc53eb1cfda71dcce6e55
+//<<<<<<< HEAD
+//
+//=======
+//>>>>>>> 6c7efa8512aa1593d9efc53eb1cfda71dcce6e55
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
