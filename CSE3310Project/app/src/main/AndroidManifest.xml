@@ -16,6 +16,13 @@
         android:theme="@style/Theme.CSE3310Project"
         tools:targetApi="31">
         <activity
+            android:name=".drawerActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Discussion.CommentActivity"
             android:exported="false">
             <meta-data
@@ -78,8 +85,12 @@
 
         <activity
             android:name=".HomeActivity"
+<<<<<<< HEAD
             android:exported="false" />
 
+=======
+            android:exported="true" />
+>>>>>>> 6746762 (fixed navigation and activity view)
         <activity
             android:name=".LoginActivity"
             android:exported="true" >

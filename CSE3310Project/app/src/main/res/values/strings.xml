@@ -12,6 +12,8 @@
     <string name="Home" />
     <string name="Clubs" />
     <string name="TransactionsToolbarTitle">Marketplace</string>
+    <string name="Open"/>
+    <string name="Close"/>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Create_Post">Create Post</string>
