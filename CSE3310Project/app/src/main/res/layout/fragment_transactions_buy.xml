@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".TransactionsBuyFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/UTA_BLUE_BG"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/shopPage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scrollView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"/>
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/TransactionsHeaderCategories"
+                            android:textSize="12pt"
+                            android:textColor="@color/white"/>
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clickable="true"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img" />
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView7"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView2"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                            </LinearLayout>
+
+                        </HorizontalScrollView>
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/TransactionsHeaderLatest"
+                            android:textSize="12pt"
+                            android:textColor="@color/white"/>
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/imageView10"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView12"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true"
+                                android:focusable="auto"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/imageView13"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView14"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/imageView15"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView16"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/imageView17"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView18"
+                                    android:layout_width="125dp"
+                                    android:layout_height="125dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/rounded_button"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/prof_img"
+                                    android:clickable="true"
+                                    android:onClick="goToTransactionsProductViewActivity"/>
+
+                            </TableRow>
+
+                        </TableLayout>
+
+                        <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp" />
+
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#33000000"
+            android:clickable="true"
+            android:inputType="text"
+            android:theme="@style/Theme.CSE3310Project.TransactionsSearchView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </SearchView>
+
+</FrameLayout>

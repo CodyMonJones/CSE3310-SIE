@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="UTA_ORANGE">#F58025</color>
     <color name="UTA_BLUE">#0064B1</color>
+    <color name="UTA_BLUE_BG">#004793</color>
 </resources>

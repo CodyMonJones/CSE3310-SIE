@@ -11,5 +11,18 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="Home" />
     <string name="Clubs" />
+
+    <!--Transactions Module -->
     <string name="TransactionsToolbarTitle">Marketplace</string>
+    <string name="TransactionsTabBuy">BUY</string>
+    <string name="TransactionsTabSell">SELL</string>
+    <string name="TransactionsTabWishlist">WISHLIST</string>
+    <string name="TransactionsTabCart">CART</string>
+    <string name="TransactionsHeaderCategories">Categories</string>
+    <string name="TransactionsHeaderLatest">Latest Additions</string>
+    <string name="cover">Cover</string>
+    <string name="title_activity_transactions_product_view">TransactionsProductViewActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
