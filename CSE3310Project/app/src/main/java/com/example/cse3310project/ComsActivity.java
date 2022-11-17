@@ -3,6 +3,7 @@ package com.example.cse3310project;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +22,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.cse3310project.databinding.ActivityComsBinding;
+import com.example.cse3310project.databinding.ActivityHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class ComsActivity extends AppCompatActivity implements View.OnClickListener{
+public class ComsActivity extends drawerActivity implements View.OnClickListener{
     ImageButton tab, add, messages, email;
     Button profile, cancel, confirm;
     TextView noContact;
@@ -38,6 +41,8 @@ public class ComsActivity extends AppCompatActivity implements View.OnClickListe
     ListView contact;
     List list = new ArrayList();
     ArrayAdapter ad;
+
+    ActivityComsBinding activityComsBinding;
 
     //DatabaseReference databaseReference = database.getReference("Users").child(firebaseAuth.getCurrentUser().getUid();)
 
@@ -82,6 +87,9 @@ public class ComsActivity extends AppCompatActivity implements View.OnClickListe
 
         ad = new ArrayAdapter<>(ComsActivity.this, R.layout.rowtextformat,list);
         contact.setAdapter(ad);
+
+        activityComsBinding = ActivityComsBinding.inflate(getLayoutInflater());
+        setContentView(activityComsBinding.getRoot());
     }
 
     @Override

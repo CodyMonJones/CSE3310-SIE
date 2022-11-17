@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                Intent showHomepage = new Intent(LoginActivity.this, DiscussionForum.class);
+                Intent showHomepage = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(showHomepage);
                 finish();
             }
