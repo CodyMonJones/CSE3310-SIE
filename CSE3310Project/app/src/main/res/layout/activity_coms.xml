@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawerLayout"
-    tools:context=".ComsActivity">
+    tools:context=".ComsContactsActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -119,6 +119,7 @@
             android:layout_height="470dp"
             android:background="#005899"
             android:fitsSystemWindows="true"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/MessageMenuButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,6 +134,7 @@
             android:textAlignment="center"
             android:textColor="#70FFFFFF"
             android:textSize="34sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Search" />

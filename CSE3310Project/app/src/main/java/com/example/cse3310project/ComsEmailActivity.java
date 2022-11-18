@@ -6,32 +6,31 @@ import androidx.core.view.GravityCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import androidx.core.view.GravityCompat;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 
-public class MessagesActivity extends AppCompatActivity implements View.OnClickListener{
+public class ComsEmailActivity extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton tab;
-    ImageButton newmsg;
-    ImageButton contacts;
-    ImageButton email;
+    ImageButton newemail;
+    ImageButton messages;
+    ImageButton contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_messages);
+        setContentView(R.layout.activity_email);
         tab = (ImageButton) findViewById(R.id.TabButton);
-        newmsg = (ImageButton) findViewById(R.id.NewMessageButton);
-        contacts = (ImageButton) findViewById(R.id.ContactsMenuButton);
-        email = (ImageButton) findViewById(R.id.EmailMenuButton);
+        newemail = (ImageButton) findViewById(R.id.NewEmailButton);
+        messages = (ImageButton) findViewById(R.id.MessageMenuButton);
+        contact = (ImageButton) findViewById(R.id.ContactsMenuButton);
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         tab.setOnClickListener(this);
-        newmsg.setOnClickListener(this);
-        contacts.setOnClickListener(this);
-        email.setOnClickListener(this);
+        newemail.setOnClickListener(this);
+        messages.setOnClickListener(this);
+        contact.setOnClickListener(this);
 
         findViewById(R.id.TabButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +38,6 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
     }
 
     @Override
@@ -47,16 +45,16 @@ public class MessagesActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.TabButton:
                 break;
-            case R.id.NewMessageButton:
+            case R.id.NewEmailButton:
                 break;
-            case R.id.ContactsMenuButton:
-                Intent x = new Intent(MessagesActivity.this, ComsActivity.class);
-                startActivity(x);
+            case R.id.MessageMenuButton:
+                Intent y = new Intent(ComsEmailActivity.this, ComsMessagesActivity.class);
+                startActivity(y);
                 finish();
                 break;
-            case R.id.EmailMenuButton:
-                Intent y = new Intent(MessagesActivity.this, EmailActivity.class);
-                startActivity(y);
+            case R.id.ContactsMenuButton:
+                Intent x = new Intent(ComsEmailActivity.this, ComsContactsActivity.class);
+                startActivity(x);
                 finish();
                 break;
         }

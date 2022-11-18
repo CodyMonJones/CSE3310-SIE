@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.cse3310project.R;
+import com.example.cse3310project.databinding.ActivityDiscussionForumBinding;
+import com.example.cse3310project.databinding.ActivityFormClubBinding;
+import com.example.cse3310project.drawerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,7 +37,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class DiscussionForum extends AppCompatActivity{
+public class DiscussionForum extends drawerActivity {
 
     private ArrayList<DiscussionPost> posts = new ArrayList<>();
     private FirebaseFirestore postDatabase;
@@ -41,6 +45,7 @@ public class DiscussionForum extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FloatingActionButton addPostButton;
     private StorageReference storageReference;
+    ActivityDiscussionForumBinding activityDiscussionForumBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,10 @@ public class DiscussionForum extends AppCompatActivity{
         });
 
         EventChangeListener();
+
+        activityDiscussionForumBinding = ActivityDiscussionForumBinding.inflate(getLayoutInflater());
+        setContentView(activityDiscussionForumBinding.getRoot());
+        allocateActivityTitle("discussion");
     }
 
     public void EventChangeListener()

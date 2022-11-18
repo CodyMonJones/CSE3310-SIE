@@ -1,6 +1,5 @@
 package com.example.cse3310project;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -8,19 +7,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.cse3310project.databinding.ActivityTransactionsBinding;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class TransactionsActivity extends AppCompatActivity implements View.OnClickListener{
+public class TransactionsActivity extends drawerActivity implements View.OnClickListener{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    ActivityTransactionsBinding activityTransactionsBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
+
+        /*
+        <--- This code is to implement NavBar w/ Navigation currently not working with Transactions --->
+        activityTransactionsBinding = ActivityTransactionsBinding.inflate(getLayoutInflater());
+        setContentView(activityTransactionsBinding.getRoot());
+        <--- Cody --->
+         */
 
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.transactionsViewPager);
