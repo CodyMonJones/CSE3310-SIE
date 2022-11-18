@@ -18,10 +18,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,13 +46,14 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
 
     // Button to select image
     // Button to submit listing
-    Button ProductImage, submitButton;
+    Button ProductImage, submitButton, lendCheckBox, exchangeCheckBox;
 
     // One Preview Image
     ImageView PreviewImage;
     public Uri selectedImageUri;
 
-    EditText listingTitle, listingDescription, listingPrice;
+    // User text-input fields
+    EditText listingTitle, listingDescription, listingPrice, listingLend, listingExchange;
 
     //Firestore used to upload data
     FirebaseFirestore transactionDB;
@@ -79,6 +84,19 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         // Enable the ActionBar Up button (go back to previous activity)
         transactionsProductCreateActionBar.setDisplayHomeAsUpEnabled(true);
 
+        // One dropdown menu for user to select transaction type
+        //Spinner transactionsProductSpinner = (Spinner) findViewById(R.id.transactionProductSpinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> transactionsProductSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.TransactionsProductSpinnerItems, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        transactionsProductSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        //transactionsProductSpinner.setAdapter(transactionsProductSpinnerAdapter);
+        //transactionsProductSpinner.setOnItemSelectedListener(this);
+
         // register the UI widgets with their appropriate IDs
         ProductImage = findViewById(R.id.transactionProductImage);
         PreviewImage = findViewById(R.id.transactionProductImagePreview);
@@ -86,9 +104,42 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         listingTitle = findViewById(R.id.transactionProductTitle);
         listingDescription = findViewById(R.id.transactionProductDescription);
         listingPrice = findViewById(R.id.transactionProductPrice);
+        listingLend = findViewById(R.id.transactionProductLendTime);
+        listingExchange = findViewById(R.id.transactionProductExchange);
+        lendCheckBox = findViewById(R.id.transactionProductLendTimeCheckBox);
+        exchangeCheckBox = findViewById(R.id.transactionProductExchangeCheckBox);
         submitButton = findViewById(R.id.transactionProductSubmitButton);
 
-        //override the submission buttons onclick listener to run custom function
+        // these 2 functions override the checkboxes to enable/disable
+        // their respective editText entries
+        lendCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CheckBox temp = (CheckBox)view;
+                if (temp.isChecked()){
+                    listingLend.setEnabled(true);
+                    listingLend.setText(null);
+                }else {
+                    listingLend.setEnabled(false);
+                    listingLend.setText("N/A");
+                }
+            }
+        });
+        exchangeCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CheckBox temp = (CheckBox)view;
+                if (temp.isChecked()){
+                    listingExchange.setEnabled(true);
+                    listingExchange.setText(null);
+                }else {
+                    listingExchange.setEnabled(false);
+                    listingExchange.setText("N/A");
+                }
+            }
+        });
+
+        // override the submission buttons onclick listener to run custom function
         submitButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
@@ -96,14 +147,14 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
                                             }
                                         });
 
-                // handle the Choose Image button to trigger
-                // the image chooser function
-                ProductImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        // handle the Choose Image button to trigger
+        // the image chooser function
+        ProductImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                         imageChooser();
                     }
-                });
+        });
     }
 
     // this function is triggered when
@@ -143,7 +194,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
 
     // this function is triggered when the submit
     // button is clicked. It ensures everything has
-    // data and then runs the firebase upload function
+    // data and then runs the firebase upload functions
     public void createTransactionProduct()
     {
         if(PreviewImage.getDrawable() == null)
@@ -187,7 +238,37 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
             listingPrice.setError(null);
         }
 
-        TransactionProductSubmission(new TransactionsProduct(listingTitle.getText().toString(), listingDescription.getText().toString(), null, Float.parseFloat(listingPrice.getText().toString())), selectedImageUri);
+        if(listingLend.getText().toString().isEmpty())
+        {
+            listingLend.setError("Please enter a lend period");
+            showKeyboard(listingLend);
+            listingLend.requestFocus();
+            return;
+        }
+        else
+        {
+            listingLend.setError(null);
+        }
+
+        if(listingExchange.getText().toString().isEmpty())
+        {
+            listingExchange.setError("Please enter exchange details");
+            showKeyboard(listingExchange);
+            listingExchange.requestFocus();
+            return;
+        }
+        else
+        {
+            listingExchange.setError(null);
+        }
+
+        TransactionProductSubmission(new TransactionsProduct(listingTitle.getText().toString(),
+                listingDescription.getText().toString(),
+                null,
+                Float.parseFloat(listingPrice.getText().toString()),
+                listingLend.getText().toString(),
+                listingExchange.getText().toString(), null),
+                selectedImageUri);
 
     }
 
@@ -211,10 +292,13 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         final String randomKey = UUID.randomUUID().toString();
         StorageReference listingImageRef = storageRef.child("images/"+randomKey);
 
-        //upload the reference to firebase
+        //Copy reference into object as a string
+        product.setImage("images/"+randomKey);
+
+        //upload the image reference to firebase storage
         listingImageRef.putFile(selectedImageUri);
 
-        //Upload everything except for the image
+        //Upload object to firestore
         DocumentReference productReference = transactionDB.collection("Marketplace_Listings").document();
         product.setUniqueID(productReference.getId());
 
@@ -222,41 +306,3 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         this.finish();
     }
 }
-
-//ALTERNATIVE CODE: USE THIS AS LAST RESORT IF ABOVE CODE FOR UPLOADING IMAGES STOPS WORKING RIGHT
-//    private void imageChooser()
-//    {
-//        Intent i = new Intent();
-//        i.setType("image/*");
-//        i.setAction(Intent.ACTION_GET_CONTENT);
-//
-//        launchSomeActivity.launch(i);
-//    }
-//
-//    ActivityResultLauncher<Intent> launchSomeActivity
-//            = registerForActivityResult(
-//            new ActivityResultContracts
-//                    .StartActivityForResult(),
-//            result -> {
-//                if (result.getResultCode()
-//                        == Activity.RESULT_OK) {
-//                    Intent data = result.getData();
-//                    // do your operation from here....
-//                    if (data != null
-//                            && data.getData() != null) {
-//                        Uri selectedImageUri = data.getData();
-//                        Bitmap selectedImageBitmap = null;
-//                        try {
-//                            selectedImageBitmap
-//                                    = MediaStore.Images.Media.getBitmap(
-//                                    this.getContentResolver(),
-//                                    selectedImageUri);
-//                        }
-//                        catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        PreviewImage.setImageBitmap(
-//                                selectedImageBitmap);
-//                    }
-//                }
-//            });

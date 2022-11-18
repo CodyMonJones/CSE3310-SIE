@@ -29,7 +29,7 @@ public class TransactionsActivity extends AppCompatActivity implements View.OnCl
 
         TransactionsVPAdapter transactionsVPAdapter = new TransactionsVPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        transactionsVPAdapter.addFragment(new TransactionsBuyFragment(),"Buy");
+        transactionsVPAdapter.addFragment(new TransactionsShopFragment(),"Shop");
         transactionsVPAdapter.addFragment(new TransactionsSellFragment(),"Sell");
         transactionsVPAdapter.addFragment(new TransactionsWishlistFragment(),"Wishlist");
         transactionsVPAdapter.addFragment(new TransactionsCartFragment(),"Cart");

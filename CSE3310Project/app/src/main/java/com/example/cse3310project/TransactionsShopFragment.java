@@ -1,7 +1,5 @@
 package com.example.cse3310project;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
-public class TransactionsBuyFragment extends Fragment {
+public class TransactionsShopFragment extends Fragment {
 
     ImageView imageView5;
 
@@ -21,7 +19,7 @@ public class TransactionsBuyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transactions_buy, container, false);
+        return inflater.inflate(R.layout.fragment_transactions_shop, container, false);
 
     }
 

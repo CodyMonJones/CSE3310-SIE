@@ -6,15 +6,20 @@ import android.widget.ImageView;
 public class TransactionsProduct{
     private String title;
     private String desc;
-    private ImageView image;
+    private String imageRef;
     private float price;
+    private String lendTime;
+    private String exchange;
     private String uniqueID;
 
-    public TransactionsProduct(String title, String desc, ImageView image, float price){
+    public TransactionsProduct(String title, String desc, String imageRef, float price, String lendTime, String exchange, String uniqueID){
         this.title = title;
         this.desc = desc;
-        this.image = image;
+        this.imageRef = imageRef;
         this.price = price;
+        this.lendTime = lendTime;
+        this.exchange = exchange;
+        this.uniqueID = uniqueID;
     }
 
     public TransactionsProduct()
@@ -22,37 +27,47 @@ public class TransactionsProduct{
 
     }
 
-    public String getUniqueID() {
-        return uniqueID;
-    }
-
-    public void setUniqueID(String uniqueID) {
-        this.uniqueID = uniqueID;
-    }
-
     public String getTitle(){
         return title;
     }
-    public void setTitle(){
+    public void setTitle(String title){
         this.title = title;
     }
     public String getDesc(){
         return desc;
     }
-    public void setDesc(){
+    public void setDesc(String desc){
         this.desc = desc;
     }
-    public ImageView getImage(){
-        return image;
+    public String getImage(){
+        return imageRef;
     }
-    public void setImage(){
-        this.image = image;
+    public void setImage(String imageRef){
+        this.imageRef = imageRef;
     }
     public float getPrice(){
         return price;
     }
-    public void setPrice(){
+    public void setPrice(Float price){
         this.price = price;
+    }
+    public String getLendTime(){
+        return lendTime;
+    }
+    public void setLendTime(String lendTime){
+        this.lendTime = lendTime;
+    }
+    public String getExchange(){
+        return exchange;
+    }
+    public void setExchange(String exchange){
+        this.exchange = exchange;
+    }
+    public String getUniqueID() {
+        return uniqueID;
+    }
+    public void setUniqueID(String uniqueID) {
+        this.uniqueID = uniqueID;
     }
 
 }

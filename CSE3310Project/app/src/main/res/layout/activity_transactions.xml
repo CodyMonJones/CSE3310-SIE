@@ -78,7 +78,7 @@
                     android:id="@+id/buyTab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/TransactionsTabBuy" />
+                    android:text="@string/TransactionsTabShop" />
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/sellTab"
                     android:layout_width="wrap_content"

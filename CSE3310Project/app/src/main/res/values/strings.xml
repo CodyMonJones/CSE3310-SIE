@@ -14,7 +14,7 @@
 
     <!--Transactions Module -->
     <string name="TransactionsToolbarTitle">Marketplace</string>
-    <string name="TransactionsTabBuy">BUY</string>
+    <string name="TransactionsTabShop">SHOP</string>
     <string name="TransactionsTabSell">SELL</string>
     <string name="TransactionsTabWishlist">WISHLIST</string>
     <string name="TransactionsTabCart">CART</string>
@@ -22,6 +22,12 @@
     <string name="TransactionsHeaderLatest">Latest Additions</string>
     <string name="cover">Cover</string>
     <string name="title_activity_transactions_product_view">TransactionsProductViewActivity</string>
+    <string name="TransactionsProductSpinnerTitle">Select</string>
+    <string-array name="TransactionsProductSpinnerItems">
+        <item>Sell</item>
+        <item>Lend</item>
+        <item>Exchange</item>
+    </string-array>
 
     <string name="Open"/>
     <string name="Close"/>
