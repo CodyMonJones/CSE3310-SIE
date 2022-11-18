@@ -56,9 +56,10 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
                 overridePendingTransition(0,0);
                 break;
 
-
-
-
+            case R.id.Marketplace:
+                startActivity(new Intent(this, TransactionsActivity.class));
+                overridePendingTransition(0, 0);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
