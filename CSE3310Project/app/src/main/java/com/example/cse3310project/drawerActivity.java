@@ -52,7 +52,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
                 break;
 
             case R.id.Messages:
-                startActivity(new Intent(this, ComsActivity.class));
+                startActivity(new Intent(this, ComsContactsActivity.class));
                 overridePendingTransition(0,0);
                 break;
 

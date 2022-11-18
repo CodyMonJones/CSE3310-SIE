@@ -14,6 +14,7 @@ public class User implements Serializable
     private String phoneNumber;
     private ArrayList<String> discussionPostsIDs;
     private ArrayList<String> transactionItemIDs;
+    private ArrayList<contact> contactslist;
     private String profile_picture;
     private String creationDate;
     private String userID;
@@ -98,6 +99,14 @@ public class User implements Serializable
         return phoneNumber;
     }
 
+    public ArrayList<contact> getContatcs() {
+        return contactslist;
+    }
+
+    public void setContactslist(ArrayList<contact> contactslist){
+        this.contactslist = contactslist;
+    }
+
 
 
     public User(String firstName, String lastName, String email, int Mav, String phone)
@@ -110,5 +119,6 @@ public class User implements Serializable
         this.discussionPostsIDs = null;
         this.transactionItemIDs = null;
         this.profile_picture = null;
+        this.contactslist = null;
     }
 }

@@ -7,30 +7,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import androidx.core.view.GravityCompat;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 
-public class EmailActivity extends AppCompatActivity implements View.OnClickListener{
+public class ComsMessagesActivity extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton tab;
-    ImageButton newemail;
-    ImageButton messages;
-    ImageButton contact;
+    ImageButton newmsg;
+    ImageButton contacts;
+    ImageButton email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_email);
+        setContentView(R.layout.activity_messages);
         tab = (ImageButton) findViewById(R.id.TabButton);
-        newemail = (ImageButton) findViewById(R.id.NewEmailButton);
-        messages = (ImageButton) findViewById(R.id.MessageMenuButton);
-        contact = (ImageButton) findViewById(R.id.ContactsMenuButton);
+        newmsg = (ImageButton) findViewById(R.id.NewMessageButton);
+        contacts = (ImageButton) findViewById(R.id.ContactsMenuButton);
+        email = (ImageButton) findViewById(R.id.EmailMenuButton);
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         tab.setOnClickListener(this);
-        newemail.setOnClickListener(this);
-        messages.setOnClickListener(this);
-        contact.setOnClickListener(this);
+        newmsg.setOnClickListener(this);
+        contacts.setOnClickListener(this);
+        email.setOnClickListener(this);
 
         findViewById(R.id.TabButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +38,7 @@ public class EmailActivity extends AppCompatActivity implements View.OnClickList
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
     }
 
     @Override
@@ -45,16 +46,16 @@ public class EmailActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.TabButton:
                 break;
-            case R.id.NewEmailButton:
-                break;
-            case R.id.MessageMenuButton:
-                Intent y = new Intent(EmailActivity.this, MessagesActivity.class);
-                startActivity(y);
-                finish();
+            case R.id.NewMessageButton:
                 break;
             case R.id.ContactsMenuButton:
-                Intent x = new Intent(EmailActivity.this, ComsActivity.class);
+                Intent x = new Intent(ComsMessagesActivity.this, ComsContactsActivity.class);
                 startActivity(x);
+                finish();
+                break;
+            case R.id.EmailMenuButton:
+                Intent y = new Intent(ComsMessagesActivity.this, ComsEmailActivity.class);
+                startActivity(y);
                 finish();
                 break;
         }
