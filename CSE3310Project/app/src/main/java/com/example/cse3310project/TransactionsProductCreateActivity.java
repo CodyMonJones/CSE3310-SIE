@@ -84,19 +84,6 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         // Enable the ActionBar Up button (go back to previous activity)
         transactionsProductCreateActionBar.setDisplayHomeAsUpEnabled(true);
 
-        // One dropdown menu for user to select transaction type
-        //Spinner transactionsProductSpinner = (Spinner) findViewById(R.id.transactionProductSpinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> transactionsProductSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.TransactionsProductSpinnerItems, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        transactionsProductSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        //transactionsProductSpinner.setAdapter(transactionsProductSpinnerAdapter);
-        //transactionsProductSpinner.setOnItemSelectedListener(this);
-
         // register the UI widgets with their appropriate IDs
         ProductImage = findViewById(R.id.transactionProductImage);
         PreviewImage = findViewById(R.id.transactionProductImagePreview);
@@ -233,6 +220,13 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
             listingPrice.requestFocus();
             return;
         }
+        else if((listingPrice.getText().toString().contains(".") == true) && (listingPrice.getText().toString().length()-(listingPrice.getText().toString().indexOf(".")+1) > 2))
+        {
+            listingPrice.setError("Invalid cent value");
+            showKeyboard(listingPrice);
+            listingPrice.requestFocus();
+            return;
+        }
         else
         {
             listingPrice.setError(null);
@@ -265,7 +259,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         TransactionProductSubmission(new TransactionsProduct(listingTitle.getText().toString(),
                 listingDescription.getText().toString(),
                 null,
-                Float.parseFloat(listingPrice.getText().toString()),
+                listingPrice.getText().toString(),
                 listingLend.getText().toString(),
                 listingExchange.getText().toString(), null),
                 selectedImageUri);

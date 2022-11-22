@@ -7,12 +7,12 @@ public class TransactionsProduct{
     private String title;
     private String desc;
     private String imageRef;
-    private float price;
+    private String price;
     private String lendTime;
     private String exchange;
     private String uniqueID;
 
-    public TransactionsProduct(String title, String desc, String imageRef, float price, String lendTime, String exchange, String uniqueID){
+    public TransactionsProduct(String title, String desc, String imageRef, String price, String lendTime, String exchange, String uniqueID){
         this.title = title;
         this.desc = desc;
         this.imageRef = imageRef;
@@ -45,10 +45,10 @@ public class TransactionsProduct{
     public void setImage(String imageRef){
         this.imageRef = imageRef;
     }
-    public float getPrice(){
+    public String getPrice(){
         return price;
     }
-    public void setPrice(Float price){
+    public void setPrice(String price){
         this.price = price;
     }
     public String getLendTime(){

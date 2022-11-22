@@ -6,7 +6,8 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:id="@+id/product_listing_cardview"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:background="@color/UTA_ORANGE"
         android:layout_margin="10dp"
@@ -19,23 +20,42 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/UTA_ORANGE"
-                android:src="@drawable/prof_img"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/cover"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/product_listing_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="@color/UTA_ORANGE"
+                    android:contentDescription="@string/cover"
+                    android:src="@drawable/blank" />
+
+                <CheckBox
+                    android:id="@+id/product_listing_wishlist_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:button="@drawable/transactions_wishlist_button"
+                    app:useMaterialThemeColors="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </FrameLayout>
 
             <TextView
+                android:id="@+id/product_listing_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/UTA_ORANGE"
                 android:gravity="center"
-                android:text="Product Title"
+                android:text="Placeholder"
                 android:textColor="#000000"
                 android:textSize="36dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
 
         </LinearLayout>
 

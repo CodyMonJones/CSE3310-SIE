@@ -41,6 +41,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toTopOf="@id/transactionProductImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <Button
                     android:id="@+id/transactionProductImage"
                     android:layout_width="wrap_content"
@@ -199,7 +207,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_height="100dp" />
         </LinearLayout>
     </ScrollView>
 

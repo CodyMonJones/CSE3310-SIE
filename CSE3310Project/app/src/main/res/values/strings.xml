@@ -23,6 +23,8 @@
     <string name="cover">Cover</string>
     <string name="title_activity_transactions_product_view">TransactionsProductViewActivity</string>
     <string name="TransactionsProductSpinnerTitle">Select</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
     <string-array name="TransactionsProductSpinnerItems">
         <item>Sell</item>
         <item>Lend</item>
