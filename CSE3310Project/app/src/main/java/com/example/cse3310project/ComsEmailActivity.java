@@ -21,30 +21,20 @@ public class ComsEmailActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email);
-        tab = (ImageButton) findViewById(R.id.TabButton);
         newemail = (ImageButton) findViewById(R.id.NewEmailButton);
         messages = (ImageButton) findViewById(R.id.MessageMenuButton);
         contact = (ImageButton) findViewById(R.id.ContactsMenuButton);
-        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         tab.setOnClickListener(this);
         newemail.setOnClickListener(this);
         messages.setOnClickListener(this);
         contact.setOnClickListener(this);
 
-        findViewById(R.id.TabButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.TabButton:
-                break;
             case R.id.NewEmailButton:
                 break;
             case R.id.MessageMenuButton:
