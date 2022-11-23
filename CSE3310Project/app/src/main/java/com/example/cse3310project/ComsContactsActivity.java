@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ComsContactsActivity extends drawerActivity implements View.OnClickListener{
-    ImageButton tab, add, messages, email, exit;
+    ImageButton add, messages, email, exit;
     Button profile, cancel, confirm, emailbutton, messagebutton, delete, edit, yes, no;
     TextView noContact;
     EditText firstname, lastname, emailaddress;
@@ -49,29 +49,19 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coms);
 
-        tab = (ImageButton) findViewById(R.id.TabButton);
         add = (ImageButton) findViewById(R.id.NewContactButton);
         messages = (ImageButton) findViewById(R.id.MessageMenuButton);
         email = (ImageButton) findViewById(R.id.EmailMenuButton);
         profile = (Button) findViewById(R.id.UserContactButton);
         noContact = (TextView) findViewById(R.id.NoContacts);
-        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         contact = (ListView)findViewById(R.id.ContactList);
         contact.setOnItemClickListener(this::onItemClick);
 
-        tab.setOnClickListener(this);
         add.setOnClickListener(this);
         messages.setOnClickListener(this);
         email.setOnClickListener(this);
         profile.setOnClickListener(this);
-
-        findViewById(R.id.TabButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
 
         if(list.size() == 0){
             noContact.setVisibility(View.VISIBLE);
