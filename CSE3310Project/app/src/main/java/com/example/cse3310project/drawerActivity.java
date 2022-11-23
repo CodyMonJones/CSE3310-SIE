@@ -42,7 +42,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
 
         switch (item.getItemId()){
             case R.id.Home:
-                startActivity(new Intent(this, DiscussionForum.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 overridePendingTransition(0, 0);
                 break;
 
