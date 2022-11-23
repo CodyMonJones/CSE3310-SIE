@@ -2,6 +2,7 @@ package com.example.cse3310project;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TransactionsShopFragment extends Fragment {
+public class TransactionsShopFragment extends Fragment implements TransactionsRecyclerViewInterface{
 
     ArrayList<TransactionsProduct> productArrayList = new ArrayList<>();
     private FirebaseFirestore marketplaceDb;
@@ -77,11 +78,12 @@ public class TransactionsShopFragment extends Fragment {
                                 TransactionsProduct product = new TransactionsProduct(
                                         document.getString("title"),
                                         document.getString("desc"),
-                                        document.getString("image"),
+                                        document.getString("imageRef"),
                                         document.getString("price"),
                                         document.getString("lendTime"),
                                         document.getString("exchange"),
-                                        document.getString("uniqueID"));
+                                        document.getString("uniqueID"),
+                                        document.getTimestamp("timestamp"));
                                 productArrayList.add(product);
                             }
                         }
@@ -93,7 +95,8 @@ public class TransactionsShopFragment extends Fragment {
                         }
 
                         transactionsAdapter = new TransactionsAdapter(productArrayList,
-                                TransactionsShopFragment.this.getContext());
+                                TransactionsShopFragment.this.getContext(),
+                                TransactionsShopFragment.this);
                         recyclerView.setAdapter(transactionsAdapter);
                     }
                 });
@@ -102,4 +105,12 @@ public class TransactionsShopFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onProductClick(int position) {
+        Intent intent = new Intent(getActivity(), TransactionsProductViewActivity.class);
+
+        intent.putExtra("UID", productArrayList.get(position).getUniqueID());
+
+        startActivity(intent);
+    }
 }

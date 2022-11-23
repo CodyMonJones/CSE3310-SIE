@@ -16,6 +16,13 @@
         android:theme="@style/Theme.CSE3310Project"
         tools:targetApi="31">
         <activity
+            android:name=".TransactionsProductEditActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".TransactionsCatalogueActivity"
             android:exported="false">
             <meta-data
@@ -38,12 +45,7 @@
         </activity>
         <activity
             android:name=".Discussion.DiscussionForum"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -64,8 +66,8 @@
         </activity>
         <activity
             android:name=".ComsContactsActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -104,13 +106,17 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" >
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

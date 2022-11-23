@@ -13,7 +13,9 @@ public class User implements Serializable
     private int MavID;
     private String phoneNumber;
     private ArrayList<String> discussionPostsIDs;
-    private ArrayList<String> transactionItemIDs;
+    private ArrayList<String> transactionListedItemIDs;
+    private ArrayList<String> transactionWishlistItemIDs;
+    private ArrayList<String> transactionCartItemIDs;
     private ArrayList<contact> contactslist;
     private String profile_picture;
     private String creationDate;
@@ -27,12 +29,28 @@ public class User implements Serializable
         this.discussionPostsIDs = discussionPostsIDs;
     }
 
-    public ArrayList<String> getTransactionItemIDs() {
-        return transactionItemIDs;
+    public ArrayList<String> getTransactionListedItemIDs() {
+        return transactionListedItemIDs;
     }
 
-    public void setTransactionItemIDs(ArrayList<String> transactionItemIDs) {
-        this.transactionItemIDs = transactionItemIDs;
+    public void setTransactionListedItemIDs(ArrayList<String> transactionListedItemIDs) {
+        this.transactionListedItemIDs = transactionListedItemIDs;
+    }
+
+    public ArrayList<String> getTransactionWishlistItemIDs() {
+        return transactionWishlistItemIDs;
+    }
+
+    public void setTransactionWishlistItemIDs(ArrayList<String> transactionWishlistItemIDs) {
+        this.transactionWishlistItemIDs = transactionWishlistItemIDs;
+    }
+
+    public ArrayList<String> getTransactionCartItemIDs() {
+        return transactionCartItemIDs;
+    }
+
+    public void setTransactionCartItemIDs(ArrayList<String> transactionCartItemIDs) {
+        this.transactionCartItemIDs = transactionCartItemIDs;
     }
 
     public String getCreationDate() {
@@ -117,7 +135,9 @@ public class User implements Serializable
         this.MavID = Mav;
         this.phoneNumber = phone;
         this.discussionPostsIDs = null;
-        this.transactionItemIDs = null;
+        this.transactionListedItemIDs = null;
+        this.transactionWishlistItemIDs = null;
+        this.transactionCartItemIDs = null;
         this.profile_picture = null;
         this.contactslist = null;
     }

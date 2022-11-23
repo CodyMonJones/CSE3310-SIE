@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class TransactionsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class TransactionsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;

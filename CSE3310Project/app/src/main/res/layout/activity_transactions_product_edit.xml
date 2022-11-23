@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/UTA_BLUE_BG"
-    tools:context=".TransactionsProductCreateActivity">
-
+    tools:context=".TransactionsProductEditActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/transactionProductCreateToolbar"
+        android:id="@+id/transactionProductEditToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/UTA_BLUE"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Create Marketplace Listing"
+        app:title="Edit Marketplace Listing"
         app:titleTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +28,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/transactionProductCreateToolbar">
+        app:layout_constraintTop_toBottomOf="@id/transactionProductEditToolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,53 +36,52 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/constraintLayoutEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    app:layout_constraintBottom_toTopOf="@id/transactionProductImage"
+                    app:layout_constraintBottom_toTopOf="@id/transactionProductImageEdit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/transactionProductImage"
+                    android:id="@+id/transactionProductImageEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:backgroundTint="@color/UTA_ORANGE"
                     android:text="Select Image"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toTopOf="@id/transactionProductImagePreview"
+                    app:layout_constraintBottom_toTopOf="@id/transactionProductImagePreviewEdit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/transactionProductImagePreview"
+                    android:id="@+id/transactionProductImagePreviewEdit"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:layout_below="@id/transactionProductImage"
+                    android:layout_below="@id/transactionProductImageEdit"
                     android:layout_marginHorizontal="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductImage" />
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductImageEdit" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/transactionProductTitleInputField"
+                    android:id="@+id/transactionProductTitleInputFieldEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="50dp"
                     android:paddingVertical="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductImagePreview">
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductImagePreviewEdit">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/transactionProductTitle"
+                        android:id="@+id/transactionProductTitleEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter Title"
@@ -92,35 +90,35 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/transactionProductDescriptionInputField"
+                    android:id="@+id/transactionProductDescriptionInputFieldEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="50dp"
                     android:paddingVertical="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductTitleInputField">
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductTitleInputFieldEdit">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/transactionProductDescription"
+                        android:id="@+id/transactionProductDescriptionEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter Description" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/transactionProductPriceInputField"
+                    android:id="@+id/transactionProductPriceInputFieldEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="50dp"
                     android:paddingVertical="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductDescriptionInputField"
-                    app:layout_constraintBottom_toTopOf="@id/transactionProductLendTimeCheckBox">
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductDescriptionInputFieldEdit"
+                    app:layout_constraintBottom_toTopOf="@id/transactionProductLendTimeCheckBoxEdit">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/transactionProductPrice"
+                        android:id="@+id/transactionProductPriceEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter Price"
@@ -130,29 +128,29 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
-                    android:id="@+id/transactionProductLendTimeCheckBox"
+                    android:id="@+id/transactionProductLendTimeCheckBoxEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:text="Toggle Lend"
-                    app:layout_constraintBottom_toTopOf="@+id/transactionProductLendTimeInputField"
+                    app:layout_constraintBottom_toTopOf="@+id/transactionProductLendTimeInputFieldEdit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductPriceInputField" />
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductPriceInputFieldEdit" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/transactionProductLendTimeInputField"
+                    android:id="@+id/transactionProductLendTimeInputFieldEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="50dp"
                     android:paddingVertical="25dp"
-                    app:layout_constraintBottom_toTopOf="@+id/transactionProductExchangeInputField"
+                    app:layout_constraintBottom_toTopOf="@+id/transactionProductExchangeInputFieldEdit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductPriceInputField">
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductPriceInputFieldEdit">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/transactionProductLendTime"
+                        android:id="@+id/transactionProductLendTimeEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter Lend Period"
@@ -163,18 +161,18 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
-                    android:id="@+id/transactionProductExchangeCheckBox"
+                    android:id="@+id/transactionProductExchangeCheckBoxEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:text="Toggle Exchange"
-                    app:layout_constraintBottom_toTopOf="@+id/transactionProductExchangeInputField"
+                    app:layout_constraintBottom_toTopOf="@+id/transactionProductExchangeInputFieldEdit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductLendTimeInputField" />
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductLendTimeInputFieldEdit" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/transactionProductExchangeInputField"
+                    android:id="@+id/transactionProductExchangeInputFieldEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
@@ -183,10 +181,10 @@
                     app:layout_constraintBottom_toTopOf="@+id/transactionProductSubmitButton"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductLendTimeInputField">
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductLendTimeInputFieldEdit">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/transactionProductExchange"
+                        android:id="@+id/transactionProductExchangeEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter Exchange Description"
@@ -197,15 +195,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/transactionProductSubmitButton"
+                    android:id="@+id/transactionProductSubmitButtonEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/UTA_ORANGE"
                     android:text="Submit"
-                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/transactionProductExchangeInputField" />
+                    app:layout_constraintTop_toBottomOf="@id/transactionProductExchangeInputFieldEdit" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -214,6 +211,5 @@
                 android:layout_height="100dp" />
         </LinearLayout>
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

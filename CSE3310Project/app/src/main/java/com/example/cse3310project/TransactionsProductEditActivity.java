@@ -1,37 +1,21 @@
 package com.example.cse3310project;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.cse3310project.Discussion.DiscussionPost;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,15 +23,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
-import java.io.PipedReader;
 import java.util.UUID;
 
-public class TransactionsProductCreateActivity extends AppCompatActivity{
+public class TransactionsProductEditActivity extends AppCompatActivity {
 
     // Button to select image
     // Button to submit listing
@@ -78,8 +58,9 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transactions_product_create);
+        setContentView(R.layout.activity_transactions_product_edit);
 
+        //insert below
         // Needed to transfer data with firebase
         transactionDB = FirebaseFirestore.getInstance();
 
@@ -88,27 +69,27 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         currentUser = currentUserAuthentication.getCurrentUser();
 
         // toolbar is defined in layout file
-        Toolbar transactionsProductCreateToolbar = (Toolbar) findViewById(R.id.transactionProductCreateToolbar);
-        setSupportActionBar(transactionsProductCreateToolbar);
+        Toolbar transactionsProductEditToolbar = (Toolbar) findViewById(R.id.transactionProductEditToolbar);
+        setSupportActionBar(transactionsProductEditToolbar);
 
         // Get a support ActionBar corresponding to this toolbar
-        ActionBar transactionsProductCreateActionBar = getSupportActionBar();
+        ActionBar transactionsProductEditActionBar = getSupportActionBar();
 
         // Enable the ActionBar Up button (go back to previous activity)
-        transactionsProductCreateActionBar.setDisplayHomeAsUpEnabled(true);
+        transactionsProductEditActionBar.setDisplayHomeAsUpEnabled(true);
 
         // register the UI widgets with their appropriate IDs
-        ProductImage = findViewById(R.id.transactionProductImage);
-        PreviewImage = findViewById(R.id.transactionProductImagePreview);
+        ProductImage = findViewById(R.id.transactionProductImageEdit);
+        PreviewImage = findViewById(R.id.transactionProductImagePreviewEdit);
         // register the user input items with their appropriate IDs
-        listingTitle = findViewById(R.id.transactionProductTitle);
-        listingDescription = findViewById(R.id.transactionProductDescription);
-        listingPrice = findViewById(R.id.transactionProductPrice);
-        listingLend = findViewById(R.id.transactionProductLendTime);
-        listingExchange = findViewById(R.id.transactionProductExchange);
-        lendCheckBox = findViewById(R.id.transactionProductLendTimeCheckBox);
-        exchangeCheckBox = findViewById(R.id.transactionProductExchangeCheckBox);
-        submitButton = findViewById(R.id.transactionProductSubmitButton);
+        listingTitle = findViewById(R.id.transactionProductTitleEdit);
+        listingDescription = findViewById(R.id.transactionProductDescriptionEdit);
+        listingPrice = findViewById(R.id.transactionProductPriceEdit);
+        listingLend = findViewById(R.id.transactionProductLendTimeEdit);
+        listingExchange = findViewById(R.id.transactionProductExchangeEdit);
+        lendCheckBox = findViewById(R.id.transactionProductLendTimeCheckBoxEdit);
+        exchangeCheckBox = findViewById(R.id.transactionProductExchangeCheckBoxEdit);
+        submitButton = findViewById(R.id.transactionProductSubmitButtonEdit);
 
         // these 2 functions override the checkboxes to enable/disable
         // their respective editText entries
@@ -144,17 +125,23 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         ProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        imageChooser();
-                    }
+                imageChooser();
+            }
         });
 
         // override the submission button's onclick listener to run custom function
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createTransactionProduct();
+                editTransactionProduct();
             }
         });
+
+        retrieveTransactionProduct();
+    }
+
+    public void retrieveTransactionProduct() {
+        //asdf
     }
 
     // this function is triggered when
@@ -195,7 +182,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
     // this function is triggered when the submit
     // button is clicked. It ensures everything has
     // data and then runs the firebase upload functions
-    public void createTransactionProduct()
+    public void editTransactionProduct()
     {
         if(PreviewImage.getDrawable() == null)
         {
@@ -206,7 +193,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         if(listingTitle.getText().toString().isEmpty())
         {
             listingTitle.setError("Please enter a title");
-            showKeyboard(listingTitle);
+            showKeyboardEdit(listingTitle);
             listingTitle.requestFocus();
             return;
         }
@@ -217,7 +204,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         if(listingDescription.getText().toString().isEmpty())
         {
             listingDescription.setError("Please enter a description");
-            showKeyboard(listingDescription);
+            showKeyboardEdit(listingDescription);
             listingDescription.requestFocus();
             return;
         }
@@ -229,14 +216,14 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         if(listingPrice.getText().toString().isEmpty())
         {
             listingPrice.setError("Please enter a price");
-            showKeyboard(listingPrice);
+            showKeyboardEdit(listingPrice);
             listingPrice.requestFocus();
             return;
         }
         else if((listingPrice.getText().toString().contains(".") == true) && (listingPrice.getText().toString().length()-(listingPrice.getText().toString().indexOf(".")+1) > 2))
         {
             listingPrice.setError("Invalid cent value");
-            showKeyboard(listingPrice);
+            showKeyboardEdit(listingPrice);
             listingPrice.requestFocus();
             return;
         }
@@ -248,7 +235,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         if(listingLend.getText().toString().isEmpty())
         {
             listingLend.setError("Please enter a lend period");
-            showKeyboard(listingLend);
+            showKeyboardEdit(listingLend);
             listingLend.requestFocus();
             return;
         }
@@ -260,7 +247,7 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         if(listingExchange.getText().toString().isEmpty())
         {
             listingExchange.setError("Please enter exchange details");
-            showKeyboard(listingExchange);
+            showKeyboardEdit(listingExchange);
             listingExchange.requestFocus();
             return;
         }
@@ -269,30 +256,19 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
             listingExchange.setError(null);
         }
 
-        TransactionProductSubmission(new TransactionsProduct(listingTitle.getText().toString(),
-                listingDescription.getText().toString(),
-                null,
-                listingPrice.getText().toString(),
-                listingLend.getText().toString(),
-                listingExchange.getText().toString(), null, null),
+        TransactionProductResubmission(new TransactionsProduct(listingTitle.getText().toString(),
+                        listingDescription.getText().toString(),
+                        null,
+                        listingPrice.getText().toString(),
+                        listingLend.getText().toString(),
+                        listingExchange.getText().toString(), null, null),
                 selectedImageUri);
 
     }
 
-    public void showKeyboard(final EditText ettext){
-        ettext.requestFocus();
-        ettext.postDelayed(new Runnable(){
-                               @Override public void run(){
-                                   InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                   keyboard.showSoftInput(ettext,0);
-                               }
-                           }
-                ,200);
-    }
-
-    // this function uploads the passed-in class to firebase.
+    // this function re-uploads the passed-in class to firebase.
     // the image goes to firebase storage
-    public void TransactionProductSubmission(TransactionsProduct product, Uri selectedImageUri)
+    public void TransactionProductResubmission(TransactionsProduct product, Uri selectedImageUri)
     {
 
         // Create a reference to product image
@@ -319,5 +295,16 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         // Upload listing to firestore
         productReference.set(product);
         this.finish();
+    }
+
+    public void showKeyboardEdit(final EditText ettext){
+        ettext.requestFocus();
+        ettext.postDelayed(new Runnable(){
+                               @Override public void run(){
+                                   InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                   keyboard.showSoftInput(ettext,0);
+                               }
+                           }
+                ,200);
     }
 }
