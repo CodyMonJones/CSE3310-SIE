@@ -42,4 +42,14 @@
             android:title="Communities"
             />
     </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/Settings"
+            android:icon="@drawable/ic_settingscog"
+            android:title="Settings"/>
+    </group>
+
 </menu>
