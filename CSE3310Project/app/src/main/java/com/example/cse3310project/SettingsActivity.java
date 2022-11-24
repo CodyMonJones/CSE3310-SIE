@@ -70,7 +70,7 @@ public class SettingsActivity extends drawerActivity {
             HashMap<String, String> userProfileMap = new HashMap<>();
                 userProfileMap.put("UID", currentUserUUID);
                 userProfileMap.put("name", getUserName);
-                userProfileMap.put("Password", getUserStatus);
+                userProfileMap.put("Status", getUserStatus);
 
             currentDBRef.child("User").child(currentUserUUID).setValue(userProfileMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
