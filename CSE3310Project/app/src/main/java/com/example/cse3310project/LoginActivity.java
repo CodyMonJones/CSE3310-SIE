@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

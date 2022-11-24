@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.cse3310project.Discussion.DiscussionForum;
 import com.google.android.material.navigation.NavigationView;
 
 public class drawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
