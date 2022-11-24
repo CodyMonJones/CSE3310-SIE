@@ -50,6 +50,12 @@
             android:id="@+id/Settings"
             android:icon="@drawable/ic_settingscog"
             android:title="Settings"/>
+
+        <item
+            android:id="@+id/Logout"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="@string/logout"
+            />
     </group>
 
 </menu>
