@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,6 +74,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
                 mAuth.signOut();
                 startActivity(new Intent(this, LoginActivity.class));
                 overridePendingTransition(0,0);
+                Toast.makeText(drawerActivity.this, "Logout Successful ", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
