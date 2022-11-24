@@ -117,7 +117,7 @@ public class User implements Serializable
         return phoneNumber;
     }
 
-    public ArrayList<contact> getContatcs() {
+    public ArrayList<contact> getContactslist() {
         return contactslist;
     }
 

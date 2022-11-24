@@ -10,22 +10,28 @@ import android.widget.ImageButton;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
-public class ComsMessagesActivity extends AppCompatActivity implements View.OnClickListener{
+import com.example.cse3310project.databinding.ActivityMessagesBinding;
 
-    ImageButton tab;
+public class ComsMessagesActivity extends drawerActivity implements View.OnClickListener{
+
     ImageButton newmsg;
     ImageButton contacts;
     ImageButton email;
+
+    ActivityMessagesBinding activityMessagesBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+        activityMessagesBinding = ActivityMessagesBinding.inflate(getLayoutInflater());
+        setContentView(activityMessagesBinding.getRoot());
+        allocateActivityTitle("Communications");
+
         newmsg = (ImageButton) findViewById(R.id.NewMessageButton);
         contacts = (ImageButton) findViewById(R.id.ContactsMenuButton);
         email = (ImageButton) findViewById(R.id.EmailMenuButton);
 
-        tab.setOnClickListener(this);
         newmsg.setOnClickListener(this);
         contacts.setOnClickListener(this);
         email.setOnClickListener(this);

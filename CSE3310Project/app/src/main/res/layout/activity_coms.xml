@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ComsContactsActivity"
     android:background="@color/UTA_BLUE">
+
     <ImageButton
         android:id="@+id/EmailMenuButton"
         android:layout_width="140dp"
@@ -60,7 +61,7 @@
         android:layout_width="410dp"
         android:layout_height="120dp"
         android:backgroundTint="#00589A"
-        android:text="{User Name}"
+        android:text=""
         android:textAlignment="textStart"
         android:textSize="24sp"
         app:icon="@drawable/ic_baseline_person_outline_24"
@@ -120,3 +121,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Search" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
