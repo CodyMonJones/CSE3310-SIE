@@ -25,6 +25,10 @@ public class contact {
         this.phonenumber = phonenum;
     }
 
+    public contact(){
+
+    }
+
     @Override
     public String toString(){
         return fname + " " + lname;

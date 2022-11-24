@@ -141,4 +141,8 @@ public class User implements Serializable
         this.profile_picture = null;
         this.contactslist = null;
     }
+
+    public User(){
+
+    }
 }

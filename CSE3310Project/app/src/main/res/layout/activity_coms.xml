@@ -96,29 +96,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ContactList"
         android:layout_width="400dp"
         android:layout_height="470dp"
         android:background="#005899"
         android:fitsSystemWindows="true"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/MessageMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Search" />
-    <TextView
-        android:id="@+id/NoContacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="No Contacts...."
-        android:textAlignment="center"
-        android:textColor="#70FFFFFF"
-        android:textSize="34sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

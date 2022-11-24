@@ -1,9 +1,11 @@
 package com.example.cse3310project;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,14 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.example.cse3310project.databinding.ActivityComsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,8 +39,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+
 
 public class ComsContactsActivity extends drawerActivity implements View.OnClickListener{
     ImageButton add, messages, email, exit;
@@ -44,18 +58,16 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
     AlertDialog.Builder pop;
     AlertDialog dialog;
 
-    ListView contact;
     ArrayList<contact> list;
-    ArrayList<String> listnames;
-    ArrayAdapter<String> ad;
+
+    RecyclerView rv;
+    ContactAdapter adapter;
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     FirebaseFirestore ff;
     DatabaseReference dbref;
     ActivityComsBinding activityComsBinding;
-
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +86,18 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         messages = (ImageButton) findViewById(R.id.MessageMenuButton);
         email = (ImageButton) findViewById(R.id.EmailMenuButton);
         profile = (Button) findViewById(R.id.UserContactButton);
-        noContact = (TextView) findViewById(R.id.NoContacts);
 
-        contact = (ListView)findViewById(R.id.ContactList);
-        contact.setOnItemClickListener(this::onItemClick);
+        rv = findViewById(R.id.ContactList);
+        list = new ArrayList<>();
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ContactAdapter(ComsContactsActivity.this, list);
+        rv.setAdapter(adapter);
 
         add.setOnClickListener(this);
         messages.setOnClickListener(this);
         email.setOnClickListener(this);
         profile.setOnClickListener(this);
-
-        list = new ArrayList<>();
-        listnames = new ArrayList<>();
 
         String userid = currentUser.getUid();
 
@@ -96,28 +108,33 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()){
                         profile.setText(doc.getString("fname") + " " + doc.getString("lname"));
-                        list = (ArrayList<com.example.cse3310project.contact>) doc.get("contactslist");
                     }
                 }
             }
         });
 
-        if(list.size() == 0){
-            noContact.setVisibility(View.VISIBLE);
-            contact.setVisibility(View.INVISIBLE);
-        } else {
-            for(int x = 0; x< list.size(); x++){
-                listnames.add(list.get(x).toString());
-            }
-            noContact.setVisibility(View.INVISIBLE);
-            contact.setVisibility(View.VISIBLE);
-        }
-        ad = new ArrayAdapter<String>(ComsContactsActivity.this, R.layout.rowtextformat,listnames);
-        contact.setAdapter(ad);
+        EventChangeListener();
     }
-
-    public void onItemClick(AdapterView<?> l, View v, int pos, long id){
-        //viewContact(l.getItemAtPosition(pos));
+    public void EventChangeListener(){
+        ff.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("Firestore error", error.getMessage());
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        User user = (dc.getDocument().toObject(User.class));
+                        if(user.getUserID().equals(currentUser.getUid())){
+                            for(contact c : user.getContactslist()){
+                                list.add(c);
+                            }
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
