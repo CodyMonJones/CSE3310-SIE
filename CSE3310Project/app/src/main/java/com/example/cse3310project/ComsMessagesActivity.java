@@ -100,6 +100,7 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.NewMessageButton:
+                createchatroom();
                 break;
             case R.id.ContactsMenuButton:
                 Intent x = new Intent(ComsMessagesActivity.this, ComsContactsActivity.class);
@@ -112,6 +113,10 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                 finish();
                 break;
         }
+    }
+
+    private void createchatroom() {
+
     }
 
     public void EventChangeListener(){
