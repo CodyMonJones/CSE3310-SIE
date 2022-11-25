@@ -7,7 +7,7 @@
     android:background="@color/UTA_BLUE_BG"
     tools:context=".TutoringOffersActivity">
 
-    <Button
+    <TextView
         android:id="@+id/contactfullname"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

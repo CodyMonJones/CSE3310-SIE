@@ -61,6 +61,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
     ArrayList<contact> list;
 
     RecyclerView rv;
+    ContactAdapter.RecyclerViewClickListener listener;
     ContactAdapter adapter;
 
     FirebaseAuth mAuth;
@@ -91,7 +92,8 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         list = new ArrayList<>();
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ContactAdapter(ComsContactsActivity.this, list);
+        setOnClickListener();
+        adapter = new ContactAdapter(ComsContactsActivity.this, list, listener);
         rv.setAdapter(adapter);
 
         add.setOnClickListener(this);
@@ -115,6 +117,16 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
 
         EventChangeListener();
     }
+
+    private void setOnClickListener() {
+        listener = new ContactAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int pos) {
+                viewContact(list.get(pos));
+            }
+        };
+    }
+
     public void EventChangeListener(){
         ff.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -153,8 +165,6 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                 startActivity(y);
                 finish();
                 break;
-            case R.id.UserContactButton:
-                break;
         }
     }
 
@@ -175,6 +185,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         cfname.setText(friend.getFname());
         csname.setText(friend.getLname());
         cemail.setText(friend.getEmail());
+        cphonenumber.setText(friend.getPhonenumber());
 
         pop.setView(popupView);
         dialog = pop.create();
@@ -279,10 +290,15 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         confirm = (Button) popupView.findViewById(R.id.confirm);
         firstname = (EditText) popupView.findViewById(R.id.fname);
         lastname = (EditText) popupView.findViewById(R.id.lname);
+        phone = (EditText) popupView.findViewById((R.id.enterphone));
 
         pop.setView(popupView);
         dialog = pop.create();
         dialog.show();
+
+        firstname.setHint(friend.getFname());
+        lastname.setHint(friend.getLname());
+        phone.setHint(friend.getPhonenumber());
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,7 +311,30 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String userid = currentUser.getUid();
+                String fname = firstname.getText().toString();
+                String lname = lastname.getText().toString();
+                String num = phone.getText().toString();
 
+                if(TextUtils.isEmpty(fname)){
+                    Toast.makeText(ComsContactsActivity.this, "First Name is Required!", Toast.LENGTH_SHORT).show();
+                }
+                if(TextUtils.isEmpty(lname)){
+                    Toast.makeText(ComsContactsActivity.this, "Last Name is Required!", Toast.LENGTH_SHORT).show();
+                }
+                if(TextUtils.isEmpty(num)){
+                    Toast.makeText(ComsContactsActivity.this, "Phone Number is Required!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    list.remove(list.indexOf(friend));
+                    friend.setFname(fname);
+                    friend.setLname(lname);
+                    friend.setPhonenumber(num);
+                    list.add(friend);
+                    ff.collection("Users").document(userid).update("contactslist", list);
+                    dialog.dismiss();
+                }
+                dialog.dismiss();
             }
         });
     }
@@ -323,7 +362,9 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                list.remove(list.indexOf(friend));
+                ff.collection("Users").document(currentUser.getUid()).update("contactslist", list);
+                dialog.dismiss();
             }
         });
     }
