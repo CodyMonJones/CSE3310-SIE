@@ -1,7 +1,6 @@
 package com.example.cse3310project;
 import android.os.Bundle;
 
-import com.example.cse3310project.Discussion.DiscussionForum;
 import com.example.cse3310project.databinding.ActivityFormClubBinding;
 
 

@@ -10,36 +10,52 @@
             android:id="@+id/Home"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Home"
-            android:checked="true"/>
+            />
 
         <item
             android:id="@+id/Clubs"
             android:icon="@drawable/ic_baseline_groups_24"
             android:title="Clubs"
-            android:checked="true"/>
+            android:checked="false"/>
 
         <item
             android:id="@+id/Tutoring"
             android:icon="@drawable/ic_baseline_school_24"
             android:title="Tutoring"
-            android:checked="true"/>
+            />
 
         <item
             android:id="@+id/Marketplace"
             android:icon="@drawable/ic_baseline_storefront_24"
             android:title="Marketplace"
-            android:checked="true"/>
+            />
 
         <item
             android:id="@+id/Messages"
             android:icon="@drawable/ic_baseline_message_24"
             android:title="Messages"
-            android:checked="true"/>
+            />
 
         <item
             android:id="@+id/Communities"
             android:icon="@drawable/ic_baseline_people_24"
             android:title="Communities"
-            android:checked="true"/>
+            />
     </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/Settings"
+            android:icon="@drawable/ic_settingscog"
+            android:title="Settings"/>
+
+        <item
+            android:id="@+id/Logout"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="@string/logout"
+            />
+    </group>
+
 </menu>

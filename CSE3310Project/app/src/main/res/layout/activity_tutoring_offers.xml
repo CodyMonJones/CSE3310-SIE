@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComsMessagesActivity"
+    tools:context=".TutoringOffersActivity"
     android:background="@color/UTA_BLUE">
 
     <com.google.android.material.textfield.TextInputEditText
@@ -16,82 +16,56 @@
         android:backgroundTintMode="add"
         android:drawableStart="?android:attr/actionModeWebSearchDrawable"
         android:drawableTint="@color/white"
-        android:hint="Search chat..."
+        android:hint="Search offer..."
         android:textColor="#FDFCFC"
         android:textColorHighlight="#673AB7"
         android:textColorHint="#6DFFFFFF"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MessagesHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/OffersHeader" />
 
     <ImageButton
-        android:id="@+id/NewMessageButton"
+        android:id="@+id/NewOfferButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit"
+        app:srcCompat="@android:drawable/ic_input_add"
         app:tint="#FFFFFF" />
 
     <Button
-        android:id="@+id/MessagesHeader"
+        android:id="@+id/OffersHeader"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:backgroundTint="#00477E"
         android:clickable="false"
-        android:text="MESSAGES"
+        android:text="Tutoring Offers"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/NewMessageButton"
+        app:layout_constraintEnd_toStartOf="@+id/NewOfferButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/EmailMenuButton"
-        android:layout_width="140dp"
+        android:id="@+id/OffersButton"
+        android:layout_width="205dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_email"
+        app:srcCompat="@drawable/ic_baseline_school_24"
         app:tint="#FFFFFF" />
 
     <ImageButton
-        android:id="@+id/MessageMenuButton"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/EmailMenuButton"
-        app:layout_constraintStart_toEndOf="@+id/ContactsMenuButton"
-        app:srcCompat="@android:drawable/sym_action_chat"
-        app:tint="#FFFFFF" />
-
-    <ImageButton
-        android:id="@+id/ContactsMenuButton"
-        android:layout_width="140dp"
+        android:id="@+id/RequestsButton"
+        android:layout_width="205dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_groups_24"
+        app:srcCompat="@drawable/ic_baseline_diversity_3_24"
         app:tint="#FFFFFF" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id = "@+id/chats"
-        android:layout_width="410dp"
-        android:layout_height="610dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:background="#005899"
-        app:layout_constraintBottom_toTopOf="@+id/EmailMenuButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
 </androidx.constraintlayout.widget.ConstraintLayout>

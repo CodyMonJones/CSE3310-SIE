@@ -11,13 +11,15 @@ import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
-import com.example.cse3310project.Discussion.DiscussionForum;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class drawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     static DrawerLayout drawerLayout;
+    private FirebaseAuth mAuth;
 
     @Override
     public void setContentView(View view){
@@ -35,6 +37,8 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -42,7 +46,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
 
         switch (item.getItemId()){
             case R.id.Home:
-                startActivity(new Intent(this, DiscussionForum.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 overridePendingTransition(0, 0);
                 break;
 
@@ -59,6 +63,18 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
             case R.id.Marketplace:
                 startActivity(new Intent(this, TransactionsActivity.class));
                 overridePendingTransition(0, 0);
+                break;
+
+            case R.id.Settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                overridePendingTransition(0,0);
+                break;
+
+            case R.id.Logout:
+                mAuth.signOut();
+                startActivity(new Intent(this, LoginActivity.class));
+                overridePendingTransition(0,0);
+                Toast.makeText(drawerActivity.this, "Logout Successful ", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

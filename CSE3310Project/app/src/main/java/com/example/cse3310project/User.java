@@ -121,8 +121,6 @@ public class User implements Serializable
         this.userID = userID;
     }
 
-
-
     public User(String firstName, String lastName, String email, int Mav, String phone)
     {
         this.fname = firstName;
@@ -137,5 +135,9 @@ public class User implements Serializable
         this.transactionCartItemIDs = null;
         this.profile_picture = null;
         this.contactslist = null;
+    }
+
+    public User(){
+
     }
 }

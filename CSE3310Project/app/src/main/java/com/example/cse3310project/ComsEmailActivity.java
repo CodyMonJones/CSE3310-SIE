@@ -8,24 +8,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import androidx.drawerlayout.widget.DrawerLayout;
+import com.example.cse3310project.databinding.ActivityEmailBinding;
 
-public class ComsEmailActivity extends AppCompatActivity implements View.OnClickListener{
+public class ComsEmailActivity extends drawerActivity implements View.OnClickListener{
 
-    ImageButton tab;
     ImageButton newemail;
     ImageButton messages;
     ImageButton contact;
+
+    ActivityEmailBinding activityEmailBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email);
+        activityEmailBinding = ActivityEmailBinding.inflate(getLayoutInflater());
+        setContentView(activityEmailBinding.getRoot());
+        allocateActivityTitle("Communications");
+
         newemail = (ImageButton) findViewById(R.id.NewEmailButton);
         messages = (ImageButton) findViewById(R.id.MessageMenuButton);
         contact = (ImageButton) findViewById(R.id.ContactsMenuButton);
 
-        tab.setOnClickListener(this);
         newemail.setOnClickListener(this);
         messages.setOnClickListener(this);
         contact.setOnClickListener(this);

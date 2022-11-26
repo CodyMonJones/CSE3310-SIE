@@ -17,13 +17,12 @@
         app:srcCompat="@drawable/ic_baseline_person_outline_24" />
 
     <TextView
-        android:id="@+id/fname"
+        android:id="@+id/confname"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="First Name"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -32,29 +31,27 @@
         app:layout_constraintTop_toBottomOf="@+id/defaultprofile" />
 
     <TextView
-        android:id="@+id/lname"
+        android:id="@+id/conlname"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="Last Name"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fname" />
+        app:layout_constraintTop_toBottomOf="@+id/confname" />
 
     <TextView
-        android:id="@+id/enteremail"
+        android:id="@+id/conemail"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:inputType="textEmailAddress"
         android:text="Email"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -62,8 +59,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lname"
+        app:layout_constraintTop_toBottomOf="@+id/conlname"
         app:layout_constraintVertical_bias="0.009" />
+
+    <TextView
+        android:id="@+id/conphonenum"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:text="Phone Number"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conemail" />
 
     <Button
         android:id="@+id/edit"
@@ -95,7 +107,7 @@
         android:id="@+id/messagecontact"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="52dp"
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:text="Message"
@@ -104,13 +116,13 @@
         app:layout_constraintBottom_toTopOf="@+id/delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/emailcontact"
-        app:layout_constraintTop_toBottomOf="@+id/enteremail" />
+        app:layout_constraintTop_toBottomOf="@+id/conphonenum" />
 
     <Button
         android:id="@+id/emailcontact"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="52dp"
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:text="Email"
@@ -119,7 +131,7 @@
         app:layout_constraintBottom_toTopOf="@+id/edit"
         app:layout_constraintEnd_toStartOf="@+id/messagecontact"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enteremail" />
+        app:layout_constraintTop_toBottomOf="@+id/conphonenum" />
 
     <ImageButton
         android:id="@+id/exitbutton"
