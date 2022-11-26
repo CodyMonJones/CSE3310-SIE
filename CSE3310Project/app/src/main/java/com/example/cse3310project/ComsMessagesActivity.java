@@ -244,7 +244,7 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         chatroom chat = (dc.getDocument().toObject(chatroom.class));
                         for(String cid : chatidlist){
-                            if(chat.getChatid().equals(currentUser.getUid())){
+                            if(chat.getChatid().equals(cid)){
                                 chatlist.add(chat);
                             }
                         }
