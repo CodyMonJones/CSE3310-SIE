@@ -45,6 +45,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.io.PipedReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class TransactionsProductCreateActivity extends AppCompatActivity{
@@ -67,7 +71,8 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
     // used to upload the image
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    //not sure what this does lmao
+
+    // used to get the current user
     private FirebaseAuth currentUserAuthentication;
     private FirebaseUser currentUser;
 
@@ -272,22 +277,11 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         TransactionProductSubmission(new TransactionsProduct(listingTitle.getText().toString(),
                 listingDescription.getText().toString(),
                 null,
-                listingPrice.getText().toString(),
+                Double.parseDouble(listingPrice.getText().toString()),
                 listingLend.getText().toString(),
-                listingExchange.getText().toString(), null, null),
+                listingExchange.getText().toString(), null, null, null, null),
                 selectedImageUri);
 
-    }
-
-    public void showKeyboard(final EditText ettext){
-        ettext.requestFocus();
-        ettext.postDelayed(new Runnable(){
-                               @Override public void run(){
-                                   InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                   keyboard.showSoftInput(ettext,0);
-                               }
-                           }
-                ,200);
     }
 
     // this function uploads the passed-in class to firebase.
@@ -309,15 +303,34 @@ public class TransactionsProductCreateActivity extends AppCompatActivity{
         DocumentReference productReference = transactionDB.collection("Marketplace_Listings").document();
         product.setUniqueID(productReference.getId());
 
-        // Assign timestamp to listing
-        product.setTimestamp(Timestamp.now());
-
         // Upload listing ID to user's account
         DocumentReference userRef = transactionDB.collection("Users").document(currentUser.getUid());
         userRef.update("transactionListedItemIDs", FieldValue.arrayUnion(product.getUniqueID()));
 
+        // Assign userID to listing
+        product.setSellerID(userRef.getId());
+
+        // Assign date/time to listing
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        product.setDatePosted(currentDate);
+
+        // Assign timestamp to listing
+        product.setTimestamp(Timestamp.now());
+
         // Upload listing to firestore
         productReference.set(product);
         this.finish();
+    }
+
+    public void showKeyboard(final EditText ettext){
+        ettext.requestFocus();
+        ettext.postDelayed(new Runnable(){
+                               @Override public void run(){
+                                   InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                   keyboard.showSoftInput(ettext,0);
+                               }
+                           }
+                ,200);
     }
 }

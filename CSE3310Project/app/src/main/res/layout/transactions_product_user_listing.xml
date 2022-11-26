@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/product_listing_cardview"
+        android:id="@+id/product_user_listing_cardview"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:background="@color/UTA_ORANGE"
@@ -14,7 +14,7 @@
         android:clickable="true"
         app:cardCornerRadius="15dp"
         app:cardElevation="5dp">
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/product_listing_image"
+                    android:id="@+id/product_user_listing_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
@@ -33,20 +33,21 @@
                     android:contentDescription="@string/cover"
                     android:src="@drawable/blank" />
 
-                <CheckBox
-                    android:id="@+id/product_listing_wishlist_button"
+                <ImageButton
+                    android:id="@+id/product_user_listing_delete_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:button="@drawable/transactions_wishlist_button"
-                    app:useMaterialThemeColors="false"
+                    android:layout_margin="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:useMaterialThemeColors="false"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
 
             </FrameLayout>
 
             <TextView
-                android:id="@+id/product_listing_title"
+                android:id="@+id/product_user_listing_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/UTA_ORANGE"

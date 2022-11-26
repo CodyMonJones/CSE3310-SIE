@@ -4,38 +4,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewHolder> {
+public class TransactionsCartAdapter extends RecyclerView.Adapter<TransactionsCartAdapter.ViewHolder> {
     private final TransactionsRecyclerViewInterface transactionsRecyclerViewInterface;
 
     ArrayList<TransactionsProduct> mData;
@@ -46,8 +33,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
 
-    public TransactionsAdapter(ArrayList<TransactionsProduct> itemList, Context context,
-                               TransactionsRecyclerViewInterface transactionsRecyclerViewInterface) {
+    public TransactionsCartAdapter(ArrayList<TransactionsProduct> itemList, Context context,
+                                   TransactionsRecyclerViewInterface transactionsRecyclerViewInterface) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = itemList;
@@ -58,13 +45,13 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     public int getItemCount() { return mData.size(); }
 
     @Override
-    public TransactionsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.transactions_product_listing, null);
-        return new TransactionsAdapter.ViewHolder(view);
+    public TransactionsCartAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.transactions_product_user_listing, null);
+        return new TransactionsCartAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final TransactionsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final TransactionsCartAdapter.ViewHolder holder, final int position) {
         holder.bindData(mData.get(position));
     }
 
@@ -72,15 +59,15 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         CardView productListingCardview;
         ImageView productListingImage;
         TextView productListingTitle;
-        CheckBox productListingWishlistButton;
+        ImageButton productListingDeleteButton;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            productListingCardview = itemView.findViewById(R.id.product_listing_cardview);
-            productListingImage = itemView.findViewById(R.id.product_listing_image);
-            productListingTitle = itemView.findViewById(R.id.product_listing_title);
-            productListingWishlistButton = itemView.findViewById(R.id.product_listing_wishlist_button);
+            productListingCardview = itemView.findViewById(R.id.product_user_listing_cardview);
+            productListingImage = itemView.findViewById(R.id.product_user_listing_image);
+            productListingTitle = itemView.findViewById(R.id.product_user_listing_title);
+            productListingDeleteButton = itemView.findViewById(R.id.product_user_listing_delete_button);
 
             productListingCardview.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,13 +81,26 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
                     }
                 }
             });
+
+            productListingDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (transactionsRecyclerViewInterface != null) {
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION) {
+                            transactionsRecyclerViewInterface.onDeleteButtonClick(pos);
+                        }
+                    }
+                }
+            });
         }
 
 
         void bindData(final TransactionsProduct item) {
-            productListingTitle.setText(item.getTitle() + ": $" + item.getPrice());
+            productListingTitle.setText(item.getTitle() + ": $" + item.getPrice().toString());
 
-            //download image from firebase storage
+            // download image from firebase storage
             StorageReference imageRef = storageRef.child(item.getImageRef());
 
             imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -50,6 +51,37 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        
+        viewPager.setOffscreenPageLimit(0);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position ==0)
+                    viewPager.getAdapter().notifyDataSetChanged();
+                if (position == 1) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .detach(transactionsVPAdapter.getItem(1))
+                            .attach(transactionsVPAdapter.getItem(1))
+                            .commit();
+                    viewPager.getAdapter().notifyDataSetChanged();
+                }
+                if (position == 2) {
+                    viewPager.getAdapter().notifyDataSetChanged();
+                }
+                if (position == 3) {
+                    viewPager.getAdapter().notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer

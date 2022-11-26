@@ -1,11 +1,14 @@
 package com.example.cse3310project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class TransactionsProductEditActivity extends AppCompatActivity {
@@ -51,6 +60,8 @@ public class TransactionsProductEditActivity extends AppCompatActivity {
     private FirebaseAuth currentUserAuthentication;
     private FirebaseUser currentUser;
 
+    public TransactionsProduct product;
+
     // constant to compare
     // the activity result code
     int SELECT_PICTURE = 200;
@@ -67,6 +78,9 @@ public class TransactionsProductEditActivity extends AppCompatActivity {
         // Find unique ID of current User
         currentUserAuthentication = FirebaseAuth.getInstance();
         currentUser = currentUserAuthentication.getCurrentUser();
+
+        // initialize the passed-in product object
+        product = (TransactionsProduct) getIntent().getParcelableExtra("PRODUCT");
 
         // toolbar is defined in layout file
         Toolbar transactionsProductEditToolbar = (Toolbar) findViewById(R.id.transactionProductEditToolbar);
@@ -90,6 +104,28 @@ public class TransactionsProductEditActivity extends AppCompatActivity {
         lendCheckBox = findViewById(R.id.transactionProductLendTimeCheckBoxEdit);
         exchangeCheckBox = findViewById(R.id.transactionProductExchangeCheckBoxEdit);
         submitButton = findViewById(R.id.transactionProductSubmitButtonEdit);
+
+        // assign each user input element with the corresponding product data
+        StorageReference imageRef = storageRef.child(product.getImageRef());
+
+        imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                PreviewImage.setImageBitmap(bitmap);
+            }
+        });
+        listingTitle.setText(product.getTitle());
+        listingDescription.setText(product.getDesc());
+        listingPrice.setText(product.getPrice().toString());
+        if(!(product.getLendTime().equals("N/A"))) {
+            lendCheckBox.setActivated(true);
+            listingLend.setText(product.getLendTime());
+        }
+        if(!(product.getExchange().equals("N/A"))) {
+            exchangeCheckBox.setActivated(true);
+            listingExchange.setText(product.getExchange());
+        }
 
         // these 2 functions override the checkboxes to enable/disable
         // their respective editText entries
@@ -136,12 +172,6 @@ public class TransactionsProductEditActivity extends AppCompatActivity {
                 editTransactionProduct();
             }
         });
-
-        retrieveTransactionProduct();
-    }
-
-    public void retrieveTransactionProduct() {
-        //asdf
     }
 
     // this function is triggered when
@@ -258,42 +288,64 @@ public class TransactionsProductEditActivity extends AppCompatActivity {
 
         TransactionProductResubmission(new TransactionsProduct(listingTitle.getText().toString(),
                         listingDescription.getText().toString(),
-                        null,
-                        listingPrice.getText().toString(),
+                        product.getImageRef(),
+                        Double.parseDouble(listingPrice.getText().toString()),
                         listingLend.getText().toString(),
-                        listingExchange.getText().toString(), null, null),
+                        listingExchange.getText().toString(), null, null, null, null),
                 selectedImageUri);
 
     }
 
     // this function re-uploads the passed-in class to firebase.
     // the image goes to firebase storage
-    public void TransactionProductResubmission(TransactionsProduct product, Uri selectedImageUri)
+    public void TransactionProductResubmission(TransactionsProduct localProduct, Uri selectedImageUri)
     {
+        // Create a reference to new product image
+        if (selectedImageUri != null) {
+            // delete the old image in firebase storage
+            StorageReference deleteRef = storageRef.child(product.getImageRef());
 
-        // Create a reference to product image
-        final String randomKey = UUID.randomUUID().toString();
-        StorageReference listingImageRef = storageRef.child("images/"+randomKey);
+            deleteRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // File deleted successfully
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Uh-oh, an error occurred!
+                }
+            });
 
-        // Copy reference into object as a string
-        product.setImageRef("images/"+randomKey);
+            final String randomKey = UUID.randomUUID().toString();
+            StorageReference listingImageRef = storageRef.child("images/"+randomKey);
 
-        // Upload the image reference to firebase storage
-        listingImageRef.putFile(selectedImageUri);
+            // Upload the image reference to firebase storage
+            listingImageRef.putFile(selectedImageUri);
 
-        // Assign unique ID to listing
-        DocumentReference productReference = transactionDB.collection("Marketplace_Listings").document();
-        product.setUniqueID(productReference.getId());
+            // Copy reference as a string into the product object
+            localProduct.setImageRef("images/"+randomKey);
+        }
+        else {
+            localProduct.setImageRef(product.getImageRef());
+        }
+
+
+        // Re-assign old unique ID to the updated listing
+        DocumentReference productReference = transactionDB.collection("Marketplace_Listings").document(product.getUniqueID());
+        localProduct.setUniqueID(product.getUniqueID());
+
+        // Assign userID to listing
+        localProduct.setSellerID(product.getSellerID());
 
         // Assign timestamp to listing
-        product.setTimestamp(Timestamp.now());
+        localProduct.setDatePosted(product.getDatePosted());
 
-        // Upload listing ID to user's account
-        DocumentReference userRef = transactionDB.collection("Users").document(currentUser.getUid());
-        userRef.update("transactionListedItemIDs", FieldValue.arrayUnion(product.getUniqueID()));
+        // Assign timestamp to listing
+        localProduct.setTimestamp(product.getTimestamp());
 
         // Upload listing to firestore
-        productReference.set(product);
+        productReference.set(localProduct);
         this.finish();
     }
 

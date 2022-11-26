@@ -2,55 +2,93 @@ package com.example.cse3310project;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.text.NoCopySpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.example.cse3310project.Discussion.CustomAdapter;
-import com.example.cse3310project.Discussion.DiscussionPost;
-import com.example.cse3310project.databinding.ActivityDiscussionForumBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.StorageReference;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class TransactionsShopFragment extends Fragment implements TransactionsRecyclerViewInterface{
 
-    ArrayList<TransactionsProduct> productArrayList = new ArrayList<>();
+    ArrayList<TransactionsProduct> productShopArrayList = new ArrayList<>();
     private FirebaseFirestore marketplaceDb;
-    private TransactionsAdapter transactionsAdapter;
+    private TransactionsShopAdapter transactionsShopAdapter;
     private RecyclerView recyclerView;
+
+    // used to get the current user
+    private FirebaseAuth currentUserAuthentication;
+    private FirebaseUser currentUser;
+
+    // setup radio to recieve datasetchanged notice in wishlist fragment
+    public static final String RADIO_DATASET_CHANGED = "com.example.cse3310.RADIO_DATASET_CHANGED";
+
+    private Radio radio;
+
+    private class Radio extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(RADIO_DATASET_CHANGED)) {
+                //Notify dataset changed here
+                transactionsShopAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //using intent filter just in case you would like to listen for more transmissions
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(RADIO_DATASET_CHANGED);
+        getActivity().getApplicationContext().registerReceiver(radio, filter);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        try {
+            getActivity().getApplicationContext().unregisterReceiver(radio);
+        }catch (Exception e){
+            //Cannot unregister receiver
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        radio = new Radio();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_transactions_shop, container, false);
 
         // setting up the recyclerView
@@ -61,12 +99,21 @@ public class TransactionsShopFragment extends Fragment implements TransactionsRe
         // setting up firebase firestore
         marketplaceDb = FirebaseFirestore.getInstance();
 
-        // downloads data from firestore into arraylist
-        if(productArrayList.size()>0)
+        // if the arraylist has data, clear it
+        if(productShopArrayList.size()>0)
         {
-            productArrayList.clear();
+            productShopArrayList.clear();
         }
 
+        // Find unique ID of current User
+        currentUserAuthentication = FirebaseAuth.getInstance();
+        currentUser = currentUserAuthentication.getCurrentUser();
+
+        // create a string to hold the current userID
+        DocumentReference userRef = marketplaceDb.collection("Users").document(currentUser.getUid());
+        String user = userRef.getId();
+
+        // downloads data from firestore into arraylist
         marketplaceDb.collection("Marketplace_Listings")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -74,17 +121,20 @@ public class TransactionsShopFragment extends Fragment implements TransactionsRe
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                                TransactionsProduct product = new TransactionsProduct(
-                                        document.getString("title"),
-                                        document.getString("desc"),
-                                        document.getString("imageRef"),
-                                        document.getString("price"),
-                                        document.getString("lendTime"),
-                                        document.getString("exchange"),
-                                        document.getString("uniqueID"),
-                                        document.getTimestamp("timestamp"));
-                                productArrayList.add(product);
+                                if(!(user.equals(document.getString("sellerID")))) {
+                                    TransactionsProduct product = new TransactionsProduct(
+                                            document.getString("title"),
+                                            document.getString("desc"),
+                                            document.getString("imageRef"),
+                                            document.getDouble("price"),
+                                            document.getString("lendTime"),
+                                            document.getString("exchange"),
+                                            document.getString("uniqueID"),
+                                            document.getString("sellerID"),
+                                            document.getString("datePosted"),
+                                            document.getTimestamp("timestamp"));
+                                    productShopArrayList.add(product);
+                                }
                             }
                         }
                         else {
@@ -94,10 +144,10 @@ public class TransactionsShopFragment extends Fragment implements TransactionsRe
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
 
-                        transactionsAdapter = new TransactionsAdapter(productArrayList,
+                        transactionsShopAdapter = new TransactionsShopAdapter(productShopArrayList,
                                 TransactionsShopFragment.this.getContext(),
                                 TransactionsShopFragment.this);
-                        recyclerView.setAdapter(transactionsAdapter);
+                        recyclerView.setAdapter(transactionsShopAdapter);
                     }
                 });
 
@@ -109,8 +159,28 @@ public class TransactionsShopFragment extends Fragment implements TransactionsRe
     public void onProductClick(int position) {
         Intent intent = new Intent(getActivity(), TransactionsProductViewActivity.class);
 
-        intent.putExtra("UID", productArrayList.get(position).getUniqueID());
+        intent.putExtra("PRODUCT", productShopArrayList.get(position));
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onWishlistButtonChecked(int position, CompoundButton compoundButton) {
+        TransactionsProduct localProduct = productShopArrayList.get(position);
+        DocumentReference userRef = marketplaceDb.collection("Users").document(currentUser.getUid());
+        if (compoundButton.isChecked()) {
+            // Upload listing ID to user's account
+            userRef.update("transactionWishlistItemIDs", FieldValue.arrayUnion(localProduct.getUniqueID()));
+            transactionsShopAdapter.notifyDataSetChanged();
+        }
+        else {
+            userRef.update("transactionWishlistItemIDs", FieldValue.arrayRemove(localProduct.getUniqueID()));
+            transactionsShopAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void onDeleteButtonClick(int position) {
     }
 }
