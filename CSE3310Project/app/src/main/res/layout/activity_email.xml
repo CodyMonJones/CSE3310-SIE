@@ -11,11 +11,12 @@
         android:id="@+id/Search"
         android:layout_width="410dp"
         android:layout_height="60dp"
+        android:height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:backgroundTintMode="add"
         android:drawableStart="?android:attr/actionModeWebSearchDrawable"
         android:drawableTint="@color/white"
-        android:hint="Search email..."
+        android:hint="Search chat..."
         android:textColor="#FDFCFC"
         android:textColorHighlight="#673AB7"
         android:textColorHint="#6DFFFFFF"
@@ -80,4 +81,13 @@
         app:srcCompat="@drawable/ic_baseline_groups_24"
         app:tint="#FFFFFF" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chats"
+        android:layout_width="410dp"
+        android:layout_height="590dp"
+        android:background="#005899"
+        app:layout_constraintBottom_toTopOf="@+id/EmailMenuButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Search" />
 </androidx.constraintlayout.widget.ConstraintLayout>
