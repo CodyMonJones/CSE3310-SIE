@@ -175,24 +175,27 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             String rid = null;
                             String rid2 = null;
-                            String chatname = null;
+                            String chatname = "";
                             ArrayList<String> uids = new ArrayList<>();
                             ArrayList<String> rcids = new ArrayList<>();
                             ArrayList<String> rcids2 = new ArrayList<>();
                             for(QueryDocumentSnapshot doc : task.getResult()){
                                 if(doc.exists()) {
+                                    if(userid.equals(doc.getString("userID"))){
+                                        chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                                    }
                                     if (chatter1.equals(doc.getString("email"))) {
                                         rid = doc.getString("userID");
                                         uids.add(rid);
                                         uids.add(currentUser.getUid());
-                                        chatname = doc.getString("fname") + " " + doc.getString("lname");
+                                        chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
 
                                         rcids = doc.toObject(User.class).getChatids();
                                     }
                                     if (!chatter2.isEmpty()) {
                                         if (chatter2.equals(doc.getString("email"))) {
                                             rid2 = doc.getString("userID");
-                                            chatname = chatname + ", " + doc.getString("fname") + " " + doc.getString("lname");
+                                            chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
                                             uids.add(rid2);
 
                                             rcids2 = doc.toObject(User.class).getChatids();
@@ -204,7 +207,6 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                             chatroom cr = new chatroom(uids, chatname);
                             DocumentReference ref = ff.collection("chatrooms").document();
                             cr.setChatid(ref.getId());
-                            chatlist.add(cr);
                             ref.set(cr);
 
                             chatidlist.add(cr.getChatid());

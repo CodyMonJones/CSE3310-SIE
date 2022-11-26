@@ -9,28 +9,25 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.cse3310project.databinding.ActivityComsChatroomBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
@@ -46,7 +43,9 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
     DatabaseReference dbref;
 
     ImageButton back, send;
+    Button title;
     EditText type;
+    TextView msg;
     ScrollView chat;
     String userid;
     String chatid;
@@ -78,6 +77,8 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
         send = (ImageButton)findViewById(R.id.sendMessage);
         chat = (ScrollView)findViewById(R.id.scroll);
         type = (EditText)findViewById(R.id.inputText);
+        msg = (TextView)findViewById(R.id.textdisplay);
+        title = (Button)findViewById(R.id.ChatHeader);
 
         back.setOnClickListener(this);
         send.setOnClickListener(this);
@@ -105,12 +106,15 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         chatroom cr = (dc.getDocument().toObject(chatroom.class));
                         if(cr.getChatid().equals(chatid)) {
+                            title.setText(cr.getName());
                             logs = cr.getChat();
+                            display();
                         }
                     }
                 }
             }
         });
+        chat.fullScroll(ScrollView.FOCUS_DOWN);
     }
 
     @Override
@@ -143,7 +147,29 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
             newMsg = new Messages(chatText, currDate, currTime, name);
             logs.add(newMsg);
             ff.collection("chatrooms").document(chatid).update("chat", logs);
+            updateDisplay(newMsg);
             type.setText("");
+            chat.fullScroll(ScrollView.FOCUS_DOWN);
         }
+    }
+
+    public void display() {
+         for(Messages ref : logs){
+            String messageText = ref.getText();
+            String messageDate = ref.getDate();
+            String messageTime = ref.getTime();
+            String messageName = ref.getName();
+
+            msg.append(messageName + ":\n" + messageText + "\n" + messageTime + "      " + messageDate +"\n\n\n");
+        }
+        chat.fullScroll(View.FOCUS_DOWN);
+    }
+    public void updateDisplay(Messages mess){
+        String messageText = mess.getText();
+        String messageDate = mess.getDate();
+        String messageTime = mess.getTime();
+        String messageName = mess.getName();
+        msg.append(messageName + ":\n" + messageText + "\n" + messageTime + "      " + messageDate +"\n\n\n");
+        chat.fullScroll(ScrollView.FOCUS_DOWN);
     }
 }
