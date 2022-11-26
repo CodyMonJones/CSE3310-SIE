@@ -16,11 +16,28 @@
         android:theme="@style/Theme.CSE3310Project"
         tools:targetApi="31">
         <activity
-            android:name=".TransactionsProductEditActivity"
-            android:exported="false">
+            android:name=".PaymentsAddCardActivity"
+            android:exported="false"
+            android:parentActivityName=".PaymentsActivity">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value=".PaymentsActivity" />
+        </activity>
+        <activity
+            android:name=".PaymentsActivity"
+            android:exported="false"
+            android:parentActivityName=".TransactionsActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value=".TransactionsActivity" />
+        </activity>
+        <activity
+            android:name=".TransactionsProductEditActivity"
+            android:exported="false"
+            android:parentActivityName=".TransactionsActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value=".TransactionsActivity" />
         </activity>
         <activity
             android:name=".TransactionsCatalogueActivity"
@@ -84,10 +101,11 @@
         </activity>
         <activity
             android:name=".TransactionsProductViewActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".TransactionsActivity">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value=".TransactionsActivity" />
         </activity>
         <activity
             android:name=".TransactionsActivity"

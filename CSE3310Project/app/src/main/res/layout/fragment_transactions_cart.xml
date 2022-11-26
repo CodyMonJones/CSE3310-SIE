@@ -7,24 +7,46 @@
     tools:context=".TransactionsCartFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Your Cart"
-            android:textColor="@color/white"
-            android:textSize="12pt" />
+            android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/transactions_cart_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Your Cart"
+                android:textColor="@color/white"
+                android:textSize="12pt" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/transactions_cart_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/transactions_cart_subtotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Subtotal: $"
+                android:textColor="@color/white"
+                android:textSize="12pt"/>
+
+            <Button
+                android:id="@+id/transactions_cart_purchase_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/UTA_ORANGE"
+                android:text="Purchase" />
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

@@ -1,21 +1,29 @@
 package com.example.cse3310project;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 
 import com.google.firebase.Timestamp;
 
-public class TransactionsProduct{
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class TransactionsProduct implements Parcelable {
     private String title;
     private String desc;
     private String imageRef;
-    private String price;
+    private Double price;
     private String lendTime;
     private String exchange;
     private String uniqueID;
+    private String sellerID;
+    private String datePosted;
     private Timestamp timestamp;
 
-    public TransactionsProduct(String title, String desc, String imageRef, String price, String lendTime, String exchange, String uniqueID, Timestamp timestamp){
+    public TransactionsProduct(String title, String desc, String imageRef, Double price, String lendTime, String exchange, String uniqueID, String sellerID, String datePosted, Timestamp timestamp){
         this.title = title;
         this.desc = desc;
         this.imageRef = imageRef;
@@ -23,13 +31,40 @@ public class TransactionsProduct{
         this.lendTime = lendTime;
         this.exchange = exchange;
         this.uniqueID = uniqueID;
-        this.timestamp = timestamp;
+        this.sellerID = sellerID;
+        this.datePosted = datePosted;
+        this.timestamp =timestamp;
     }
 
     public TransactionsProduct()
     {
 
     }
+
+    protected TransactionsProduct(Parcel in) {
+        title = in.readString();
+        desc = in.readString();
+        imageRef = in.readString();
+        price = in.readDouble();
+        lendTime = in.readString();
+        exchange = in.readString();
+        uniqueID = in.readString();
+        sellerID = in.readString();
+        datePosted = in.readString();
+        timestamp = in.readParcelable(Timestamp.class.getClassLoader());
+    }
+
+    public static final Creator<TransactionsProduct> CREATOR = new Creator<TransactionsProduct>() {
+        @Override
+        public TransactionsProduct createFromParcel(Parcel in) {
+            return new TransactionsProduct(in);
+        }
+
+        @Override
+        public TransactionsProduct[] newArray(int size) {
+            return new TransactionsProduct[size];
+        }
+    };
 
     public String getTitle(){
         return title;
@@ -52,10 +87,10 @@ public class TransactionsProduct{
         this.imageRef = imageRef;
     }
 
-    public String getPrice(){
+    public Double getPrice(){
         return price;
     }
-    public void setPrice(String price){
+    public void setPrice(Double price){
         this.price = price;
     }
 
@@ -80,6 +115,20 @@ public class TransactionsProduct{
         this.uniqueID = uniqueID;
     }
 
+    public String getSellerID() {
+        return sellerID;
+    }
+    public void setSellerID(String sellerID) {
+        this.sellerID = sellerID;
+    }
+
+    public String getDatePosted() {
+        return datePosted;
+    }
+    public void setDatePosted(String datePosted) {
+        this.datePosted = datePosted;
+    }
+
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -87,5 +136,22 @@ public class TransactionsProduct{
         this.timestamp = timestamp;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(desc);
+        parcel.writeString(imageRef);
+        parcel.writeDouble(price);
+        parcel.writeString(lendTime);
+        parcel.writeString(exchange);
+        parcel.writeString(uniqueID);
+        parcel.writeString(sellerID);
+        parcel.writeString(datePosted);
+        parcel.writeParcelable(timestamp, i);
+    }
 }

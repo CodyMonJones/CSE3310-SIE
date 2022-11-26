@@ -19,7 +19,7 @@
     <string name="TransactionsTabWishlist">WISHLIST</string>
     <string name="TransactionsTabCart">CART</string>
     <string name="TransactionsHeaderCategories">Categories</string>
-    <string name="TransactionsHeaderLatest">Latest Additions</string>
+    <string name="TransactionsShopHeader">All Listings</string>
     <string name="cover">Cover</string>
     <string name="title_activity_transactions_product_view">TransactionsProductViewActivity</string>
     <string name="TransactionsProductSpinnerTitle">Select</string>
