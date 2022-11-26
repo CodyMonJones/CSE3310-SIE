@@ -89,7 +89,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         profile = (Button) findViewById(R.id.UserContactButton);
 
         rv = findViewById(R.id.ContactList);
-        list = new ArrayList<>();
+        list = new ArrayList<contact>();
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
         setOnClickListener();
@@ -137,9 +137,11 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                 for(DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         User user = (dc.getDocument().toObject(User.class));
-                        if(user.getUserID().equals(currentUser.getUid())){
-                            for(contact c : user.getContactslist()){
-                                list.add(c);
+                        if(user.getUserID().equals(currentUser.getUid())) {
+                            if (!user.getContactslist().isEmpty()){
+                                for (contact c : user.getContactslist()) {
+                                    list.add(c);
+                                }
                             }
                         }
                     }

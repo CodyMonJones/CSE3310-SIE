@@ -82,13 +82,9 @@
         app:tint="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id = "@+id/chats"
+        android:id="@+id/chats"
         android:layout_width="410dp"
-        android:layout_height="610dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_height="590dp"
         android:background="#005899"
         app:layout_constraintBottom_toTopOf="@+id/EmailMenuButton"
         app:layout_constraintEnd_toEndOf="parent"

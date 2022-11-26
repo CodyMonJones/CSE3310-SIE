@@ -17,6 +17,7 @@ public class User implements Serializable
     private ArrayList<String> transactionWishlistItemIDs;
     private ArrayList<String> transactionCartItemIDs;
     private ArrayList<contact> contactslist;
+    private ArrayList<String> chatids;
     private String profile_picture;
     private String creationDate;
     private String userID;
@@ -125,7 +126,13 @@ public class User implements Serializable
         this.contactslist = contactslist;
     }
 
+    public ArrayList<String> getChatids() {
+        return chatids;
+    }
 
+    public void setChatids(ArrayList<String> chatids){
+        this.chatids = chatids;
+    }
 
     public User(String firstName, String lastName, String email, int Mav, String phone)
     {
@@ -139,7 +146,8 @@ public class User implements Serializable
         this.transactionWishlistItemIDs = null;
         this.transactionCartItemIDs = null;
         this.profile_picture = null;
-        this.contactslist = null;
+        this.contactslist = new ArrayList<contact>();
+        this.chatids = new ArrayList<String>();
     }
 
     public User(){

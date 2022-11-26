@@ -68,7 +68,7 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
-                Intent x = new Intent(ComsChatroomActivity.this, ComsContactsActivity.class);
+                Intent x = new Intent(ComsChatroomActivity.this, ComsMessagesActivity.class);
                 startActivity(x);
                 finish();
                 break;
