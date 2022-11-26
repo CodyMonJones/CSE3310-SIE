@@ -1,10 +1,13 @@
 package com.example.cse3310project;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,6 +33,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class ComsChatroomActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityComsChatroomBinding activityComsChatroomBinding;
@@ -42,12 +49,24 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
     EditText type;
     ScrollView chat;
     String userid;
+    String chatid;
+    String chatText;
+    String currDate;
+    String currTime;
+    String name;
+
+    Messages newMsg;
+    ArrayList<Messages> logs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coms_chatroom);
         activityComsChatroomBinding = ActivityComsChatroomBinding.inflate(getLayoutInflater());
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            chatid = extras.getString("chatid");
+        }
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -62,6 +81,36 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
 
         back.setOnClickListener(this);
         send.setOnClickListener(this);
+
+        ff.collection("Users").document(userid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc.exists()){
+                        name = doc.getString("fname") + " " + doc.getString("lname");
+                    }
+                }
+            }
+        });
+
+
+        ff.collection("chatrooms").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("Firestore error", error.getMessage());
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        chatroom cr = (dc.getDocument().toObject(chatroom.class));
+                        if(cr.getChatid().equals(chatid)) {
+                            logs = cr.getChat();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -79,11 +128,22 @@ public class ComsChatroomActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void saveMessage() {
-        String msg = type.getText().toString();
-        if(TextUtils.isEmpty(msg)){
+        chatText = type.getText().toString();
+        if(TextUtils.isEmpty(chatText)){
             Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT);
         } else {
+            Calendar finddate = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM dd, yyyy");
+            currDate = dateFormat.format(finddate.getTime());
 
+            Calendar findtime = Calendar.getInstance();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+            currTime = timeFormat.format(findtime.getTime());
+
+            newMsg = new Messages(chatText, currDate, currTime, name);
+            logs.add(newMsg);
+            ff.collection("chatrooms").document(chatid).update("chat", logs);
+            type.setText("");
         }
     }
 }

@@ -117,6 +117,7 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
 
     public void viewChat(chatroom chatroom) {
         Intent x = new Intent(ComsMessagesActivity.this, ComsChatroomActivity.class);
+        x.putExtra("chatid", chatroom.getChatid());
         startActivity(x);
         finish();
     }
@@ -176,21 +177,27 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                             String rid2 = null;
                             String chatname = null;
                             ArrayList<String> uids = new ArrayList<>();
+                            ArrayList<String> rcids = new ArrayList<>();
+                            ArrayList<String> rcids2 = new ArrayList<>();
                             for(QueryDocumentSnapshot doc : task.getResult()){
                                 if(doc.exists()) {
                                     if (chatter1.equals(doc.getString("email"))) {
                                         rid = doc.getString("userID");
                                         uids.add(rid);
+                                        uids.add(currentUser.getUid());
                                         chatname = doc.getString("fname") + " " + doc.getString("lname");
+
+                                        rcids = doc.toObject(User.class).getChatids();
                                     }
                                     if (!chatter2.isEmpty()) {
                                         if (chatter2.equals(doc.getString("email"))) {
                                             rid2 = doc.getString("userID");
                                             chatname = chatname + ", " + doc.getString("fname") + " " + doc.getString("lname");
                                             uids.add(rid2);
+
+                                            rcids2 = doc.toObject(User.class).getChatids();
                                         }
                                     }
-
                                 }
                             }
 
@@ -200,9 +207,16 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                             chatlist.add(cr);
                             ref.set(cr);
 
-                            chatidlist.add(chatname);
+                            chatidlist.add(cr.getChatid());
+                            rcids.add(cr.getChatid());
 
                             ff.collection("Users").document(userid).update("chatids", chatidlist);
+                            ff.collection("Users").document(rid).update("chatids", rcids);
+                            if(rid2 != null){
+                                rcids2.add(cr.getChatid());
+                                ff.collection("Users").document(rid2).update("chatids", rcids2);
+                            }
+
                         }
                     });
                 }
@@ -229,7 +243,6 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                             }
                         }
                     }
-                    adapter.notifyDataSetChanged();
                 }
             }
         });

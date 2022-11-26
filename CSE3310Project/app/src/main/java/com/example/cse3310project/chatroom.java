@@ -22,7 +22,7 @@ public class chatroom {
 
     public chatroom(ArrayList<String> uids, String name){
         this.uids = uids;
-        this.chat = null;
+        this.chat = new ArrayList<>();
         this.chatid = chatid;
         this.name = name;
     }
