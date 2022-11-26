@@ -22,6 +22,8 @@ public class User implements Serializable
     private String profile_picture;
     private String creationDate;
     private String userID;
+    private ArrayList<String> emailsent;
+    private ArrayList<String> emailrecieved;
 
 
     public String getFname() {
@@ -129,6 +131,20 @@ public class User implements Serializable
         this.userID = userID;
     }
 
+    public ArrayList<String> getEmailsent() {
+        return emailsent;
+    }
+    public void setEmailsent(ArrayList<String> emailsent){
+        this.emailsent = emailsent;
+    }
+
+    public ArrayList<String> getEmailrecieved() {
+        return emailrecieved;
+    }
+    public void setEmailrecieved(ArrayList<String> emailrecieved){
+        this.emailrecieved = emailrecieved;
+    }
+
     public User(String firstName, String lastName, String email, int Mav, String phone)
     {
         this.fname = firstName;
@@ -144,6 +160,8 @@ public class User implements Serializable
         this.profile_picture = null;
         this.contactslist = new ArrayList<contact>();
         this.chatids = new ArrayList<String>();
+        this.emailsent = new ArrayList<>();
+        this.emailrecieved = new ArrayList<>();
     }
 
     public User(){

@@ -1,8 +1,5 @@
 package com.example.cse3310project;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +37,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.NewEmailButton:
+                createEmail();
                 break;
             case R.id.MessageMenuButton:
                 Intent y = new Intent(ComsEmailActivity.this, ComsMessagesActivity.class);
@@ -52,5 +50,8 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                 finish();
                 break;
         }
+    }
+
+    public void createEmail() {
     }
 }
