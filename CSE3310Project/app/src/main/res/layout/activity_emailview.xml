@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/EmailHeader"
-        android:layout_width="360dp"
+        android:layout_width="350dp"
         android:layout_height="62dp"
         android:backgroundTint="#00477E"
         android:clickable="false"

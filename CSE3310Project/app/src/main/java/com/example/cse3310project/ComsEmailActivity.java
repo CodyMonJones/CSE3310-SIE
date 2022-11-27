@@ -1,19 +1,72 @@
 package com.example.cse3310project;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cse3310project.databinding.ActivityEmailBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ComsEmailActivity extends drawerActivity implements View.OnClickListener{
 
-    ImageButton newemail;
-    ImageButton messages;
-    ImageButton contact;
+    ImageButton newemail, messages, contact, reply, forward, back;
+
+    Button confirm, cancel, header;
+
+    EditText recipient, subject, body;
+
+    TextView content, emsub;
 
     ActivityEmailBinding activityEmailBinding;
+
+    RecyclerView rv;
+    EmailAdapter.RecyclerViewClickListener listener;
+    EmailAdapter adapter;
+
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    FirebaseFirestore ff;
+    DatabaseReference dbref;
+    String userid;
+
+    AlertDialog.Builder pop;
+    AlertDialog dialog;
+
+    ArrayList<Email> allemails;
+    ArrayList<String> sentids;
+    ArrayList<String> recievedids;
+
+    String replyid;
+    Boolean response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +76,144 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
         setContentView(activityEmailBinding.getRoot());
         allocateActivityTitle("Communications");
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        userid = currentUser.getUid();
+        dbref = FirebaseDatabase.getInstance().getReference();
+        ff = FirebaseFirestore.getInstance();
+
         newemail = (ImageButton) findViewById(R.id.NewEmailButton);
         messages = (ImageButton) findViewById(R.id.MessageMenuButton);
         contact = (ImageButton) findViewById(R.id.ContactsMenuButton);
+        rv = findViewById(R.id.emails);
 
         newemail.setOnClickListener(this);
         messages.setOnClickListener(this);
         contact.setOnClickListener(this);
 
+        allemails = new ArrayList<>();
+        sentids = new ArrayList<>();
+        recievedids = new ArrayList<>();
+
+        rv = findViewById(R.id.emails);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        setOnClickListener();
+        adapter = new EmailAdapter(ComsEmailActivity.this, allemails, listener);
+        rv.setAdapter(adapter);
+
+        response = false;
+
+        EventChangeListener();
+    }
+
+    public void EventChangeListener() {
+        ff.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("Firestore error", error.getMessage());
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        User user = (dc.getDocument().toObject(User.class));
+                        if(user.getUserID().equals(userid)){
+                            if(!user.getEmailsent().isEmpty()) {
+                                for (String sid : user.getEmailsent()) {
+                                    sentids.add(sid);
+                                }
+                            }
+                            if(!user.getEmailrecieved().isEmpty()) {
+                                for (String rid : user.getEmailrecieved()) {
+                                    recievedids.add(rid);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        ff.collection("emails").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("Firestore error", error.getMessage());
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        Email email = (dc.getDocument().toObject(Email.class));
+                        if(!sentids.isEmpty()) {
+                            for (String sid : sentids) {
+                                if (email.getEid().equals(sid)) {
+                                    allemails.add(email);
+                                }
+                            }
+                        }
+                        if(!recievedids.isEmpty()) {
+                            for (String rid : recievedids) {
+                                if (email.getEid().equals(rid)) {
+                                    allemails.add(email);
+                                }
+                            }
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void setOnClickListener() {
+        listener = new EmailAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int pos) {viewEmail(allemails.get(pos));}
+        };
+    }
+
+    public void viewEmail(Email email) {
+        pop = new AlertDialog.Builder(this);
+        final View popupView = getLayoutInflater().inflate(R.layout.activity_emailview, null);
+
+        header = (Button) popupView.findViewById(R.id.EmailHeader);
+        reply = (ImageButton) popupView.findViewById(R.id.sendMessage);
+        forward = (ImageButton) popupView.findViewById(R.id.Forward);
+        back = (ImageButton) popupView.findViewById(R.id.back);
+        emsub = (TextView) popupView.findViewById(R.id.subject);
+        content = (TextView) popupView.findViewById(R.id.content);
+
+        header.setText(email.getEmail().getName());
+        emsub.setText(email.getSubject() + " " + email.getEmail().getDate() + " " + email.getEmail().getTime());
+        content.setText(email.getEmail().getText());
+
+        pop.setView(popupView);
+        dialog = pop.create();
+        dialog.show();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createEmail();
+                response = true;
+                ArrayList<String> rids = new ArrayList<>();
+                rids = email.getReplyids();
+                rids.add(replyid);
+
+                ff.collection("emails").document(email.getEid()).update("replyids", rids);
+                response = false;
+            }
+        });
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -53,5 +236,81 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
     }
 
     public void createEmail() {
+        pop = new AlertDialog.Builder(this);
+        final View popupView = getLayoutInflater().inflate(R.layout.createemailpopup, null);
+
+        cancel = (Button) popupView.findViewById(R.id.cancel);
+        confirm = (Button) popupView.findViewById(R.id.confirm);
+
+        recipient = (EditText) popupView.findViewById(R.id.recipient);
+        subject = (EditText) popupView.findViewById(R.id.emailsubject);
+        body = (EditText) popupView.findViewById(R.id.body);
+
+        pop.setView(popupView);
+        dialog = pop.create();
+        dialog.show();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String whoto = recipient.getText().toString();
+                String about = subject.getText().toString();
+                String words = body.getText().toString();
+                String currDate;
+                String currTime;
+
+                if(TextUtils.isEmpty(whoto) || TextUtils.isEmpty(about) || TextUtils.isEmpty(words)){
+                    Toast.makeText(ComsEmailActivity.this, "Please fill in every field", Toast.LENGTH_SHORT).show();
+                } else {
+                    Calendar finddate = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM dd, yyyy");
+                    currDate = dateFormat.format(finddate.getTime());
+
+                    Calendar findTime = Calendar.getInstance();
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+                    currTime = timeFormat.format(findTime.getTime());
+
+                    Messages em = new Messages(words, currDate, currTime, whoto);
+
+
+                    ff.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            String whoid = "";
+                            User user = new User();
+                            Email emailing = new Email();
+                            for(QueryDocumentSnapshot doc : task.getResult()){
+                                if(doc.exists()) {
+                                    if (whoto.equals(doc.getString("email"))) {
+                                        user = doc.toObject(User.class);
+                                        whoid = user.getUserID();
+                                        emailing = new Email(whoid, em, userid, about);
+                                        allemails.add(emailing);
+                                        DocumentReference ref = ff.collection("emails").document();
+                                        emailing.setEid(ref.getId());
+                                        ref.set(emailing);
+                                        ArrayList<String> recemid = user.getEmailrecieved();
+                                        recemid.add(emailing.getEid());
+                                        ff.collection("Users").document(userid).update("emailsent", sentids);
+                                        ff.collection("Users").document(whoid).update("emailrecieved", recemid);
+
+                                        if(response){
+                                            replyid = emailing.getEid();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                dialog.dismiss();
+            }
+        });
     }
 }
