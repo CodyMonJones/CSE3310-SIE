@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
     android:layout_height="match_parent"
     tools:context=".ComsEmailActivity"
     android:background="@color/UTA_BLUE">
 
     <Button
         android:id="@+id/EmailHeader"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="62dp"
         android:backgroundTint="#00477E"
         android:clickable="false"
@@ -34,12 +34,13 @@
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="480dp"
         android:layout_above="@+id/Temp"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/Temp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </TextView>
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
     <TextView
         android:id="@+id/subject"
@@ -47,6 +48,8 @@
         android:layout_height="60dp"
         android:layout_above="@+id/Temp"
         android:layout_marginTop="4dp"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +65,7 @@
 
         <ImageButton
             android:id="@+id/sendMessage"
-            android:layout_width="205dp"
+            android:layout_width="180dp"
             android:layout_height="60dp"
             android:background="#09278F"
             android:src="@android:drawable/ic_media_play">
@@ -71,7 +74,7 @@
 
         <ImageButton
             android:id="@+id/Forward"
-            android:layout_width="206dp"
+            android:layout_width="180dp"
             android:layout_height="60dp"
             android:background="#09278F"
             android:src="@android:drawable/ic_media_ff">

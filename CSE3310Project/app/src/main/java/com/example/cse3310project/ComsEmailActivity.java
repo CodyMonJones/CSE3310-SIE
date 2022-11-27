@@ -65,8 +65,11 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
     ArrayList<String> sentids;
     ArrayList<String> recievedids;
 
-    String replyid;
-    Boolean response;
+    String replytoid;
+    String resub;
+    String readdress;
+    String msgbody;
+    Boolean response, forwardmsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
         rv.setAdapter(adapter);
 
         response = false;
+        forwardmsg = false;
 
         EventChangeListener();
     }
@@ -198,20 +202,26 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
         reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createEmail();
+                dialog.dismiss();
                 response = true;
-                ArrayList<String> rids = new ArrayList<>();
-                rids = email.getReplyids();
-                rids.add(replyid);
+                resub = email.getSubject();
+                readdress = email.getEmail().getName();
+                replytoid = email.getEid();
+                createEmail();
 
-                ff.collection("emails").document(email.getEid()).update("replyids", rids);
                 response = false;
             }
         });
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog.dismiss();
+                forwardmsg = true;
+                resub = email.getSubject();
+                readdress = email.getEmail().getName();
+                msgbody = email.getEmail().getText();
+                createEmail();
+                forwardmsg = false;
             }
         });
     }
@@ -246,6 +256,17 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
         subject = (EditText) popupView.findViewById(R.id.emailsubject);
         body = (EditText) popupView.findViewById(R.id.body);
 
+        subject.setText("Subject: ");
+
+        if(response){
+            recipient.setText(readdress);
+            subject.setText("Subject:: re: " + resub);
+        }
+        if(forwardmsg){
+            subject.setText("Subject:: forward: " + readdress + " " + resub);
+            body.setText(msgbody);
+        }
+
         pop.setView(popupView);
         dialog = pop.create();
         dialog.show();
@@ -262,6 +283,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                 String whoto = recipient.getText().toString();
                 String about = subject.getText().toString();
                 String words = body.getText().toString();
+
                 String currDate;
                 String currTime;
 
@@ -291,17 +313,18 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                                         user = doc.toObject(User.class);
                                         whoid = user.getUserID();
                                         emailing = new Email(whoid, em, userid, about);
-                                        allemails.add(emailing);
                                         DocumentReference ref = ff.collection("emails").document();
                                         emailing.setEid(ref.getId());
                                         ref.set(emailing);
-                                        ArrayList<String> recemid = user.getEmailrecieved();
+                                        ArrayList<String> recemid = new ArrayList<>();
+                                        recemid.addAll(user.getEmailrecieved());
                                         recemid.add(emailing.getEid());
+                                        sentids.add(emailing.getEid());
                                         ff.collection("Users").document(userid).update("emailsent", sentids);
                                         ff.collection("Users").document(whoid).update("emailrecieved", recemid);
 
                                         if(response){
-                                            replyid = emailing.getEid();
+                                            ff.collection("emails").document(replytoid).update("replyids", emailing.getEid());
                                         }
                                     }
                                 }
