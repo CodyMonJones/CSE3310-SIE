@@ -14,6 +14,8 @@ public class User implements Serializable
     private String phoneNumber;
     private ArrayList<String> creditCards;
     private ArrayList<String> discussionPostsIDs;
+    private ArrayList<String> tutorpostids;
+    private float[] ratings;
     private ArrayList<String> transactionListedItemIDs;
     private ArrayList<String> transactionWishlistItemIDs;
     private ArrayList<String> transactionCartItemIDs;
@@ -66,6 +68,20 @@ public class User implements Serializable
     }
     public void setCreditCards(ArrayList<String> creditCards) {
         this.creditCards = creditCards;
+    }
+
+    public ArrayList<String> getTutorpostids() {
+        return tutorpostids;
+    }
+    public void setTutorpostids(ArrayList<String> tutorpostids) {
+        this.tutorpostids = tutorpostids;
+    }
+
+    public float[] getRatings() {
+        return ratings;
+    }
+    public void setRatings(float[] ratings) {
+        this.ratings = ratings;
     }
 
     public ArrayList<String> getDiscussionPostsIDs() {
@@ -162,6 +178,8 @@ public class User implements Serializable
         this.chatids = new ArrayList<String>();
         this.emailsent = new ArrayList<>();
         this.emailrecieved = new ArrayList<>();
+        this.tutorpostids = new ArrayList<>();
+        this.ratings = null;
     }
 
     public User(){

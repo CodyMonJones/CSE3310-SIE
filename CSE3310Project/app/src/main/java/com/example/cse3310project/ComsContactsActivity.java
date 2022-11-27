@@ -52,7 +52,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class ComsContactsActivity extends drawerActivity implements View.OnClickListener{
     ImageButton add, messages, email, exit;
     Button profile, cancel, confirm, emailbutton, messagebutton, delete, edit, yes, no;
-    TextView noContact, cfname, csname, cemail, cphonenumber;
+    TextView cfname, csname, cemail, cphonenumber;
     EditText firstname, lastname, emailaddress, phone;
 
     AlertDialog.Builder pop;
