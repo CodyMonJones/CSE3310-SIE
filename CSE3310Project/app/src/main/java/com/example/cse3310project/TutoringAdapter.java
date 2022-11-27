@@ -11,6 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 
@@ -20,6 +28,8 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
     LayoutInflater mInflater;
     AlertDialog.Builder pop;
     AlertDialog dialog;
+
+    FirebaseFirestore ff = FirebaseFirestore.getInstance();
 
     public TutoringAdapter(Context context, ArrayList<tutorpost> tutors){
         this.context = context;
@@ -110,12 +120,80 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         final View popupView = LayoutInflater.from(context).inflate(R.layout.ratingtutorpopup, null);
 
         ImageButton r1, r2, r3, r4, r5;
+        TextView namerate;
+
+        namerate = popupView.findViewById(R.id.name);
+
+        ff.collection("Users").document(tutorpost.getPosterid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc.exists()){
+                        int sum = 0;
+                        int num = 0;
+                        ArrayList<Integer> rates = doc.get("ratings", ArrayList.class);
+                        if(!rates.isEmpty()){
+                            for(float f : rates){
+                                sum += f;
+                                num++;
+                            }
+                            float avg = sum/num;
+                            namerate.setText(tutorpost.getName() + "(" + avg +")");
+                        } else {
+                            namerate.setText(tutorpost.getName());
+                        }
+                    }
+                }
+            }
+        });
 
         r1 = (ImageButton) popupView.findViewById(R.id.r1);
         r2 = (ImageButton) popupView.findViewById(R.id.r2);
         r3 = (ImageButton) popupView.findViewById(R.id.r3);
         r4 = (ImageButton) popupView.findViewById(R.id.r4);
         r5 = (ImageButton) popupView.findViewById(R.id.r5);
+
+        r1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int rate = 1;
+                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                dialog.dismiss();
+            }
+        });
+        r2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int rate = 2;
+                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                dialog.dismiss();
+            }
+        });
+        r3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int rate = 3;
+                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                dialog.dismiss();
+            }
+        });
+        r4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int rate = 4;
+                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                dialog.dismiss();
+            }
+        });
+        r5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int rate = 5;
+                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                dialog.dismiss();
+            }
+        });
 
         pop.setView(popupView);
         dialog = pop.create();
