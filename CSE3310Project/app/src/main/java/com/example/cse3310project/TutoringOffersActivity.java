@@ -54,11 +54,11 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
     ArrayList<String> list;
     ArrayList<tutorpost> tps;
-<<<<<<< HEAD
+
     int[] ratings;
-=======
-    ArrayList<Integer> ratings;
->>>>>>> 7108795 (15min)
+
+//    ArrayList<Integer> ratings;
+
     String email;
 
     @Override
@@ -111,15 +111,13 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
                                     for (String t : user.getTutorpostids()) {
                                         list.add(t);
                                     }
-<<<<<<< HEAD
-=======
+
                                 }
-                                if (!user.getRatings().isEmpty()){
-                                    for (int t : user.getRatings()) {
-                                        ratings.add(t);
-                                    }
->>>>>>> 7108795 (15min)
-                                }
+//                                if (!user.getRatings().isEmpty()){
+//                                    for (int t : user.getRatings()) {
+////                                        ratings.add(t);
+//                                    }
+//                                }
                                 email = user.getEmail();
                             }
                         }

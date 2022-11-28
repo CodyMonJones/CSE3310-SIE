@@ -69,8 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
     <ImageButton
-<<<<<<< HEAD
-=======
+
         android:id="@+id/messagetutor"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -88,7 +87,6 @@
         app:tint="#FFFFFF" />
 
     <ImageButton
->>>>>>> 7108795 (15min)
         android:id="@+id/rate"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -103,8 +101,7 @@
         app:srcCompat="@android:drawable/star_big_on"
         app:tint="#FFFFFF" />
 
-<<<<<<< HEAD
-=======
+
     <ImageButton
         android:id="@+id/emailtutor"
         android:layout_width="60dp"
@@ -118,5 +115,4 @@
         app:layout_constraintTop_toBottomOf="@+id/price"
         app:srcCompat="@android:drawable/sym_action_email"
         app:tint="#FFFFFF" />
->>>>>>> 7108795 (15min)
 </androidx.constraintlayout.widget.ConstraintLayout>
