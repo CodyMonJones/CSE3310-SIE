@@ -1,7 +1,5 @@
 package com.example.cse3310project;
 
-import com.example.cse3310project.Discussion.DiscussionPost;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

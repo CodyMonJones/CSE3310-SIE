@@ -2,13 +2,19 @@ package com.example.cse3310project;
 
 import static android.content.ContentValues.TAG;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.SearchManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,27 +22,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.MediaStore;
 import android.text.NoCopySpan;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class TransactionsShopFragment extends Fragment implements TransactionsRecyclerViewInterface{
+public class TransactionsShopFragment extends Fragment implements TransactionsRecyclerViewInterface {
 
     ArrayList<TransactionsProduct> productShopArrayList = new ArrayList<>();
     private FirebaseFirestore marketplaceDb;
@@ -80,8 +98,39 @@ public class TransactionsShopFragment extends Fragment implements TransactionsRe
         }
     }
 
+    // this function makes the search functionality work
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+
+        //inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.transactions_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.transactions_searchbar);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                transactionsShopAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
         radio = new Radio();
     }
