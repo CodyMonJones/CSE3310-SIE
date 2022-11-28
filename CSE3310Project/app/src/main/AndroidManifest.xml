@@ -157,13 +157,13 @@
         </activity>
         <activity
             android:name=".TransactionsActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivity" />
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".HomeActivity$RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".FormClubActivity"
