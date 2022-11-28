@@ -77,7 +77,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
                 break;
 
             case R.id.Clubs:
-                startActivity(new Intent(this, ComsEmailActivity.FormClubActivity.class));
+                startActivity(new Intent(this, FormClubActivity.class));
                 overridePendingTransition(0,0);
                 break;
 
