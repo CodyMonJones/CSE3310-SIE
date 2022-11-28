@@ -37,7 +37,9 @@ import java.text.DecimalFormat;
 
 
 public class TransactionsCartFragment extends Fragment implements TransactionsRecyclerViewInterface {
+    // formats doubles to have only 2 digits past the decimal
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
     public Double runningSubtotal = 0.00;
     TextView subtotal;
     Button purchaseButton;
@@ -146,12 +148,12 @@ public class TransactionsCartFragment extends Fragment implements TransactionsRe
                                         TransactionsCartFragment.this.getContext(),
                                         TransactionsCartFragment.this);
                                 recyclerView.setAdapter(transactionsCartAdapter);
+                                subtotal.setText("Subtotal: $" + df.format(runningSubtotal));
                             }
                         });
             }
         });
 
-        subtotal.setText("Subtotal: $" + df.format(runningSubtotal));
 
         purchaseButton.setOnClickListener(new View.OnClickListener() {
             @Override

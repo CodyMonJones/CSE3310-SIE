@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -12,8 +13,13 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cse3310project.Discussion.DiscussionForum;
@@ -31,6 +37,34 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
     public DrawerLayout drawerLayout;
     public Toolbar toolbar;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.transactions_search, menu);
+//
+//        MenuItem searchItem = menu.findItem(R.id.transactions_searchbar);
+//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//        searchView.setIconifiedByDefault(false);
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//
+//                //transactionsShopAdapter.getFilter().filter(s);
+//                return false;
+//            }
+//        });
+//
+//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

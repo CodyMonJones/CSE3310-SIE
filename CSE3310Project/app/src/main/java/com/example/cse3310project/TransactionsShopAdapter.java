@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +35,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class TransactionsShopAdapter extends RecyclerView.Adapter<TransactionsShopAdapter.ViewHolder> {
+public class TransactionsShopAdapter extends RecyclerView.Adapter<TransactionsShopAdapter.ViewHolder> implements Filterable {
     private final TransactionsRecyclerViewInterface transactionsRecyclerViewInterface;
 
     ArrayList<TransactionsProduct> mData;
+    ArrayList<TransactionsProduct> mDataFull;
     LayoutInflater mInflater;
     Context context;
 
@@ -50,11 +55,48 @@ public class TransactionsShopAdapter extends RecyclerView.Adapter<TransactionsSh
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = itemList;
+        mDataFull = new ArrayList<>(itemList);
         this.transactionsRecyclerViewInterface = transactionsRecyclerViewInterface;
     }
 
     @Override
     public int getItemCount() { return mData.size(); }
+
+    @Override
+    public Filter getFilter() {
+        return transactionsFilter;
+    }
+
+    private Filter transactionsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<TransactionsProduct> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(mDataFull);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (TransactionsProduct item : mDataFull){
+                    if(item.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            mData.clear();
+            mData.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @Override
     public TransactionsShopAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
