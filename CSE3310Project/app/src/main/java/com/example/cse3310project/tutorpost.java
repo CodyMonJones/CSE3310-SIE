@@ -13,7 +13,7 @@ public class tutorpost {
     public void setName(String name){this.name = name;}
     public String getName(){return name;}
 
-    public void setTid(String lname){this.tid = tid;}
+    public void setTid(String tid){this.tid = tid;}
     public String getTid(){return tid;}
 
     public void setEmail(String email){this.email = email;}
@@ -34,14 +34,15 @@ public class tutorpost {
     public void setPrice(String price){this.price = price;}
     public String getPrice(){return price;}
 
-    public tutorpost(String name, String posterid, String emailaddy, String field, String schedule, String price, Boolean request){
+    public tutorpost(String name, String posterid, String email, String field, String schedule, String price, Boolean request){
         this.name = name;
         this.posterid = posterid;
-        this.email = emailaddy;
+        this.email = email;
         this.request = request;
         this.field = field;
         this.schedule = schedule;
         this.price = price;
+        this.tid = "";
     }
 
     public tutorpost(){

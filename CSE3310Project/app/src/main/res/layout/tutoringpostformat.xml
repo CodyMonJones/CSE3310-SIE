@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:background="@color/UTA_BLUE">
+    android:background="@color/UTA_ORANGE"
+    app:layout_dodgeInsetEdges="all">
 
 
     <TextView
@@ -75,7 +76,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="25dp"
-        android:background="@color/UTA_ORANGE"
+        android:background="@color/UTA_BLUE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/rate"
         app:layout_constraintStart_toEndOf="@+id/emailtutor"
@@ -91,7 +92,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="25dp"
-        android:background="@color/UTA_ORANGE"
+        android:background="@color/UTA_BLUE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price"
@@ -106,7 +107,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="25dp"
-        android:background="@color/UTA_ORANGE"
+        android:background="@color/UTA_BLUE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price"

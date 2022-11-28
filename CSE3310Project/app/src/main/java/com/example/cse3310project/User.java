@@ -178,7 +178,7 @@ public class User implements Serializable
         this.chatids = new ArrayList<String>();
         this.emailsent = new ArrayList<>();
         this.emailrecieved = new ArrayList<>();
-        this.tutorpostids = new ArrayList<>();
+        this.tutorpostids = new ArrayList<String>();
         this.ratings = new ArrayList<Integer>();
     }
 

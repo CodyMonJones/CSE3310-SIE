@@ -70,9 +70,9 @@
         app:tint="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id = "@+id/TutorList"
-        android:layout_width="409dp"
-        android:layout_height="614dp"
+        android:id="@+id/TutorList"
+        android:layout_width="410dp"
+        android:layout_height="590dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHolder>{
     Context context;
     ArrayList<tutorpost> tutors;
-    LayoutInflater mInflater;
     AlertDialog.Builder pop;
     AlertDialog dialog;
 
@@ -34,17 +33,17 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
     public TutoringAdapter(Context context, ArrayList<tutorpost> tutors){
         this.context = context;
         this.tutors = tutors;
-        this.mInflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
     public TutoringAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = mInflater.inflate(R.layout.tutoringpostformat, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.tutoringpostformat, parent, false);
         return new TutoringAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final TutoringAdapter.ViewHolder holder, final int position)
+    public void onBindViewHolder(@NonNull TutoringAdapter.ViewHolder holder, final int position)
     {
         holder.bindData(tutors.get(position));
     }
@@ -68,7 +67,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Name = itemView.findViewById(R.id.Name);
-            Email = itemView.findViewById(R.id.Email);
+            Email = itemView.findViewById(R.id.email);
             Study = itemView.findViewById(R.id.study);
             Schedule = itemView.findViewById(R.id.schedule);
             Price = itemView.findViewById(R.id.price);
