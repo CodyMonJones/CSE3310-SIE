@@ -79,8 +79,6 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             Price = itemView.findViewById(R.id.price);
 
             rate = itemView.findViewById(R.id.rate);
-            message = itemView.findViewById(R.id.messagetutor);
-            email = itemView.findViewById(R.id.emailtutor);
 
             rate.setOnClickListener(this);
             message.setOnClickListener(this);
@@ -90,10 +88,6 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         @Override
         public void onClick(View view) {
             switch(view.getId()) {
-                case R.id.messagetutor:
-                    break;
-                case R.id.emailtutor:
-                    break;
                 case R.id.rate:
                     int pos = getLayoutPosition();
                     tutorpost t = tutors.get(pos);
