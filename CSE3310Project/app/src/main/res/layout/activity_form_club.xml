@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/UTA_BLUE"
     tools:context=".FormClubActivity">
+<!--    tools:context=".ComsEmailActivity$FormClubActivity"-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/clubTabLayout"

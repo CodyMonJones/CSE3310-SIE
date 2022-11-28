@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class DiscussionPost
 {
+    // Instance variables that define a Discussion Post
     private String postTitle;
     private String postBody;
     private String postCreationDate;
@@ -21,6 +22,7 @@ public class DiscussionPost
     private ArrayList<String> comments;
     private Timestamp timestamp;
 
+    // Constructor used to create a Discussion Post when in the Activity "CreatePost"
     public DiscussionPost(String postTitle, String postBody, String postCreationDate, String postUsername)
     {
         this.postTitle = postTitle;
@@ -33,6 +35,7 @@ public class DiscussionPost
         this.timestamp = null;
     }
 
+    // Constructor used to create a Discussion Post when pulling from the database
     public DiscussionPost(String postTitle, String postBody, String postCreationDate, int dislikes, int likes)
     {
         this.postTitle = postTitle;
@@ -42,11 +45,13 @@ public class DiscussionPost
         this.likes = likes;
     }
 
+    // Necessary constructor for FireBase to save the object to the database
     public DiscussionPost()
     {
 
     }
 
+    // Getters and Setters
     public Timestamp getTimestamp() {
         return timestamp;
     }

@@ -87,6 +87,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
         </activity>
         <activity
             android:name=".Discussion.CreatePost"
@@ -101,6 +102,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
         </activity>
         <activity
             android:name=".ComsEmailActivity"
@@ -127,12 +129,12 @@
         <activity
             android:name=".TransactionsProductCreateActivity"
             android:exported="false"
-            android:parentActivityName=".TransactionsActivity">
+            android:parentActivityName=".drawerActivity$TransactionsActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TransactionsActivity" />
+                android:value=".drawerActivity$TransactionsActivity" />
         </activity>
         <activity
             android:name=".TransactionsProductViewActivity"
@@ -143,18 +145,19 @@
                 android:value=".TransactionsActivity" />
         </activity>
         <activity
-            android:name=".TransactionsActivity"
+            android:name=".drawerActivity$TransactionsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".HomeActivity$RegistrationActivity"
             android:exported="false" />
         <activity
+
             android:name=".FormClubActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -163,13 +166,14 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".HomeActivity$LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

@@ -18,14 +18,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>
+public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.ViewHolder>
 {
-    private ArrayList<DiscussionPost> posts = new ArrayList<>();
+    private ArrayList<DiscussionPost> posts;
     private LayoutInflater mInflater;
     private Context context;
     private FirebaseFirestore postDatabase = FirebaseFirestore.getInstance();
 
-    public CustomAdapter(ArrayList<DiscussionPost> posts, Context context)
+    public DiscussionAdapter(ArrayList<DiscussionPost> posts, Context context)
     {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -36,14 +36,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public int getItemCount() { return posts.size(); }
 
     @Override
-    public CustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public DiscussionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View view = mInflater.inflate(R.layout.discussion_post_layout, null);
-        return new CustomAdapter.ViewHolder(view);
+        return new DiscussionAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CustomAdapter.ViewHolder holder, final int position)
+    public void onBindViewHolder(final DiscussionAdapter.ViewHolder holder, final int position)
     {
         holder.bindData(posts.get(position));
     }
@@ -55,7 +55,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView postTitle, postBody, postCreationDate, username;
+        TextView postTitle, postBody, postCreationDate, username, postLikes, postDislikes;
         MaterialButton likeButton, dislikeButton, commentButton;
         CardView cv;
 
@@ -65,6 +65,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             postTitle = itemView.findViewById(R.id.Post_Title);
             postBody = itemView.findViewById(R.id.Post_Body);
             postCreationDate = itemView.findViewById(R.id.Post_Creation_Date);
+            postLikes = itemView.findViewById(R.id.Post_Likes);
+            postDislikes = itemView.findViewById(R.id.Post_Dislikes);
             username = itemView.findViewById(R.id.Username_Discussion_Forum);
             likeButton = itemView.findViewById(R.id.Like_Button);
             dislikeButton = itemView.findViewById(R.id.Dislike_Button);
@@ -75,7 +77,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             likeButton.setOnClickListener(this);
             dislikeButton.setOnClickListener(this);
             commentButton.setOnClickListener(this);
-
         }
 
         @Override
@@ -87,34 +88,34 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     int postPosition = getLayoutPosition();
                     int postCurrentLikes = posts.get(postPosition).getLikes();
                     posts.get(postPosition).setLikes(postCurrentLikes + 1);
-                    posts.get(getLayoutPosition()).setPostBody("" + posts.get(postPosition).getLikes());
 
                     updateData(posts.get(postPosition));
+
+                    postLikes.setText("Likes: " + posts.get(postPosition).getLikes());
+
                     notifyDataSetChanged();
-
-
-
-                    Toast.makeText(context.getApplicationContext(), posts.get(getLayoutPosition()).getPostBody(), Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.Dislike_Button:
                     postPosition = getLayoutPosition();
                     int postCurrentDislikes = posts.get(postPosition).getDislikes();
                     posts.get(postPosition).setDislikes(postCurrentDislikes + 1);
-                    posts.get(getLayoutPosition()).setPostBody("" + posts.get(postPosition).getDislikes());
 
                     updateData(posts.get(postPosition));
-                    notifyDataSetChanged();
 
-                    Toast.makeText(context.getApplicationContext(), "You disliked a post", Toast.LENGTH_SHORT).show();
+                    postDislikes.setText("Dislikes: " + posts.get(postPosition).getDislikes());
+
+                    notifyDataSetChanged();
                     break;
 
                 case R.id.cv:
-                    goToCommentActivity();
+                    postPosition = getLayoutPosition();
+                    goToCommentActivity(posts.get(postPosition), 0);
                     break;
 
                 case R.id.Comment_Button:
-                    goToCommentActivity();
+                    postPosition = getLayoutPosition();
+                    goToCommentActivity(posts.get(postPosition), 1);
                     break;
             }
         }
@@ -124,6 +125,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             postTitle.setText(post.getPostTitle());
             postBody.setText(post.getPostBody());
             postCreationDate.setText(post.getPostCreationDate());
+            postLikes.setText("Likes: " + post.getLikes());
+            postDislikes.setText("Dislikes: " + post.getDislikes());
             username.setText(post.getPostUsername());
         }
 
@@ -136,9 +139,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             notifyDataSetChanged();
         }
 
-        void goToCommentActivity()
+        void goToCommentActivity(DiscussionPost selectedPost, int requestFocus)
         {
             Intent commentActivity = new Intent(context.getApplicationContext(), CommentActivity.class);
+            commentActivity.putExtra("DiscussionID", selectedPost.getUniqueID());
+            commentActivity.putExtra("SelectedComment", requestFocus);
             context.startActivity(commentActivity);
         }
     }
