@@ -1,6 +1,10 @@
 package com.example.cse3310project;
 
+
 import android.app.AlertDialog;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cse3310project.databinding.ActivityEmailBinding;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +40,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import com.example.cse3310project.databinding.ActivityFormClubBinding;
 
 public class ComsEmailActivity extends drawerActivity implements View.OnClickListener{
 
@@ -258,11 +265,11 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
 
         subject.setText("Subject: ");
 
-        if(response){
+        if (response) {
             recipient.setText(readdress);
             subject.setText("Subject:: re: " + resub);
         }
-        if(forwardmsg){
+        if (forwardmsg) {
             subject.setText("Subject:: forward: " + readdress + " " + resub);
             body.setText(msgbody);
         }
@@ -287,7 +294,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                 String currDate;
                 String currTime;
 
-                if(TextUtils.isEmpty(whoto) || TextUtils.isEmpty(about) || TextUtils.isEmpty(words)){
+                if (TextUtils.isEmpty(whoto) || TextUtils.isEmpty(about) || TextUtils.isEmpty(words)) {
                     Toast.makeText(ComsEmailActivity.this, "Please fill in every field", Toast.LENGTH_SHORT).show();
                 } else {
                     Calendar finddate = Calendar.getInstance();
@@ -307,8 +314,8 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                             String whoid = "";
                             User user = new User();
                             Email emailing = new Email();
-                            for(QueryDocumentSnapshot doc : task.getResult()){
-                                if(doc.exists()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                if (doc.exists()) {
                                     if (whoto.equals(doc.getString("email"))) {
                                         user = doc.toObject(User.class);
                                         whoid = user.getUserID();
@@ -323,7 +330,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                                         ff.collection("Users").document(userid).update("emailsent", sentids);
                                         ff.collection("Users").document(whoid).update("emailrecieved", recemid);
 
-                                        if(response){
+                                        if (response) {
                                             ff.collection("emails").document(replytoid).update("replyids", emailing.getEid());
                                         }
                                     }
@@ -335,5 +342,19 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                 dialog.dismiss();
             }
         });
+    }
+
+    public static class FormClubActivity extends drawerActivity {
+
+        ActivityFormClubBinding activityFormClubBinding;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            activityFormClubBinding = ActivityFormClubBinding.inflate(getLayoutInflater());
+            setContentView(activityFormClubBinding.getRoot());
+            allocateActivityTitle("Clubs");
+        }
+
     }
 }

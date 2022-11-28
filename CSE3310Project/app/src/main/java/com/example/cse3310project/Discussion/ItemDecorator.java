@@ -9,15 +9,14 @@ public class ItemDecorator extends RecyclerView.ItemDecoration
 {
     private final int VerticalSpaceHeight;
 
-
-
-    public ItemDecorator(int verticalSpaceHeight) {
+    public ItemDecorator(int verticalSpaceHeight)
+    {
         this.VerticalSpaceHeight = verticalSpaceHeight;
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                               RecyclerView.State state) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+    {
         outRect.bottom = VerticalSpaceHeight;
     }
 }
