@@ -12,14 +12,14 @@
     <string name="Home" />
     <string name="Clubs" />
 
-    <!--Transactions Module -->
+    <!-- Transactions Module -->
     <string name="TransactionsToolbarTitle">Marketplace</string>
     <string name="TransactionsTabShop">SHOP</string>
     <string name="TransactionsTabSell">SELL</string>
     <string name="TransactionsTabWishlist">WISHLIST</string>
     <string name="TransactionsTabCart">CART</string>
     <string name="TransactionsHeaderCategories">Categories</string>
-    <string name="TransactionsShopHeader">All Listings</string>
+    <string name="TransactionsShopHeader">Available Listings</string>
     <string name="cover">Cover</string>
     <string name="title_activity_transactions_product_view">TransactionsProductViewActivity</string>
     <string name="TransactionsProductSpinnerTitle">Select</string>
@@ -41,6 +41,12 @@
     <string name="update_profile">Update Profile</string>
     <string name="status">Status</string>
     <string name="logout">Logout</string>
+<<<<<<< HEAD
+
+    <!-- Search Functionality -->
+    <string name="search_hint">Enter Search Term</string>
+    <string name="app_label">temp app label</string>
+=======
     <string name="discussions">Discussions</string>
     <string name="messages">Messages</string>
     <string name="marketplace">Marketplace</string>
@@ -56,4 +62,5 @@
     <string name="club_menu">Club Menu</string>
     <string name="about">About</string>
     <string name="input_message">Input message...</string>
+>>>>>>> 57095a5fe8b216e05ab93a4b3e794a3c1cb76626
 </resources>

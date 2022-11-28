@@ -14,7 +14,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CSE3310Project"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        >
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".SearchableActivity" />
+        <activity
+            android:name=".SearchableActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity
             android:name=".clubChatActivity"
             android:exported="false">
@@ -87,7 +100,6 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-
         </activity>
         <activity
             android:name=".Discussion.CreatePost"
@@ -102,7 +114,6 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-
         </activity>
         <activity
             android:name=".ComsEmailActivity"
@@ -129,12 +140,12 @@
         <activity
             android:name=".TransactionsProductCreateActivity"
             android:exported="false"
-            android:parentActivityName=".drawerActivity$TransactionsActivity">
+            android:parentActivityName=".TransactionsActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".drawerActivity$TransactionsActivity" />
+                android:value=".TransactionsActivity" />
         </activity>
         <activity
             android:name=".TransactionsProductViewActivity"
@@ -145,19 +156,22 @@
                 android:value=".TransactionsActivity" />
         </activity>
         <activity
-            android:name=".drawerActivity$TransactionsActivity"
-            android:exported="false">
+            android:name=".TransactionsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
         </activity>
         <activity
-            android:name=".HomeActivity$RegistrationActivity"
+            android:name=".RegistrationActivity"
             android:exported="false" />
         <activity
-
             android:name=".FormClubActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -166,14 +180,13 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity$LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

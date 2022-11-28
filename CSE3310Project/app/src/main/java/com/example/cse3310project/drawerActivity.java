@@ -22,6 +22,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.cse3310project.Discussion.CommentActivity;
+import com.example.cse3310project.Discussion.DiscussionForum;
+import com.example.cse3310project.Discussion.DiscussionPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -102,7 +105,12 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
 
             case R.id.FormClub:
                 newClubName();
+                break;
 
+            case R.id.Discussions:
+                startActivity(new Intent(this, CommentActivity.class));
+                overridePendingTransition(0,0);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
