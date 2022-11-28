@@ -37,7 +37,7 @@
             />
 
         <item
-            android:id="@+id/Communities"
+            android:id="@+id/Discussions"
             android:icon="@drawable/ic_baseline_people_24"
             android:title="@string/discussions"
             />
