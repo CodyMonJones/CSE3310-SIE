@@ -1,5 +1,6 @@
 package com.example.cse3310project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -49,6 +51,17 @@ public class clubsFragment extends Fragment {
         initializeClubListing();
 
         showClubList();
+
+        clubsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int listPosition, long l) {
+                String selectedClubName = adapterView.getItemAtPosition(listPosition).toString();
+
+                Intent clubChatIntent = new Intent(getContext(), clubChatActivity.class);
+                clubChatIntent.putExtra("clubName", selectedClubName);
+                startActivity(clubChatIntent);
+            }
+        });
 
         return clubFragmentView;
     }

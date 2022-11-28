@@ -55,4 +55,5 @@
     <string name="contacts">Contacts</string>
     <string name="club_menu">Club Menu</string>
     <string name="about">About</string>
+    <string name="input_message">Input message...</string>
 </resources>
