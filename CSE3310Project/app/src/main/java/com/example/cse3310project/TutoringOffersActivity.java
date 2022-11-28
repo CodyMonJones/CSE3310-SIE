@@ -54,7 +54,7 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
     ArrayList<String> list;
     ArrayList<tutorpost> tps;
-    ArrayList<Integer> ratings;
+    int[] ratings;
     String email;
 
     @Override
@@ -106,11 +106,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
                                 if (!user.getTutorpostids().isEmpty()){
                                     for (String t : user.getTutorpostids()) {
                                         list.add(t);
-                                    }
-                                }
-                                if (!user.getRatings().isEmpty()){
-                                    for (int t : user.getRatings()) {
-                                        ratings.add(t);
                                     }
                                 }
                                 email = user.getEmail();
