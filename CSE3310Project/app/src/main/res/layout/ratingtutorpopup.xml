@@ -9,8 +9,8 @@
     <TextView
         android:id="@+id/RateTitle"
         android:layout_width="340dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="Rate by clicking the associated star:"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -21,15 +21,16 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="340dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
         android:text="name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/exit"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -99,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="51dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="247dp"
         android:text="Bad"
         android:textColor="#FFFFFF"
@@ -112,12 +113,26 @@
         android:id="@+id/best"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="47dp"
         android:text="Good"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r5" />
+
+    <ImageButton
+        android:id="@+id/exit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="361dp"
+        android:background="#AC0909"
+        app:tint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

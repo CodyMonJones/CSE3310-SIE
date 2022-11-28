@@ -119,7 +119,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         pop = new AlertDialog.Builder(context);
         final View popupView = LayoutInflater.from(context).inflate(R.layout.ratingtutorpopup, null);
 
-        ImageButton r1, r2, r3, r4, r5;
+        ImageButton r1, r2, r3, r4, r5, exit;
         TextView namerate;
 
         namerate = popupView.findViewById(R.id.name);
@@ -153,6 +153,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         r3 = (ImageButton) popupView.findViewById(R.id.r3);
         r4 = (ImageButton) popupView.findViewById(R.id.r4);
         r5 = (ImageButton) popupView.findViewById(R.id.r5);
+        exit = (ImageButton) popupView.findViewById(R.id.exit);
 
         r1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +192,12 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             public void onClick(View view) {
                 int rate = 5;
                 ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                dialog.dismiss();
+            }
+        });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 dialog.dismiss();
             }
         });
