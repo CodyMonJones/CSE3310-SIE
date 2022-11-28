@@ -41,12 +41,10 @@
     <string name="update_profile">Update Profile</string>
     <string name="status">Status</string>
     <string name="logout">Logout</string>
-<<<<<<< HEAD
 
     <!-- Search Functionality -->
     <string name="search_hint">Enter Search Term</string>
     <string name="app_label">temp app label</string>
-=======
     <string name="discussions">Discussions</string>
     <string name="messages">Messages</string>
     <string name="marketplace">Marketplace</string>
@@ -62,5 +60,4 @@
     <string name="club_menu">Club Menu</string>
     <string name="about">About</string>
     <string name="input_message">Input message...</string>
->>>>>>> 57095a5fe8b216e05ab93a4b3e794a3c1cb76626
 </resources>
