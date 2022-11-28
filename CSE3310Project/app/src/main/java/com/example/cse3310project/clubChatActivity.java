@@ -1,10 +1,9 @@
 package com.example.cse3310project;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CalendarView;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 import com.example.cse3310project.databinding.ActivityClubChatBinding;
 import com.example.cse3310project.databinding.ActivityFormClubBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class clubChatActivity extends drawerActivity{
     private ImageButton sendMessageButton;
@@ -63,8 +64,60 @@ public class clubChatActivity extends drawerActivity{
                 sendUserMessageToDB();
 
                 chatMessageBox.setText("");
+                chatScrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        clubNameRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.exists()){
+                    showMessages(snapshot);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.exists()){
+                    showMessages(snapshot);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void showMessages(DataSnapshot snapshot) {
+
+        Iterator iterator = snapshot.getChildren().iterator();
+
+        while(iterator.hasNext()){
+            String chatMessageDate = (String) ((DataSnapshot)iterator.next()).getValue();
+            String chatMessageTime = (String) ((DataSnapshot)iterator.next()).getValue();
+            String chatMessage = (String) ((DataSnapshot)iterator.next()).getValue();
+            String chatMessageName = (String) ((DataSnapshot)iterator.next()).getValue();
+
+            chatTextMessages.append(chatMessageName + ":\n" + chatMessage + "\n" + chatMessageDate + "   " + chatMessageTime + "\n\n\n");
+
+            chatScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+        }
     }
 
     private void sendUserMessageToDB() {
@@ -76,7 +129,7 @@ public class clubChatActivity extends drawerActivity{
         }
         else{
             Calendar grabMessageDate = Calendar.getInstance();
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM yyyy");
+            SimpleDateFormat currentDate = new SimpleDateFormat("ddMMMyyyy");
             messageDate = currentDate.format(grabMessageDate.getTime());
 
             Calendar grabMessageTime = Calendar.getInstance();

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".clubChatActivity">
+    tools:context=".clubChatActivity"
+    android:background="@color/UTA_BLUE">
 
     <ScrollView
         android:id="@+id/chatScrollView"
@@ -45,8 +46,10 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:hint="@string/input_message"
+            android:textColorHint="@color/white"
             android:padding="20dp"
             android:background="@drawable/rounded_edittext"
+            android:textColor="@color/white"
             />
 
         <ImageButton
@@ -54,7 +57,8 @@
             android:layout_width="60dp"
             android:layout_height="65dp"
             android:src="@drawable/ic_baseline_send_24"
-            android:background="@color/UTA_ORANGE"/>
+            android:background="@drawable/rounded_edittext"
+            android:backgroundTint="@color/white"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/UTA_BLUE"
     tools:context=".clubsFragment">
 
     <ListView
         android:id="@+id/clubList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        />
 
 </RelativeLayout>
