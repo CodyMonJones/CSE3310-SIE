@@ -110,11 +110,13 @@ public class TutoringRequestActivity extends drawerActivity implements View.OnCl
                                     list.add(t);
                                 }
                             }
-                            if (!user.getRatings().isEmpty()){
-                                for (int t : user.getRatings()) {
-                                    ratings.add(t);
-                                }
-                            }
+
+//                            if (!user.getRatings().isEmpty()){
+//                                for (int t : user.getRatings()) {
+//                                    ratings.add(t);
+//                                }
+//                            }
+
                             email = user.getEmail();
                         }
                     }
