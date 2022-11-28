@@ -177,7 +177,11 @@ public class User implements Serializable
         this.emailsent = new ArrayList<>();
         this.emailrecieved = new ArrayList<>();
         this.tutorpostids = new ArrayList<String>();
+<<<<<<< HEAD
         this.ratings = new ArrayList<String>();
+=======
+        this.ratings = new ArrayList<Integer>();
+>>>>>>> 7108795 (15min)
     }
 
     public User(){
