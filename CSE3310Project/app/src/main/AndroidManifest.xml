@@ -29,6 +29,13 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
+            android:name=".clubChatActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ComsChatroomActivity"
             android:exported="false">
             <meta-data
@@ -164,7 +171,7 @@
             android:exported="false" />
         <activity
             android:name=".FormClubActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

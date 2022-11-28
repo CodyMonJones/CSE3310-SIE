@@ -68,4 +68,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_diversity_3_24"
         app:tint="#FFFFFF" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/TutorList"
+        android:layout_width="410dp"
+        android:layout_height="590dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="#00477E"
+        app:layout_constraintBottom_toTopOf="@+id/OffersButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Search" />
 </androidx.constraintlayout.widget.ConstraintLayout>

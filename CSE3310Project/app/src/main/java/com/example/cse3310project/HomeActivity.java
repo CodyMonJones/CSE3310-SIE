@@ -122,10 +122,10 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
                 overridePendingTransition(0,0);
                 break;
 
-//            case R.id.tutoring_card:
-//                startActivity(new Intent(this, ComsMessagesActivity.class));
-//                overridePendingTransition(0,0);
-//                break;
+            case R.id.tutoring_card:
+                startActivity(new Intent(this, TutoringRequestActivity.class));
+                overridePendingTransition(0,0);
+                break;
 
             case R.id.discussion_card:
                 startActivity(new Intent(this, DiscussionForum.class));

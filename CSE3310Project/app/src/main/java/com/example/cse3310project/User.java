@@ -14,13 +14,18 @@ public class User implements Serializable
     private String phoneNumber;
     private ArrayList<String> creditCards;
     private ArrayList<String> discussionPostsIDs;
+    private ArrayList<String> tutorpostids;
+    private ArrayList<Integer> ratings;
     private ArrayList<String> transactionListedItemIDs;
     private ArrayList<String> transactionWishlistItemIDs;
     private ArrayList<String> transactionCartItemIDs;
     private ArrayList<contact> contactslist;
+    private ArrayList<String> chatids;
     private String profile_picture;
     private String creationDate;
     private String userID;
+    private ArrayList<String> emailsent;
+    private ArrayList<String> emailrecieved;
 
 
     public String getFname() {
@@ -65,6 +70,20 @@ public class User implements Serializable
         this.creditCards = creditCards;
     }
 
+    public ArrayList<String> getTutorpostids() {
+        return tutorpostids;
+    }
+    public void setTutorpostids(ArrayList<String> tutorpostids) {
+        this.tutorpostids = tutorpostids;
+    }
+
+    public ArrayList<Integer> getRatings() {
+        return ratings;
+    }
+    public void setRatings(ArrayList<Integer> ratings) {
+        this.ratings = ratings;
+    }
+
     public ArrayList<String> getDiscussionPostsIDs() {
         return discussionPostsIDs;
     }
@@ -100,6 +119,13 @@ public class User implements Serializable
         this.contactslist = contactslist;
     }
 
+    public ArrayList<String> getChatids() {
+        return chatids;
+    }
+    public void setChatids(ArrayList<String> chatids){
+        this.chatids = chatids;
+    }
+
     public String getProfile_picture() {
         return profile_picture;
     }
@@ -121,6 +147,20 @@ public class User implements Serializable
         this.userID = userID;
     }
 
+    public ArrayList<String> getEmailsent() {
+        return emailsent;
+    }
+    public void setEmailsent(ArrayList<String> emailsent){
+        this.emailsent = emailsent;
+    }
+
+    public ArrayList<String> getEmailrecieved() {
+        return emailrecieved;
+    }
+    public void setEmailrecieved(ArrayList<String> emailrecieved){
+        this.emailrecieved = emailrecieved;
+    }
+
     public User(String firstName, String lastName, String email, int Mav, String phone)
     {
         this.fname = firstName;
@@ -134,7 +174,12 @@ public class User implements Serializable
         this.transactionWishlistItemIDs = null;
         this.transactionCartItemIDs = null;
         this.profile_picture = null;
-        this.contactslist = null;
+        this.contactslist = new ArrayList<contact>();
+        this.chatids = new ArrayList<String>();
+        this.emailsent = new ArrayList<>();
+        this.emailrecieved = new ArrayList<>();
+        this.tutorpostids = new ArrayList<String>();
+        this.ratings = new ArrayList<Integer>();
     }
 
     public User(){

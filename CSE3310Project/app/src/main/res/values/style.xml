@@ -3,4 +3,9 @@
     <style name="circle">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="Modal" parent="Theme.AppCompat.Dialog">
+        <item name="android:background">@color/UTA_ORANGE</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

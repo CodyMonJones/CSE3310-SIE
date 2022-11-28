@@ -114,4 +114,8 @@ public class DiscussionForum extends drawerActivity {
     {
         StorageReference fileRef = storageReference.child("default-user.jpg");
     }
+
+    public void onClick(View view) {
+
+    }
 }

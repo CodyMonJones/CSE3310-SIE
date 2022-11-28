@@ -9,37 +9,37 @@
         <item
             android:id="@+id/Home"
             android:icon="@drawable/ic_baseline_home_24"
-            android:title="Home"
+            android:title="@string/home"
             />
 
         <item
             android:id="@+id/Clubs"
             android:icon="@drawable/ic_baseline_groups_24"
-            android:title="Clubs"
+            android:title="@string/clubs"
             android:checked="false"/>
 
         <item
             android:id="@+id/Tutoring"
             android:icon="@drawable/ic_baseline_school_24"
-            android:title="Tutoring"
+            android:title="@string/tutoring"
             />
 
         <item
             android:id="@+id/Marketplace"
             android:icon="@drawable/ic_baseline_storefront_24"
-            android:title="Marketplace"
+            android:title="@string/marketplace"
             />
 
         <item
             android:id="@+id/Messages"
             android:icon="@drawable/ic_baseline_message_24"
-            android:title="Messages"
+            android:title="@string/messages"
             />
 
         <item
-            android:id="@+id/Communities"
+            android:id="@+id/Discussions"
             android:icon="@drawable/ic_baseline_people_24"
-            android:title="Communities"
+            android:title="@string/discussions"
             />
     </group>
     <group
@@ -47,9 +47,18 @@
         android:checkableBehavior="single">
 
         <item
+            android:id="@+id/FormClub"
+            android:icon="@drawable/ic_baseline_group_add_24"
+            android:title="@string/form_club"/>
+    </group>
+    <group
+        android:id="@+id/group3"
+        android:checkableBehavior="single">
+
+        <item
             android:id="@+id/Settings"
             android:icon="@drawable/ic_settingscog"
-            android:title="Settings"/>
+            android:title="@string/settings"/>
 
         <item
             android:id="@+id/Logout"
