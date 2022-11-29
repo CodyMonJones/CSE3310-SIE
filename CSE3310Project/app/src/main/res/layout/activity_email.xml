@@ -85,7 +85,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/emails"
         android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_height="600dp"
         android:background="#005899"
         app:layout_constraintBottom_toTopOf="@+id/EmailMenuButton"
         app:layout_constraintEnd_toEndOf="parent"

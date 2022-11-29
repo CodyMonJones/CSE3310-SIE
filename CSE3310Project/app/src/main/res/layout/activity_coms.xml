@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComsContactsActivity"
-    android:background="@color/UTA_BLUE">
+    android:background="@color/UTA_BLUE"
+    tools:context=".ComsContactsActivity">
 
     <ImageButton
         android:id="@+id/EmailMenuButton"
@@ -41,21 +41,21 @@
         app:srcCompat="@drawable/ic_baseline_groups_24"
         app:tint="#FFFFFF" />
 
-<!--    <com.google.android.material.textfield.TextInputEditText-->
-<!--        android:id="@+id/Search"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:backgroundTint="@color/UTA_ORANGE"-->
-<!--        android:backgroundTintMode="add"-->
-<!--        android:drawableStart="?android:attr/actionModeWebSearchDrawable"-->
-<!--        android:drawableTint="@color/white"-->
-<!--        android:hint="Search contact..."-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textColorHighlight="#673AB7"-->
-<!--        android:textColorHint="#6DFFFFFF"-->
-<!--        android:textSize="28sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/UserContactButton" />-->
+    <!--    <com.google.android.material.textfield.TextInputEditText-->
+    <!--        android:id="@+id/Search"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:backgroundTint="@color/UTA_ORANGE"-->
+    <!--        android:backgroundTintMode="add"-->
+    <!--        android:drawableStart="?android:attr/actionModeWebSearchDrawable"-->
+    <!--        android:drawableTint="@color/white"-->
+    <!--        android:hint="Search contact..."-->
+    <!--        android:textColor="#FFFFFF"-->
+    <!--        android:textColorHighlight="#673AB7"-->
+    <!--        android:textColorHint="#6DFFFFFF"-->
+    <!--        android:textSize="28sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/UserContactButton" />-->
 
     <Button
         android:id="@+id/UserContactButton"
@@ -102,7 +102,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ContactList"
         android:layout_width="match_parent"
-        android:layout_height="440dp"
+        android:layout_height="470dp"
         android:background="#005899"
         android:fitsSystemWindows="true"
         app:layout_constraintBottom_toTopOf="@+id/MessageMenuButton"
