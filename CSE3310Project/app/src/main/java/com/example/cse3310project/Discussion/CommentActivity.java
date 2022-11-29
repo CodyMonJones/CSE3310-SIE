@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +45,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
@@ -59,14 +63,16 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     private CommentAdapter commentAdapter;
     private RecyclerView recyclerView;
-    private StorageReference storageReference;
 
     private DocumentReference postRef;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
     private FirebaseFirestore postDatabase;
     private FirebaseFirestore commentDatabase;
     private FirebaseUser currentUser;
 
     private NestedScrollView scrollView;
+    private ShapeableImageView posterImage;
     private TextView postTitle, postUsername, postBody, postCreationDate;
     private MaterialButton addButton;
     private EditText commentEditText;
@@ -80,6 +86,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = getIntent();
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         postDatabase = FirebaseFirestore.getInstance();
@@ -91,6 +100,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         postBody = findViewById(R.id.Post_Body);
         postUsername = findViewById(R.id.Username_Discussion_Forum);
         postCreationDate = findViewById(R.id.Post_Creation_Date);
+        posterImage = findViewById(R.id.Profile_Picture_Post_Header);
         addButton = findViewById(R.id.Add_Comment_Button);
         commentEditText = findViewById(R.id.Comment_EditText);
 
@@ -119,6 +129,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 postBody.setText(selectedPost.getPostBody());
                 postCreationDate.setText(selectedPost.getPostCreationDate());
                 postUsername.setText(selectedPost.getPostUsername());
+                setProfileImage(selectedPost);
             }
         });
     }
@@ -223,4 +234,24 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                            }
                 ,200);
     }
+
+    void setProfileImage(DiscussionPost post)
+    {
+        if(post.getPosterImage().isEmpty())
+            return;
+
+        // download image from firebase storage
+        StorageReference imageRef = storageReference.child(post.getPosterImage());
+
+        imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                // assigns the downloaded image, in bitmap form, to the imageView
+                posterImage.setImageBitmap(bitmap);
+            }
+        });
+    }
+
+
 }

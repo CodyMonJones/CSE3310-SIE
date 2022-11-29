@@ -163,7 +163,7 @@
                 android:value=".SearchableActivity" />
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".HomeActivity$RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".FormClubActivity"

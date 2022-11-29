@@ -40,6 +40,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -178,6 +179,7 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
 
         FirebaseFirestore db;
         FirebaseStorage storage;
+        StorageReference storageRef;
         FirebaseAuth mAuth;
 
         @Override
@@ -201,6 +203,7 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             db = FirebaseFirestore.getInstance();
             mAuth = FirebaseAuth.getInstance();
             storage = FirebaseStorage.getInstance();
+            storageRef = storage.getReference();
 
             submitButton.setEnabled(true);
         }
@@ -290,6 +293,11 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             }
         }
 
+        public void setUserDefaultImage()
+        {
+            StorageReference imageRef = storageRef.child("user-default/default-user.jpg");
+        }
+
         public void registerUser()
         {
             User newUser= new User(firstName.getText().toString(), lastName.getText().toString(),
@@ -301,6 +309,8 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             String currentDateandTime = sdf.format(new Date());
 
             newUser.setCreationDate(currentDateandTime);
+            newUser.setProfile_picture("user-default/default-user.jpg");
+
 
             mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override

@@ -16,6 +16,7 @@ public class DiscussionPost
     private String postBody;
     private String postCreationDate;
     private String postUsername;
+    private String posterImage;
     private int dislikes;
     private int likes;
     private String uniqueID;
@@ -117,4 +118,12 @@ public class DiscussionPost
     public String getUniqueID() { return uniqueID; }
 
     public void setUniqueID(String uniqueID) { this.uniqueID = uniqueID; }
+
+    public String getPosterImage() {
+        return posterImage;
+    }
+
+    public void setPosterImage(String posterImage) {
+        this.posterImage = posterImage;
+    }
 }

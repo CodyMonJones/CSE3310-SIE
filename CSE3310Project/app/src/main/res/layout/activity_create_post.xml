@@ -42,15 +42,20 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/Post_Title_Create_Post"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/Post_Title_Create_Post"
-                        android:hint="Post Title"
-                        android:textSize="30dp"
-                        android:textAllCaps="true"
                         android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:background="@color/white" />
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white"
+                        android:hint="Post Title"
+                        android:textColor="@color/black"
+                        android:textAllCaps="true"
+                        android:textColorHint="@color/black"
+                        android:textSize="30dp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -74,13 +79,18 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/Post_Body_Create_Post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Post_Body_Create_Post"
                 android:layout_below="@id/Linear_Layout_Post_Header"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_edittext"
                 android:hint="Enter post body"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_edittext"/>
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

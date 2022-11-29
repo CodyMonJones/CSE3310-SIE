@@ -84,7 +84,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Linear_Layout_Post_Header"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non magna ac quam rhoncus semper et vel mauris. Ut efficitur faucibus nisl. Maecenas ut euismod sem, a lacinia eros. Duis varius dui vel luctus malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent malesuada consectetur sapien, eget mattis nunc viverra ut. Fusce tincidunt lectus quis magna consectetur lobortis. Proin at sem vehicula tellus placerat volutpat. Aenean mollis egestas velit, id rhoncus nisi tempus at. Curabitur sodales, est in rhoncus consectetur, ex sem feugiat eros, sit amet mattis sem turpis in velit. " />
 
         </RelativeLayout>
@@ -119,6 +122,8 @@
             android:inputType="text"
             android:id="@+id/Comment_EditText"
             android:hint="Say something..."
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:layout_weight="0.5" />
 
         <com.google.android.material.button.MaterialButton
