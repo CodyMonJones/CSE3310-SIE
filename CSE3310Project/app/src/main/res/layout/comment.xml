@@ -4,15 +4,18 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Comment_Header">
 
             <RelativeLayout
+                android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
@@ -22,7 +25,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
-                    android:text="{username}"/>
+                    android:text="{username}"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/Comment_Creation_Date"
@@ -30,7 +34,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="{creation date}"/>
+                    android:text="{creation date}"
+                    android:textColor="@color/black"/>
             </RelativeLayout>
 
         </LinearLayout>
@@ -43,7 +48,8 @@
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"
-            android:text="{POST BODY}"/>
+            android:text="{POST BODY}"
+            android:textColor="@color/black"/>
 
     </RelativeLayout>
 
