@@ -4,23 +4,66 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.cse3310project.Discussion.DiscussionPost;
 
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyViewHolder> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyViewHolder> implements Filterable {
     Context context;
-    ArrayList<chatroom> chatroomArrayList;
+    static ArrayList<chatroom> chatroomArrayList;
+    static ArrayList<chatroom> chatroomArrayListFull;
     ChatListAdapter.RecyclerViewClickListener listener;
 
     public ChatListAdapter(Context context, ArrayList<chatroom> chatroomArrayList, ChatListAdapter.RecyclerViewClickListener listener){
         this.context = context;
         this.chatroomArrayList = chatroomArrayList;
         this.listener = listener;
+        chatroomArrayListFull = new ArrayList<>(chatroomArrayList);
     }
+
+    @Override
+    public Filter getFilter() {
+        return transactionsFilter;
+    }
+
+    private Filter transactionsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<chatroom> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(chatroomArrayListFull);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (chatroom item : chatroomArrayListFull){
+                    if(item.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            chatroomArrayList.clear();
+            chatroomArrayList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @NonNull
     @Override

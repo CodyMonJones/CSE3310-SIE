@@ -4,23 +4,64 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyViewHolder> {
+public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyViewHolder> implements Filterable {
     Context context;
     ArrayList<Email> emailArrayList;
+    ArrayList<Email> emailArrayListFull;
     EmailAdapter.RecyclerViewClickListener listener;
 
     public EmailAdapter(Context context, ArrayList<Email> emailArrayList, EmailAdapter.RecyclerViewClickListener listener){
         this.context = context;
         this.emailArrayList = emailArrayList;
         this.listener = listener;
+        emailArrayListFull = new ArrayList<>(emailArrayList);
     }
+
+    @Override
+    public Filter getFilter() {
+        return transactionsFilter;
+    }
+
+    private Filter transactionsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Email> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(emailArrayListFull);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Email item : emailArrayListFull){
+                    if(item.getEmail().getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            emailArrayList.clear();
+            emailArrayList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @NonNull
     @Override

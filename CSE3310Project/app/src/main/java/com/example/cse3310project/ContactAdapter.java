@@ -4,24 +4,65 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> implements Filterable {
 
     Context context;
     ArrayList<contact> contactArrayList;
+    ArrayList<contact> contactArrayListFull;
     RecyclerViewClickListener listener;
 
     public ContactAdapter(Context context, ArrayList<contact> contactArrayList, RecyclerViewClickListener listener){
         this.context = context;
         this.contactArrayList = contactArrayList;
         this.listener = listener;
+        contactArrayListFull = new ArrayList<>(contactArrayList);
     }
+
+    @Override
+    public Filter getFilter() {
+        return transactionsFilter;
+    }
+
+    private Filter transactionsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<contact> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(contactArrayListFull);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (contact item : contactArrayListFull){
+                    if(item.getFname().toLowerCase().contains(filterPattern) || item.getLname().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            contactArrayList.clear();
+            contactArrayList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @NonNull
     @Override
