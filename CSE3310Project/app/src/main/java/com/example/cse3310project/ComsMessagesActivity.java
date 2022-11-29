@@ -72,6 +72,9 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
     ArrayList<chatroom> chatlist;
     ArrayList<String> chatidlist;
 
+    String useremail;
+    Boolean email1Exists, email2Exists;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,12 +84,16 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
         allocateActivityTitle("Communications");
 
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();;
+        currentUser = mAuth.getCurrentUser();
+        useremail = currentUser.getEmail();
         dbref = FirebaseDatabase.getInstance().getReference();
         ff = FirebaseFirestore.getInstance();
 
         chatlist = new ArrayList<chatroom>();
         chatidlist = new ArrayList<>();
+
+        email1Exists = false;
+        email2Exists = false;
 
         newmsg = (ImageButton) findViewById(R.id.NewMessageButton);
         contacts = (ImageButton) findViewById(R.id.ContactsMenuButton);
@@ -169,56 +176,73 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
 
                 if(TextUtils.isEmpty(chatter1)){
                     Toast.makeText(ComsMessagesActivity.this, "Please fill in the first field", Toast.LENGTH_SHORT).show();
+                } else if(chatter1.equals(useremail)) {
+                    Toast.makeText(ComsMessagesActivity.this, "Invalid email, cannot be user email", Toast.LENGTH_SHORT).show();
                 } else {
                     ff.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            String rid = null;
-                            String rid2 = null;
-                            String chatname = "";
-                            ArrayList<String> uids = new ArrayList<>();
-                            ArrayList<String> rcids = new ArrayList<>();
-                            ArrayList<String> rcids2 = new ArrayList<>();
-                            for(QueryDocumentSnapshot doc : task.getResult()){
-                                if(doc.exists()) {
-                                    if(userid.equals(doc.getString("userID"))){
-                                        chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                            for(QueryDocumentSnapshot doc : task.getResult()) {
+                                if (doc.exists()) {
+                                    User user = doc.toObject(User.class);
+                                    if(chatter1.equals(user.getEmail())){
+                                        email1Exists = true;
                                     }
-                                    if (chatter1.equals(doc.getString("email"))) {
-                                        rid = doc.getString("userID");
-                                        uids.add(rid);
-                                        uids.add(currentUser.getUid());
-                                        chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
-
-                                        rcids = doc.toObject(User.class).getChatids();
-                                    }
-                                    if (!chatter2.isEmpty()) {
-                                        if (chatter2.equals(doc.getString("email"))) {
-                                            rid2 = doc.getString("userID");
-                                            chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
-                                            uids.add(rid2);
-
-                                            rcids2 = doc.toObject(User.class).getChatids();
+                                    if(!TextUtils.isEmpty(chatter2)) {
+                                        if (chatter2.equals(user.getEmail())) {
+                                            email2Exists = true;
                                         }
                                     }
                                 }
                             }
+                            if(email1Exists) {
+                                String rid = null;
+                                String rid2 = null;
+                                String chatname = "";
+                                ArrayList<String> uids = new ArrayList<>();
+                                ArrayList<String> rcids = new ArrayList<>();
+                                ArrayList<String> rcids2 = new ArrayList<>();
+                                for (QueryDocumentSnapshot doc : task.getResult()) {
+                                    if (doc.exists()) {
+                                        if (userid.equals(doc.getString("userID"))) {
+                                            chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                                        }
+                                        if (chatter1.equals(doc.getString("email"))) {
+                                            rid = doc.getString("userID");
+                                            uids.add(rid);
+                                            uids.add(currentUser.getUid());
+                                            chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
 
-                            chatroom cr = new chatroom(uids, chatname);
-                            DocumentReference ref = ff.collection("chatrooms").document();
-                            cr.setChatid(ref.getId());
-                            ref.set(cr);
+                                            rcids = doc.toObject(User.class).getChatids();
+                                        }
+                                        if (email2Exists) {
+                                            if (chatter2.equals(doc.getString("email"))) {
+                                                rid2 = doc.getString("userID");
+                                                chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                                                uids.add(rid2);
 
-                            chatidlist.add(cr.getChatid());
-                            rcids.add(cr.getChatid());
+                                                rcids2 = doc.toObject(User.class).getChatids();
+                                            }
+                                        }
+                                    }
+                                }
+                                chatroom cr = new chatroom(uids, chatname);
+                                DocumentReference ref = ff.collection("chatrooms").document();
+                                cr.setChatid(ref.getId());
+                                ref.set(cr);
 
-                            ff.collection("Users").document(userid).update("chatids", chatidlist);
-                            ff.collection("Users").document(rid).update("chatids", rcids);
-                            if(rid2 != null){
-                                rcids2.add(cr.getChatid());
-                                ff.collection("Users").document(rid2).update("chatids", rcids2);
+                                chatidlist.add(cr.getChatid());
+                                rcids.add(cr.getChatid());
+
+                                ff.collection("Users").document(userid).update("chatids", chatidlist);
+                                ff.collection("Users").document(rid).update("chatids", rcids);
+                                if (rid2 != null) {
+                                    rcids2.add(cr.getChatid());
+                                    ff.collection("Users").document(rid2).update("chatids", rcids2);
+                                }
+                            } else {
+                                Toast.makeText(ComsMessagesActivity.this, "Email address does not exist", Toast.LENGTH_SHORT).show();
                             }
-
                         }
                     });
                 }

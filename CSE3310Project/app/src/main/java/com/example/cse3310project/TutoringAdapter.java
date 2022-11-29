@@ -67,7 +67,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView Name, Email, Study, Schedule, Price;
-        ImageButton message, email, rate;
+        ImageButton rate;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -139,7 +139,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
                             float avg = sum/num;
                             namerate.setText(tutorpost.getName() + "(" + avg +")");
                         } else {
-                            namerate.setText(tutorpost.getName() + "No current ratings");
+                            namerate.setText(tutorpost.getName() + "N/A");
                         }
                     }
                 }

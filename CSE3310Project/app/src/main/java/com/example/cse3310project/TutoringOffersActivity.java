@@ -38,7 +38,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
     Button post;
 
     RecyclerView rv;
-    ContactAdapter.RecyclerViewClickListener listener;
     TutoringAdapter adapter;
 
     AlertDialog.Builder pop;
@@ -54,10 +53,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
     ArrayList<String> list;
     ArrayList<tutorpost> tps;
-
-    int[] ratings;
-
-//    ArrayList<Integer> ratings;
 
     String email;
 
@@ -111,13 +106,7 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
                                     for (String t : user.getTutorpostids()) {
                                         list.add(t);
                                     }
-
                                 }
-//                                if (!user.getRatings().isEmpty()){
-//                                    for (int t : user.getRatings()) {
-////                                        ratings.add(t);
-//                                    }
-//                                }
                                 email = user.getEmail();
                             }
                         }
@@ -135,12 +124,8 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
                 for(DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         tutorpost post = (dc.getDocument().toObject(tutorpost.class));
-                        if(!list.isEmpty()) {
-                            for (String tut : list) {
-                                if (!post.getRequest()) {
-                                    tps.add(post);
-                                }
-                            }
+                        if (!post.getRequest()) {
+                            tps.add(post);
                         }
                     }
                     adapter.notifyDataSetChanged();
@@ -175,6 +160,10 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
         schedule = (EditText) popupView.findViewById(R.id.Enterschedule);
         price = (EditText) popupView.findViewById(R.id.Enterprice);
 
+        pop.setView(popupView);
+        dialog = pop.create();
+        dialog.show();
+
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,19 +182,15 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
                 if(TextUtils.isEmpty(n) || TextUtils.isEmpty(stud) || TextUtils.isEmpty(sched) || TextUtils.isEmpty(money)){
                     Toast.makeText(TutoringOffersActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+                } else {
+                    tutorpost tp = new tutorpost(n, userid, email, stud, sched, money, false);
+                    DocumentReference ref = ff.collection("tutorposts").document();
+                    tp.setTid(ref.getId());
+                    ref.set(tp);
+                    list.add(tp.getTid());
+                    ff.collection("Users").document(userid).update("tutorpostids", list);
                 }
-                tutorpost tp = new tutorpost(n, userid, email, stud, sched, money, false);
-                DocumentReference ref = ff.collection("tutorposts").document();
-                tp.setTid(ref.getId());
-                ref.set(tp);
-                list.add(tp.getTid());
-                ff.collection("Users").document(userid).update("tutorpostids", list);
-                dialog.dismiss();
             }
         });
-
-        pop.setView(popupView);
-        dialog = pop.create();
-        dialog.show();
     }
 }
