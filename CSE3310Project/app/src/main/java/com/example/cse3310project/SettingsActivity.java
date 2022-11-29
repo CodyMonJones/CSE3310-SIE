@@ -1,7 +1,10 @@
 package com.example.cse3310project;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,7 @@ import androidx.annotation.NonNull;
 
 import com.example.cse3310project.databinding.ActivitySettingsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.common.initializedfields.qual.InitializedFields;
@@ -37,12 +45,18 @@ public class SettingsActivity extends drawerActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference currentDBRef;
 
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activitySettingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(activitySettingsBinding.getRoot());
         allocateActivityTitle("Settings");
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         mAuth = FirebaseAuth.getInstance();
         currentUserUUID = mAuth.getCurrentUser().getUid();
@@ -59,6 +73,7 @@ public class SettingsActivity extends drawerActivity {
         });
 
         grabUserProfile();
+        setProfileImage();
     }
 
     private void grabUserProfile() {
@@ -92,6 +107,30 @@ public class SettingsActivity extends drawerActivity {
 
                     }
                 });
+    }
+
+    public void setProfileImage()
+    {
+        DocumentReference userRef = FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User temp = documentSnapshot.toObject(User.class);
+
+                // download image from firebase storage
+                StorageReference imageRef = storageReference.child(temp.getProfile_picture());
+
+                imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // assigns the downloaded image, in bitmap form, to the imageView
+                        profileImage.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        });
     }
 
     private void updateAccountSettings() {

@@ -25,7 +25,8 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <LinearLayout
                     android:id="@+id/Linear_Layout_Post_Header"
@@ -54,9 +55,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_margin="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_weight="0.5"
                             android:text="{POST TITLE}"
+                            android:textColor="@color/black"
                             android:textAllCaps="true"
                             android:textSize="30dp" />
 
@@ -65,7 +70,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/Post_Title"
-                            android:text="username" />
+                            android:text="username"
+                            android:textColor="@color/black"/>
 
                         <TextView
                             android:id="@+id/Post_Creation_Date"
@@ -73,7 +79,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/Username_Discussion_Forum"
                             android:text="{MM/DD/YYYY}"
-                            android:textSize="10dp" />
+                            android:textSize="10dp"
+                            android:textColor="@color/black"/>
 
                     </RelativeLayout>
 
@@ -84,7 +91,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Linear_Layout_Post_Header"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/white"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non magna ac quam rhoncus semper et vel mauris. Ut efficitur faucibus nisl. Maecenas ut euismod sem, a lacinia eros. Duis varius dui vel luctus malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent malesuada consectetur sapien, eget mattis nunc viverra ut. Fusce tincidunt lectus quis magna consectetur lobortis. Proin at sem vehicula tellus placerat volutpat. Aenean mollis egestas velit, id rhoncus nisi tempus at. Curabitur sodales, est in rhoncus consectetur, ex sem feugiat eros, sit amet mattis sem turpis in velit. " />
 
         </RelativeLayout>
@@ -101,7 +114,8 @@
             android:background="@drawable/recyclerview_background_comments"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
-            android:paddingBottom="20dp"/>
+            android:paddingBottom="20dp"
+            android:backgroundTint="@color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,6 +133,8 @@
             android:inputType="text"
             android:id="@+id/Comment_EditText"
             android:hint="Say something..."
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:layout_weight="0.5" />
 
         <com.google.android.material.button.MaterialButton

@@ -13,9 +13,12 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +29,9 @@ import com.example.cse3310project.Discussion.CommentActivity;
 import com.example.cse3310project.Discussion.DiscussionForum;
 import com.example.cse3310project.Discussion.DiscussionPost;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +43,11 @@ import com.example.cse3310project.Discussion.DiscussionForum;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 public class drawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,12 +56,22 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
+    private ShapeableImageView currentUserImage;
+
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+
     @Override
     public void setContentView(View view){
         drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
         FrameLayout container = drawerLayout.findViewById(R.id.activityContainer);
         container.addView(view);
         super.setContentView(drawerLayout);
+
+        currentUserImage = findViewById(R.id.prof_image);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         Toolbar toolbar = drawerLayout.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +85,35 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
 
         mAuth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference();
+
+        //setProfileImage();
+    }
+
+    public void setProfileImage()
+    {
+        DocumentReference userRef = FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User temp = documentSnapshot.toObject(User.class);
+
+                Log.d("CURRENT USER", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                Log.d("CURRENT USER", temp.getProfile_picture());
+
+                // download image from firebase storage
+                StorageReference imageRef = storageReference.child(temp.getProfile_picture());
+
+                imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // assigns the downloaded image, in bitmap form, to the imageView
+                        currentUserImage.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -108,7 +157,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
                 break;
 
             case R.id.Discussions:
-                startActivity(new Intent(this, CommentActivity.class));
+                startActivity(new Intent(this, DiscussionForum.class));
                 overridePendingTransition(0,0);
                 break;
         }

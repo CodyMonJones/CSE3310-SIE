@@ -9,7 +9,7 @@
 
     <ImageButton
         android:id="@+id/EmailMenuButton"
-        android:layout_width="140dp"
+        android:layout_width="133dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
@@ -17,9 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_dialog_email"
         app:tint="#FFFFFF" />
+
     <ImageButton
         android:id="@+id/MessageMenuButton"
-        android:layout_width="140dp"
+        android:layout_width="133dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
@@ -31,7 +32,7 @@
 
     <ImageButton
         android:id="@+id/ContactsMenuButton"
-        android:layout_width="140dp"
+        android:layout_width="133dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
@@ -42,7 +43,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/Search"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:backgroundTintMode="add"
@@ -58,7 +59,7 @@
 
     <Button
         android:id="@+id/UserContactButton"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
         android:backgroundTint="#00589A"
         android:text=""
@@ -86,7 +87,7 @@
 
     <Button
         android:id="@+id/ContactsHeader"
-        android:layout_width="360dp"
+        android:layout_width="333dp"
         android:layout_height="62dp"
         android:backgroundTint="#00477E"
         android:clickable="false"
@@ -98,8 +99,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ContactList"
-        android:layout_width="400dp"
-        android:layout_height="470dp"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
         android:background="#005899"
         android:fitsSystemWindows="true"
         app:layout_constraintBottom_toTopOf="@+id/MessageMenuButton"

@@ -9,35 +9,6 @@
     android:id="@+id/drawerLayout">
 
 
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:id="@+id/appBarLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/UTA_ORANGE">-->
-
-<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            app:layout_scrollFlags="scroll">-->
-
-<!--            <androidx.appcompat.widget.Toolbar-->
-<!--                android:id="@+id/Discussion_Forum_Toolbar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                app:layout_collapseMode="pin"/>-->
-
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginBottom="20dp"-->
-<!--                android:gravity="bottom|left"-->
-<!--                android:text="DISCUSSIONS"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="30dp" />-->
-
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
-
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Discussion_Forum"
             android:layout_width="match_parent"

@@ -18,7 +18,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/prof_img"
+        android:src="@color/UTA_BLUE"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 
     <EditText
