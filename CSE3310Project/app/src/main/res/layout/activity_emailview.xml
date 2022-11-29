@@ -10,12 +10,13 @@
     <Button
         android:id="@+id/EmailHeader"
         android:layout_width="300dp"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="#00477E"
         android:clickable="false"
         android:text="Email Address"
         android:textColor="@color/white"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/subject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,9 +24,10 @@
     <ImageButton
         android:id="@+id/back"
         android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/subject"
         app:layout_constraintEnd_toStartOf="@id/EmailHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
