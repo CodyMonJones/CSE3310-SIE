@@ -133,10 +133,6 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
 
         // initialize adView
         MobileAds.initialize(this);
-        BannerAd();
-    }
-
-    void BannerAd(){
         adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);

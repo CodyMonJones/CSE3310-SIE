@@ -137,9 +137,9 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
                                 num++;
                             }
                             float avg = sum/num;
-                            namerate.setText(tutorpost.getName() + "(" + avg +")");
+                            namerate.setText(tutorpost.getName() + " (" + avg +")");
                         } else {
-                            namerate.setText(tutorpost.getName() + "N/A");
+                            namerate.setText(tutorpost.getName() + " N/A");
                         }
                     }
                 }
