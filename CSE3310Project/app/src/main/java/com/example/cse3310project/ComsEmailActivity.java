@@ -156,6 +156,9 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                         if(!sentids.isEmpty()) {
                             for (String sid : sentids) {
                                 if (email.getEid().equals(sid)) {
+                                    Messages em = email.getEmail();
+                                    em.setName("To: " + email.getRecemail());
+                                    email.setEmail(em);
                                     allemails.add(email);
                                 }
                             }
@@ -163,6 +166,9 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                         if(!recievedids.isEmpty()) {
                             for (String rid : recievedids) {
                                 if (email.getEid().equals(rid)) {
+                                    Messages em = email.getEmail();
+                                    em.setName("From: " + email.getSendemail());
+                                    email.setEmail(em);
                                     allemails.add(email);
                                 }
                             }
@@ -319,7 +325,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                                     if (whoto.equals(doc.getString("email"))) {
                                         user = doc.toObject(User.class);
                                         whoid = user.getUserID();
-                                        emailing = new Email(whoid, em, userid, about);
+                                        emailing = new Email(whoid, em, userid, about, currentUser.getEmail(), whoto);
                                         DocumentReference ref = ff.collection("emails").document();
                                         emailing.setEid(ref.getId());
                                         ref.set(emailing);

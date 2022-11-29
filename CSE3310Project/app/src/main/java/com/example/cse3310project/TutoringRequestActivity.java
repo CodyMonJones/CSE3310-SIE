@@ -1,7 +1,6 @@
 package com.example.cse3310project;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.cse3310project.databinding.ActivityComsBinding;
 import com.example.cse3310project.databinding.ActivityTutoringRequestBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +38,6 @@ public class TutoringRequestActivity extends drawerActivity implements View.OnCl
     Button post;
 
     RecyclerView rv;
-    ContactAdapter.RecyclerViewClickListener listener;
     TutoringAdapter adapter;
 
     AlertDialog.Builder pop;
