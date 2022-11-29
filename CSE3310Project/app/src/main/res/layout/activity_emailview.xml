@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="360dp"
-    android:layout_height="match_parent"
-    tools:context=".ComsEmailActivity"
-    android:background="@color/UTA_BLUE">
+    android:layout_height="750dp"
+    android:background="@color/UTA_BLUE"
+    tools:context=".ComsEmailActivity">
 
     <Button
         android:id="@+id/EmailHeader"
@@ -35,18 +35,18 @@
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/Temp"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/Temp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subject"></TextView>
 
     <TextView
         android:id="@+id/subject"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/Temp"
         android:layout_marginTop="4dp"
         android:textColor="#FFFFFF"
@@ -57,12 +57,14 @@
         app:layout_constraintTop_toBottomOf="@+id/EmailHeader" />
 
     <LinearLayout
+        android:id="@+id/Temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="620dp"
+        android:background="@color/UTA_BLUE_BG"
         android:orientation="horizontal"
-        android:id="@+id/Temp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/UTA_BLUE_BG">
+        app:layout_constraintTop_toBottomOf="@id/EmailHeader">
 
         <ImageButton
             android:id="@+id/sendMessage"
