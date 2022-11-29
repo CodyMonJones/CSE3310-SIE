@@ -10,10 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -104,8 +109,6 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
         setOnClickListener();
-        adapter = new ChatListAdapter(ComsMessagesActivity.this, chatlist, listener);
-        rv.setAdapter(adapter);
 
         newmsg.setOnClickListener(this);
         contacts.setOnClickListener(this);
@@ -113,6 +116,33 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
 
         EventChangeListener();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.transactions_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.transactions_searchbar);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void setOnClickListener() {
@@ -288,7 +318,9 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                             }
                         }
                     }
-                    adapter.notifyDataSetChanged();
+                    adapter = new ChatListAdapter(ComsMessagesActivity.this, chatlist, listener);
+                    rv.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
                 }
             }
         });

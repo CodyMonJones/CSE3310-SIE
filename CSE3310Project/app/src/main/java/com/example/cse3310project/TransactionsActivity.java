@@ -133,10 +133,6 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
 
         // initialize adView
         MobileAds.initialize(this);
-        BannerAd();
-    }
-
-    void BannerAd(){
         adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
@@ -153,6 +149,11 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
 
             case R.id.Clubs:
                 startActivity(new Intent(this, FormClubActivity.class));
+                overridePendingTransition(0,0);
+                break;
+
+            case R.id.Tutoring:
+                startActivity(new Intent(this, TutoringRequestActivity.class));
                 overridePendingTransition(0,0);
                 break;
 

@@ -7,23 +7,23 @@
     tools:context=".ComsEmailActivity"
     android:background="@color/UTA_BLUE">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/Search"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:backgroundTintMode="add"
-        android:drawableStart="?android:attr/actionModeWebSearchDrawable"
-        android:drawableTint="@color/white"
-        android:hint="Search chat..."
-        android:textColor="#FDFCFC"
-        android:textColorHighlight="#673AB7"
-        android:textColorHint="#6DFFFFFF"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailHeader" />
+<!--    <com.google.android.material.textfield.TextInputEditText-->
+<!--        android:id="@+id/Search"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:height="60dp"-->
+<!--        android:backgroundTint="@color/UTA_ORANGE"-->
+<!--        android:backgroundTintMode="add"-->
+<!--        android:drawableStart="?android:attr/actionModeWebSearchDrawable"-->
+<!--        android:drawableTint="@color/white"-->
+<!--        android:hint="Search chat..."-->
+<!--        android:textColor="#FDFCFC"-->
+<!--        android:textColorHighlight="#673AB7"-->
+<!--        android:textColorHint="#6DFFFFFF"-->
+<!--        android:textSize="28sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/EmailHeader" />-->
 
     <ImageButton
         android:id="@+id/NewEmailButton"
@@ -90,5 +90,5 @@
         app:layout_constraintBottom_toTopOf="@+id/EmailMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+        app:layout_constraintTop_toBottomOf="@+id/EmailHeader" />
 </androidx.constraintlayout.widget.ConstraintLayout>
