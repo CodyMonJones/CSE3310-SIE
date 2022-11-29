@@ -213,7 +213,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
                 commentRef.set(newComment);
 
-                DocumentReference postRef = postDatabase.collection("Posts").document("TWGVSkX9tKJq5yhCUmPU");
+                DocumentReference postRef = postDatabase.collection("Posts").document(getIntent().getStringExtra("DiscussionID"));
                 postRef.update("comments", FieldValue.arrayUnion(newComment.getUniqueID()));
 
                 Toast.makeText(getApplicationContext(), "Added Comment", Toast.LENGTH_SHORT).show();

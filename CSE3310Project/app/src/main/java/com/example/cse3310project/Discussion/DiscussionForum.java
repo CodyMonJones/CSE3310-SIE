@@ -139,12 +139,6 @@ public class DiscussionForum extends drawerActivity{
         startActivity(createPost);
     }
 
-    // TODO: implement functionality to set the user's profile picture to a post
-    public void setProfilePicture()
-    {
-        StorageReference fileRef = storageReference.child("default-user.jpg");
-    }
-
     public void onClick(View view) {
 
     }

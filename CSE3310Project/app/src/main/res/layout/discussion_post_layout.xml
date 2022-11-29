@@ -48,6 +48,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="0.5"
                     android:text="{POST TITLE}"
+                    android:textColor="@color/black"
                     android:textAllCaps="true"
                     android:textSize="30dp" />
 
@@ -56,7 +57,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Post_Title"
-                    android:text="username" />
+                    android:text="username"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/Post_Creation_Date"
@@ -64,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Username_Discussion_Forum"
                     android:text="{MM/DD/YYYY}"
+                    android:textColor="@color/black"
                     android:textSize="10dp" />
 
             </RelativeLayout>
@@ -75,44 +78,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/Linear_Layout_Post_Header"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non magna ac quam rhoncus semper et vel mauris. Ut efficitur faucibus nisl. Maecenas ut euismod sem, a lacinia eros. Duis varius dui vel luctus malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent malesuada consectetur sapien, eget mattis nunc viverra ut. Fusce tincidunt lectus quis magna consectetur lobortis. Proin at sem vehicula tellus placerat volutpat. Aenean mollis egestas velit, id rhoncus nisi tempus at. Curabitur sodales, est in rhoncus consectetur, ex sem feugiat eros, sit amet mattis sem turpis in velit. " />
 
         <LinearLayout
             android:id="@+id/Button_Layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Post_Body"
-            android:layout_marginLeft="13.5dp">
+            android:layout_marginLeft="10dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/Like_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.5"
+
                 android:backgroundTint="@color/UTA_ORANGE"
-                android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
-                android:text="LIKE" />
+                android:text="LIKE"
+                android:textColor="@color/white"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/Dislike_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.5"
+
                 android:backgroundTint="@color/UTA_ORANGE"
-                android:drawableLeft="@drawable/ic_baseline_thumb_down_24"
-                android:text="DISLIKE" />
+                android:text="DISLIKE"
+                android:textColor="@color/white"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/Comment_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.5"
                 android:backgroundTint="@color/UTA_ORANGE"
-                android:text="COMMENT" />
+                android:text="COMMENT"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -128,7 +135,8 @@
                 android:layout_marginStart="24dp"
                 android:text="Likes: "
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/Post_Dislikes"
@@ -137,7 +145,8 @@
                 android:layout_marginStart="64dp"
                 android:text="Dislikes: "
                 app:layout_constraintStart_toEndOf="@+id/Post_Likes"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:textColor="@color/black"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -214,8 +214,6 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             switch(view.getId())
             {
                 case R.id.CancelButton:
-                    Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
-                    startActivity(i);
                     finish();
                     break;
 

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.CSE3310Project" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/UTA_BLUE</item>
+        <item name="colorPrimaryVariant">@color/UTA_BLUE</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -15,8 +15,8 @@
 
         <!-- Below two lines make all editText elements -->
         <!-- use white as default color -->
-        <item name="android:editTextColor">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/black</item>
     </style>
 
     <style name="Theme.CSE3310Project.NoActionBar">

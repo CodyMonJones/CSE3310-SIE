@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.RegisterButton:
                 Intent i = new Intent(LoginActivity.this, HomeActivity.RegistrationActivity.class);
                 startActivity(i);
-                finish();
                 break;
 
             case R.id.LoginButton:
