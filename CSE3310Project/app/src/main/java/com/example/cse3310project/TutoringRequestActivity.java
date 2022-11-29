@@ -110,13 +110,6 @@ public class TutoringRequestActivity extends drawerActivity implements View.OnCl
                                     list.add(t);
                                 }
                             }
-
-//                            if (!user.getRatings().isEmpty()){
-//                                for (int t : user.getRatings()) {
-//                                    ratings.add(t);
-//                                }
-//                            }
-
                             email = user.getEmail();
                         }
                     }
@@ -133,12 +126,8 @@ public class TutoringRequestActivity extends drawerActivity implements View.OnCl
                 for(DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         tutorpost post = (dc.getDocument().toObject(tutorpost.class));
-                        if(!list.isEmpty()) {
-                            for (String tut : list) {
-                                if (post.getRequest()) {
-                                    tps.add(post);
-                                }
-                            }
+                        if (post.getRequest()) {
+                            tps.add(post);
                         }
                     }
                     adapter.notifyDataSetChanged();
@@ -173,6 +162,10 @@ public class TutoringRequestActivity extends drawerActivity implements View.OnCl
         schedule = (EditText) popupView.findViewById(R.id.Enterschedule);
         price = (EditText) popupView.findViewById(R.id.Enterprice);
 
+        pop.setView(popupView);
+        dialog = pop.create();
+        dialog.show();
+
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,9 +193,5 @@ public class TutoringRequestActivity extends drawerActivity implements View.OnCl
                 dialog.dismiss();
             }
         });
-
-        pop.setView(popupView);
-        dialog = pop.create();
-        dialog.show();
     }
 }
