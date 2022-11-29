@@ -148,6 +148,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
             case R.id.Logout:
                 mAuth.signOut();
                 startActivity(new Intent(this, LoginActivity.class));
+                finish();
                 overridePendingTransition(0,0);
                 Toast.makeText(drawerActivity.this, "Logout Successful ", Toast.LENGTH_SHORT).show();
                 break;
