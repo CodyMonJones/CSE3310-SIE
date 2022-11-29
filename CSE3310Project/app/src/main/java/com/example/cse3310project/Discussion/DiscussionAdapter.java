@@ -24,8 +24,8 @@ import java.util.List;
 
 public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.ViewHolder> implements Filterable
 {
-    private ArrayList<DiscussionPost> posts = new ArrayList<>();
-    private ArrayList<DiscussionPost> postsFull = new ArrayList<>();
+    private ArrayList<DiscussionPost> posts;
+    private ArrayList<DiscussionPost> postsFull;
     private LayoutInflater mInflater;
     private Context context;
     private FirebaseFirestore postDatabase = FirebaseFirestore.getInstance();
@@ -35,6 +35,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.posts = posts;
+        postsFull = new ArrayList<>(posts);
     }
 
     @Override
