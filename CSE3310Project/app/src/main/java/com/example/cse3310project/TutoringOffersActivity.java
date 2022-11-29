@@ -38,7 +38,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
     Button post;
 
     RecyclerView rv;
-    ContactAdapter.RecyclerViewClickListener listener;
     TutoringAdapter adapter;
 
     AlertDialog.Builder pop;
@@ -54,10 +53,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
     ArrayList<String> list;
     ArrayList<tutorpost> tps;
-
-    int[] ratings;
-
-//    ArrayList<Integer> ratings;
 
     String email;
 
@@ -113,11 +108,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
                                     }
 
                                 }
-//                                if (!user.getRatings().isEmpty()){
-//                                    for (int t : user.getRatings()) {
-////                                        ratings.add(t);
-//                                    }
-//                                }
                                 email = user.getEmail();
                             }
                         }
