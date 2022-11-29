@@ -250,7 +250,11 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                 dialog.dismiss();
                 response = true;
                 resub = email.getSubject();
-                readdress = email.getEmail().getName();
+                if(userid.equals(email.getSenderid())) {
+                    readdress = email.getRecemail();
+                } else {
+                    readdress = email.getSendemail();
+                }
                 replytoid = email.getEid();
                 createEmail();
 
@@ -263,7 +267,7 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                 dialog.dismiss();
                 forwardmsg = true;
                 resub = email.getSubject();
-                readdress = email.getEmail().getName();
+                readdress = email.getSendemail();
                 msgbody = email.getEmail().getText();
                 createEmail();
                 forwardmsg = false;
