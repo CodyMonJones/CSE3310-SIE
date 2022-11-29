@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:background="@color/UTA_ORANGE"
     app:layout_dodgeInsetEdges="all">
 
@@ -11,8 +12,9 @@
     <TextView
         android:id="@+id/Name"
         android:layout_width="340dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:padding="0dp"
         android:text="Name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -23,8 +25,9 @@
     <TextView
         android:id="@+id/email"
         android:layout_width="340dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:padding="0dp"
         android:text="Email"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -35,8 +38,9 @@
     <TextView
         android:id="@+id/study"
         android:layout_width="340dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:padding="0dp"
         android:text="Studyfield"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -47,9 +51,10 @@
     <TextView
         android:id="@+id/schedule"
         android:layout_width="340dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Schedule"
+        android:padding="0dp"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,9 +64,10 @@
     <TextView
         android:id="@+id/price"
         android:layout_width="340dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Price"
+        android:padding="0dp"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,9 +77,10 @@
     <ImageButton
         android:id="@+id/rate"
         android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="25dp"
+        android:padding="0dp"
         android:background="@color/UTA_BLUE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

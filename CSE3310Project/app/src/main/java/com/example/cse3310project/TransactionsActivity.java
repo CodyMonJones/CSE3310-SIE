@@ -156,6 +156,11 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
                 overridePendingTransition(0,0);
                 break;
 
+            case R.id.Tutoring:
+                startActivity(new Intent(this, TutoringRequestActivity.class));
+                overridePendingTransition(0,0);
+                break;
+
             case R.id.Messages:
                 startActivity(new Intent(this, ComsContactsActivity.class));
                 overridePendingTransition(0,0);
