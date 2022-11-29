@@ -2,6 +2,7 @@ package com.example.cse3310project;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,8 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -73,8 +79,6 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             Price = itemView.findViewById(R.id.price);
 
             rate = itemView.findViewById(R.id.rate);
-            message = itemView.findViewById(R.id.messagetutor);
-            email = itemView.findViewById(R.id.emailtutor);
 
             rate.setOnClickListener(this);
             message.setOnClickListener(this);
@@ -84,10 +88,6 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         @Override
         public void onClick(View view) {
             switch(view.getId()) {
-                case R.id.messagetutor:
-                    break;
-                case R.id.emailtutor:
-                    break;
                 case R.id.rate:
                     int pos = getLayoutPosition();
                     tutorpost t = tutors.get(pos);
@@ -129,18 +129,19 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()){
-                        int sum = 0;
-                        int num = 0;
-                        ArrayList<Integer> rates = doc.get("ratings", ArrayList.class);
-                        if(!rates.isEmpty()){
-                            for(float f : rates){
-                                sum += f;
+                        User user = doc.toObject(User.class);
+                        ArrayList<String> rates = user.getRatings();
+                        if(rates != null && !rates.isEmpty()){
+                            int sum = 0;
+                            int num = 0;
+                            for(String f : rates){
+                                sum += Integer.parseInt(f);
                                 num++;
                             }
                             float avg = sum/num;
                             namerate.setText(tutorpost.getName() + "(" + avg +")");
                         } else {
-                            namerate.setText(tutorpost.getName());
+                            namerate.setText(tutorpost.getName() + "No current ratings");
                         }
                     }
                 }
@@ -158,7 +159,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int rate = 1;
-                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                addRate(rate, tutorpost);
                 dialog.dismiss();
             }
         });
@@ -166,7 +167,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int rate = 2;
-                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                addRate(rate, tutorpost);
                 dialog.dismiss();
             }
         });
@@ -174,7 +175,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int rate = 3;
-                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                addRate(rate, tutorpost);
                 dialog.dismiss();
             }
         });
@@ -182,7 +183,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int rate = 4;
-                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                addRate(rate, tutorpost);
                 dialog.dismiss();
             }
         });
@@ -190,7 +191,7 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 int rate = 5;
-                ff.collection("User").document(tutorpost.getPosterid()).update("ratings", rate);
+                addRate(rate, tutorpost);
                 dialog.dismiss();
             }
         });
@@ -204,5 +205,39 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
         pop.setView(popupView);
         dialog = pop.create();
         dialog.show();
+    }
+
+    public void addRate(int rate, tutorpost post) {
+        ff.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("Firestore error", error.getMessage());
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        User user = (dc.getDocument().toObject(User.class));
+                        if(user.getUserID().equals(post.getPosterid())) {
+                            if (user.getRatings() != null){
+                                int[] rates = new int[user.getRatings().size()+1];
+                                for(int x = 0; x< user.getRatings().size(); x++) {
+                                        rates[x] = Integer.parseInt(user.getRatings().get(x));
+                                }
+                                rates[user.getRatings().size()] = rate;
+                                ArrayList<String> rateTutor = new ArrayList<>();
+                                for(int r : rates){
+                                    rateTutor.add(Integer.toString(r));
+                                }
+                                ff.collection("Users").document(post.getPosterid()).update("ratings", rateTutor);
+                            } else {
+                                ArrayList<String> rateTutor = new ArrayList<>();
+                                rateTutor.add(Integer.toString(rate));
+                                ff.collection("Users").document(post.getPosterid()).update("ratings", rateTutor);
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 }

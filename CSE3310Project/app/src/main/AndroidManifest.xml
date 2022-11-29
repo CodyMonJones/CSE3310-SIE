@@ -157,7 +157,7 @@
         </activity>
         <activity
             android:name=".TransactionsActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivity" />

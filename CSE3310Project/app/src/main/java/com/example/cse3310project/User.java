@@ -13,7 +13,7 @@ public class User implements Serializable
     private ArrayList<String> creditCards;
     private ArrayList<String> discussionPostsIDs;
     private ArrayList<String> tutorpostids;
-    private ArrayList<Integer> ratings;
+    private ArrayList<String> ratings;
     private ArrayList<String> transactionListedItemIDs;
     private ArrayList<String> transactionWishlistItemIDs;
     private ArrayList<String> transactionCartItemIDs;
@@ -75,10 +75,10 @@ public class User implements Serializable
         this.tutorpostids = tutorpostids;
     }
 
-    public ArrayList<Integer> getRatings() {
+    public ArrayList<String> getRatings() {
         return ratings;
     }
-    public void setRatings(ArrayList<Integer> ratings) {
+    public void setRatings(ArrayList<String> ratings) {
         this.ratings = ratings;
     }
 
@@ -177,7 +177,11 @@ public class User implements Serializable
         this.emailsent = new ArrayList<>();
         this.emailrecieved = new ArrayList<>();
         this.tutorpostids = new ArrayList<String>();
-        this.ratings = new ArrayList<Integer>();
+
+        this.ratings = new ArrayList<String>();
+
+//        this.ratings = new ArrayList<Integer>();
+
     }
 
     public User(){
