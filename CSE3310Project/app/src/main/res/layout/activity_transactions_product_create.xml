@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/UTA_BLUE_BG"
+    android:background="@color/UTA_BLUE"
     tools:context=".TransactionsProductCreateActivity">
 
 
@@ -12,7 +12,7 @@
         android:id="@+id/transactionProductCreateToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/UTA_BLUE"
+        android:background="@color/UTA_ORANGE"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Create Marketplace Listing"

@@ -3,6 +3,7 @@ package com.example.cse3310project;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 public class PaymentsActivity extends AppCompatActivity{
 
     public ArrayList<String> creditCards = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     // Create ArrayList to hold all of the listing ID's in cart
     public ArrayList<String> listingsToDelete = new ArrayList<>();
@@ -99,9 +101,10 @@ public class PaymentsActivity extends AppCompatActivity{
             public void onComplete(@NonNull Task<DocumentSnapshot> task){
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
+                    creditCards.clear();
                     if (document.exists()) {
                         ArrayList<String> cardArray = (ArrayList<String>) document.get("creditCards");
-                        if (cardArray.size() > 0){
+                        if (cardArray != null){
                             creditCards.addAll(cardArray);
                         }
                     }
@@ -116,7 +119,7 @@ public class PaymentsActivity extends AppCompatActivity{
 
         // place saved cards into ArrayAdapter if there are any existing cards
         if(creditCards != null){
-            ArrayAdapter<String> adapter =
+            adapter =
                     new ArrayAdapter<>(
                             this,
                             R.layout.payments_dropdown_menu_popup_item,
@@ -126,11 +129,13 @@ public class PaymentsActivity extends AppCompatActivity{
             editTextFilledExposedDropdown.setAdapter(adapter);
         }
 
+
         // override the add-card button's onclick listener to run custom function
         addCardButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 goToAddCardActivity();
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -150,6 +155,41 @@ public class PaymentsActivity extends AppCompatActivity{
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        DocumentReference userRef = paymentDB.collection("Users").document(currentUser.getUid());
+
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>(){
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task){
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    creditCards.clear();
+                    if (document.exists()) {
+                        ArrayList<String> cardArray = (ArrayList<String>) document.get("creditCards");
+                        if (cardArray != null){
+                            creditCards.addAll(cardArray);
+                        }
+                    }
+                    else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        adapter.notifyDataSetChanged();
+    }
+
+    void goToAddCardActivity(){
+        Intent intent = new Intent(this, PaymentsAddCardActivity.class);
+        startActivity(intent);
     }
 
     // deletes all traces of purchased listing(s) from firebase
@@ -253,11 +293,6 @@ public class PaymentsActivity extends AppCompatActivity{
         });
 
         this.finish();
-    }
-
-    void goToAddCardActivity(){
-        Intent intent = new Intent(this, PaymentsAddCardActivity.class);
-        startActivity(intent);
     }
 
     public void showKeyboard(final EditText ettext){

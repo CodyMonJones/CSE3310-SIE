@@ -69,7 +69,8 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:layout_marginRight="20dp"
-            android:text="Login" />
+            android:text="Login"
+            android:textColor="@color/white"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/RegisterButton"
@@ -83,6 +84,7 @@
             android:layout_weight="0.5"
             android:layout_marginLeft="20dp"
             android:text="Register"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

@@ -13,6 +13,7 @@
         android:backgroundTint="#00477E"
         android:clickable="false"
         android:text="Email Address"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"

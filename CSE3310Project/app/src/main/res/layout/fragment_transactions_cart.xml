@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/UTA_BLUE_BG"
+    android:background="@color/UTA_BLUE"
     tools:context=".TransactionsCartFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -45,7 +45,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/UTA_ORANGE"
-                android:text="Purchase" />
+                android:text="Purchase"
+                android:textColor="@color/white"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
         </LinearLayout>
     </ScrollView>
 

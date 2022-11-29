@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/UTA_BLUE_BG"
+    android:background="@color/UTA_BLUE"
     tools:context=".TransactionsProductEditActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/transactionProductEditToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/UTA_BLUE"
+        android:background="@color/UTA_ORANGE"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Edit Marketplace Listing"
@@ -55,6 +55,7 @@
                     android:layout_margin="10dp"
                     android:backgroundTint="@color/UTA_ORANGE"
                     android:text="Select Image"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/transactionProductImagePreviewEdit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -200,6 +201,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/UTA_ORANGE"
                     android:text="Submit"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/transactionProductExchangeInputFieldEdit" />

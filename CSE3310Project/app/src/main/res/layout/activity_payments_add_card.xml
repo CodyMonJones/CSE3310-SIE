@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/UTA_BLUE_BG"
+    android:background="@color/UTA_BLUE"
     tools:context=".PaymentsAddCardActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/payments_add_card_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/UTA_BLUE"
+        android:background="@color/UTA_ORANGE"
         android:textAlignment="center"
         app:title="Add Card"
         app:titleTextColor="@color/white"

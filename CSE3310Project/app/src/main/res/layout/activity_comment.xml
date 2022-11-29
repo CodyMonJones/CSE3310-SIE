@@ -145,7 +145,8 @@
             android:backgroundTint="@color/UTA_ORANGE"
             android:checkable="true"
             android:clickable="true"
-            android:text="ADD" />
+            android:text="ADD"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

@@ -45,6 +45,8 @@ public class TransactionsCartFragment extends Fragment implements TransactionsRe
     Button purchaseButton;
 
     ArrayList<TransactionsProduct> productCartArrayList = new ArrayList<>();
+    // create an ArrayList to hold the firestore cart data
+    ArrayList<String> userCart;
     private FirebaseFirestore marketplaceDb;
     private TransactionsCartAdapter transactionsCartAdapter;
     private RecyclerView recyclerView;
@@ -82,15 +84,16 @@ public class TransactionsCartFragment extends Fragment implements TransactionsRe
         // create a string to hold the current userID
         DocumentReference userRef = marketplaceDb.collection("Users").document(currentUser.getUid());
 
-        // create an ArrayList to hold the wishlist data
-        ArrayList<String> userCart = new ArrayList<>();
-        // download the user's wishlist from firestore
+        // create an ArrayList to hold the cart data
+        userCart = new ArrayList<>();
+        // download the user's cart from firestore
         // and load it into the ArrayList
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
+                    userCart.clear();
                     if (document.exists()) {
                         ArrayList<String> cartArray = (ArrayList<String>) document.get("transactionCartItemIDs");
                         if (cartArray != null) {
@@ -114,6 +117,7 @@ public class TransactionsCartFragment extends Fragment implements TransactionsRe
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
+                                    productCartArrayList.clear();
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         for (String i : userCart) {
                                             if (i.equals(document.getString("uniqueID"))) {
@@ -159,8 +163,14 @@ public class TransactionsCartFragment extends Fragment implements TransactionsRe
             @Override
             public void onClick(View view) {
                 if(productCartArrayList.size()>0) {
+                    // set up intent to purchase screen
                     Intent intent = new Intent(getActivity(), PaymentsActivity.class);
                     intent.putExtra("SUBTOTAL", subtotal.getText().toString());
+                    //clear cart so that upon return there is nothing left
+                    productCartArrayList.clear();
+                    transactionsCartAdapter.notifyDataSetChanged();
+
+                    // execute intent to purchase screen
                     startActivity(intent);
                 }
                 else {

@@ -42,6 +42,7 @@
         android:backgroundTint="#00477E"
         android:clickable="false"
         android:text="MESSAGES"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/NewMessageButton"
         app:layout_constraintStart_toStartOf="parent"

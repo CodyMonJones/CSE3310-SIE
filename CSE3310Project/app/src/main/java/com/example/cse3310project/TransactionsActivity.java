@@ -30,6 +30,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.cse3310project.Discussion.CommentActivity;
 import com.example.cse3310project.Discussion.DiscussionForum;
 import com.example.cse3310project.databinding.ActivityTransactionsBinding;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.mediation.MediationBannerAd;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -45,6 +49,9 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
     private ViewPager viewPager;
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
+
+    // ad stuff
+    private AdView adView;
 
     //variables needed for drawer menu
     public DrawerLayout drawerLayout;
@@ -123,6 +130,16 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
         // to toggle the button
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        // initialize adView
+        MobileAds.initialize(this);
+        BannerAd();
+    }
+
+    void BannerAd(){
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override
@@ -166,7 +183,7 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
                 break;
 
             case R.id.Discussions:
-                startActivity(new Intent(this, CommentActivity.class));
+                startActivity(new Intent(this, DiscussionForum.class));
                 overridePendingTransition(0,0);
                 break;
         }

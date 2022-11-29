@@ -46,7 +46,12 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:tabGravity="fill"
                     app:tabMaxWidth="0dp"
-                    app:tabMode="fixed">
+                    app:tabMode="fixed"
+                    app:tabPaddingBottom="0dp"
+                    app:tabPaddingEnd="0dp"
+                    app:tabPaddingStart="0dp"
+                    app:tabPaddingTop="0dp"
+                    app:tabIndicatorHeight="0dp">
 
                     <com.google.android.material.tabs.TabItem
                         android:id="@+id/buyTab"
@@ -93,6 +98,19 @@
             android:foregroundGravity="bottom"
             android:onClick="goToTransactionsProductCreateActivity"
             app:srcCompat="@android:drawable/ic_input_add" />
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+
+
     </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView

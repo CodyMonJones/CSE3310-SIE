@@ -87,11 +87,11 @@ public class DiscussionForum extends drawerActivity{
         postDatabase = FirebaseFirestore.getInstance();
 
         // Initializes the adapter and sets the RecyclerView
-        customAdapter = new DiscussionAdapter(posts, this);
+
         recyclerView = findViewById(R.id.Discussion_Forum);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(customAdapter);
+
         recyclerView.addItemDecoration(new ItemDecorator(50));
 
         // Sets the Floating Action Button and implements the listener
@@ -128,7 +128,10 @@ public class DiscussionForum extends drawerActivity{
                     }
                 }
 
+                customAdapter = new DiscussionAdapter(posts, DiscussionForum.this);
+
                 customAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(customAdapter);
             }
         });
     }
