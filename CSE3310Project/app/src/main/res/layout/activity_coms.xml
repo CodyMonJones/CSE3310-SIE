@@ -41,21 +41,21 @@
         app:srcCompat="@drawable/ic_baseline_groups_24"
         app:tint="#FFFFFF" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/Search"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:backgroundTintMode="add"
-        android:drawableStart="?android:attr/actionModeWebSearchDrawable"
-        android:drawableTint="@color/white"
-        android:hint="Search contact..."
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#673AB7"
-        android:textColorHint="#6DFFFFFF"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UserContactButton" />
+<!--    <com.google.android.material.textfield.TextInputEditText-->
+<!--        android:id="@+id/Search"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:backgroundTint="@color/UTA_ORANGE"-->
+<!--        android:backgroundTintMode="add"-->
+<!--        android:drawableStart="?android:attr/actionModeWebSearchDrawable"-->
+<!--        android:drawableTint="@color/white"-->
+<!--        android:hint="Search contact..."-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textColorHighlight="#673AB7"-->
+<!--        android:textColorHint="#6DFFFFFF"-->
+<!--        android:textSize="28sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/UserContactButton" />-->
 
     <Button
         android:id="@+id/UserContactButton"
@@ -108,7 +108,7 @@
         app:layout_constraintBottom_toTopOf="@+id/MessageMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+        app:layout_constraintTop_toBottomOf="@+id/UserContactButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
