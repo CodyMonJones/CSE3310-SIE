@@ -81,8 +81,6 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
             rate = itemView.findViewById(R.id.rate);
 
             rate.setOnClickListener(this);
-            message.setOnClickListener(this);
-            email.setOnClickListener(this);
         }
 
         @Override

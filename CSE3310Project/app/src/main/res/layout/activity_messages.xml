@@ -9,7 +9,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/Search"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
@@ -37,7 +37,7 @@
 
     <Button
         android:id="@+id/MessagesHeader"
-        android:layout_width="360dp"
+        android:layout_width="333dp"
         android:layout_height="60dp"
         android:backgroundTint="#00477E"
         android:clickable="false"
@@ -49,7 +49,7 @@
 
     <ImageButton
         android:id="@+id/EmailMenuButton"
-        android:layout_width="140dp"
+        android:layout_width="133dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
@@ -60,7 +60,7 @@
 
     <ImageButton
         android:id="@+id/MessageMenuButton"
-        android:layout_width="140dp"
+        android:layout_width="133dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
@@ -72,7 +72,7 @@
 
     <ImageButton
         android:id="@+id/ContactsMenuButton"
-        android:layout_width="140dp"
+        android:layout_width="133dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/UTA_ORANGE"
         android:scaleType="fitCenter"
@@ -83,8 +83,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chats"
-        android:layout_width="410dp"
-        android:layout_height="590dp"
+        android:layout_width="match_parent"
+        android:layout_height="560dp"
         android:background="#005899"
         app:layout_constraintBottom_toTopOf="@+id/EmailMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
