@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.cse3310project.Discussion.CommentActivity;
@@ -56,7 +57,7 @@ public class drawerActivity extends AppCompatActivity implements NavigationView.
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
-    private ShapeableImageView currentUserImage;
+    private ImageView currentUserImage;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;

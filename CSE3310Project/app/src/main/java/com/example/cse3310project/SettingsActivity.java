@@ -20,6 +20,7 @@ import com.example.cse3310project.databinding.ActivitySettingsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,8 +45,9 @@ public class SettingsActivity extends drawerActivity {
     private Button updateAccount;
     private EditText userName, userStatus;
     private ImageView profileImage;
-    private static int profImgSelected = 1;
-    private StorageReference profileImagesRef;
+    private ShapeableImageView drawerImage;
+//    private static int profImgSelected = 1;
+//    private StorageReference profileImagesRef;
 
     private String currentUserUUID;
     private FirebaseAuth mAuth;
@@ -67,7 +69,7 @@ public class SettingsActivity extends drawerActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserUUID = mAuth.getCurrentUser().getUid();
         currentDBRef = FirebaseDatabase.getInstance().getReference();
-        profileImagesRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
+//        profileImagesRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
 
         InitializedFields();
@@ -80,15 +82,15 @@ public class SettingsActivity extends drawerActivity {
         });
 
         grabUserProfile();
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent images = new Intent();
-                images.setAction(Intent.ACTION_GET_CONTENT);
-                images.setType("image/*");
-                startActivityForResult(images, profImgSelected);
-            }
-        });
+//        profileImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent images = new Intent();
+//                images.setAction(Intent.ACTION_GET_CONTENT);
+//                images.setType("image/*");
+//                startActivityForResult(images, profImgSelected);
+//            }
+//        });
         setProfileImage();
     }
 
@@ -123,27 +125,6 @@ public class SettingsActivity extends drawerActivity {
 
                     }
                 });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == profImgSelected && requestCode == RESULT_OK && data != null){
-            Uri imageUri = data.getData();
-            StorageReference path = profileImagesRef.child(currentUserUUID + ".jpg");
-            path.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(SettingsActivity.this, "Image uploaded Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        String errMessage = task.getException().toString();
-                        Toast.makeText(SettingsActivity.this, "Error Ocurred: " + errMessage, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
     }
 
     public void setProfileImage()

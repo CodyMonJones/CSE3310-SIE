@@ -10,11 +10,17 @@
         android:id="@+id/prof_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/prof_img"
+        android:src="@color/UTA_BLUE"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <View
         android:id="@+id/prof_img_container"
