@@ -56,6 +56,7 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
 
     Button cancel;
     Button confirm;
+    Button all;
 
     EditText member1;
     EditText member2;
@@ -184,8 +185,17 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
 
         cancel = (Button) popupView.findViewById(R.id.cancel);
         confirm = (Button) popupView.findViewById(R.id.confirm);
+        all = (Button) popupView.findViewById(R.id.All);
         member1 = (EditText) popupView.findViewById(R.id.recipient);
         member2 = (EditText) popupView.findViewById(R.id.recipient2);
+
+        if(currentUser.getUid().equals("GsOj1mpUeuW4yf7luJa65Tn9xik1")){
+            all.setVisibility(View.VISIBLE);
+            all.setClickable(true);
+        } else {
+            all.setVisibility(View.INVISIBLE);
+            all.setClickable(false);
+        }
 
         pop.setView(popupView);
         dialog = pop.create();
@@ -194,6 +204,37 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<User> allusers = new ArrayList<User>();
+                ArrayList<String> alluids = new ArrayList<String>();
+                ff.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                            if (doc.exists()) {
+                                User user = doc.toObject(User.class);
+                                allusers.add(user);
+                                alluids.add(user.getUserID());
+                            }
+                        }
+                        chatroom cr = new chatroom(alluids, "All Users!!!");
+                        DocumentReference ref = ff.collection("chatrooms").document();
+                        cr.setChatid(ref.getId());
+                        ref.set(cr);
+
+                        for(User curr : allusers){
+                            ArrayList<String> id = new ArrayList<>(curr.getChatids());
+                            id.add(cr.getChatid());
+                            ff.collection("Users").document(curr.getUserID()).update("chatids", id);
+                        }
+                    }
+                });
+
                 dialog.dismiss();
             }
         });
