@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -33,10 +34,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.common.initializedfields.qual.InitializedFields;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.URI;
 import java.util.HashMap;
 
 public class SettingsActivity extends drawerActivity {
@@ -45,11 +50,12 @@ public class SettingsActivity extends drawerActivity {
     private Button updateAccount;
     private EditText userName, userStatus;
     private ImageView profileImage;
-    private ShapeableImageView drawerImage;
-//    private static int profImgSelected = 1;
-//    private StorageReference profileImagesRef;
+    private static int profImgSelected = 1;
+    Uri profImageURI;
+    private StorageReference profileImagesRef;
 
     private String currentUserUUID;
+    private String photoUrl = "";
     private FirebaseAuth mAuth;
     private DatabaseReference currentDBRef;
 
@@ -69,7 +75,7 @@ public class SettingsActivity extends drawerActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserUUID = mAuth.getCurrentUser().getUid();
         currentDBRef = FirebaseDatabase.getInstance().getReference();
-//        profileImagesRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
+        profileImagesRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
 
         InitializedFields();
@@ -82,16 +88,48 @@ public class SettingsActivity extends drawerActivity {
         });
 
         grabUserProfile();
-//        profileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent images = new Intent();
-//                images.setAction(Intent.ACTION_GET_CONTENT);
-//                images.setType("image/*");
-//                startActivityForResult(images, profImgSelected);
-//            }
-//        });
-        setProfileImage();
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent images = new Intent(Intent.ACTION_PICK);
+                images.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(images, profImgSelected);
+            }
+        });
+//        setProfileImage();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == profImgSelected && resultCode == RESULT_OK && data != null){
+           profileImage.setImageURI(data.getData());
+           profImageURI = data.getData();
+
+           StorageReference path = profileImagesRef.child(currentUserUUID + ".jpg");
+           path.putFile(profImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(SettingsActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        photoUrl = task.getResult().getStorage().getDownloadUrl().toString();
+                        task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                   updateProfileImage(task.getResult().toString());
+                                }
+                            }
+                        });
+                    }
+               }
+           });
+        }
+    }
+
+    private void updateProfileImage(String url){
+     FirebaseDatabase.getInstance().getReference("User/" + mAuth.getCurrentUser().getUid() + "/Image").setValue(url);
     }
 
     private void grabUserProfile() {
@@ -99,13 +137,14 @@ public class SettingsActivity extends drawerActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if((snapshot.exists()) && (snapshot.hasChild("name")) && (snapshot.hasChild("image"))){
+                        if((snapshot.exists()) && (snapshot.hasChild("name")) && (snapshot.hasChild("Image"))){
                             String grabUserName = snapshot.child("name").getValue().toString();
                             String grabUserStatus = snapshot.child("Status").getValue().toString();
-                            String grabUserProfImg = snapshot.child("image").getValue().toString();
+                            String grabUserProfImg = snapshot.child("Image").getValue().toString();
 
                             userName.setText(grabUserName);
                             userStatus.setText(grabUserStatus);
+                            Picasso.get().load(grabUserProfImg).into(profileImage);
                         }
                         else if((snapshot.exists()) && (snapshot.hasChild("name"))){
                             String grabUserName = snapshot.child("name").getValue().toString();
@@ -166,6 +205,11 @@ public class SettingsActivity extends drawerActivity {
                 userProfileMap.put("UID", currentUserUUID);
                 userProfileMap.put("name", getUserName);
                 userProfileMap.put("Status", getUserStatus);
+                if(!TextUtils.isEmpty(photoUrl)){
+                    userProfileMap.put("Image", photoUrl);
+                }
+
+
 
             currentDBRef.child("User").child(currentUserUUID).setValue(userProfileMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {

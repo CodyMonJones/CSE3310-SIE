@@ -72,4 +72,7 @@ dependencies {
 
     // ad implementation added by AJ
     implementation 'com.google.android.gms:play-services-afs-native:19.0.3'
+
+    //image dependency
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
