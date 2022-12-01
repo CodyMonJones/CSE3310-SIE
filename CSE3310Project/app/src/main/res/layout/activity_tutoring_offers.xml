@@ -7,24 +7,6 @@
     tools:context=".TutoringOffersActivity"
     android:background="@color/UTA_BLUE">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/Search"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:height="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:backgroundTintMode="add"
-        android:drawableStart="?android:attr/actionModeWebSearchDrawable"
-        android:drawableTint="@color/white"
-        android:hint="Search offer..."
-        android:textColor="#FDFCFC"
-        android:textColorHighlight="#673AB7"
-        android:textColorHint="#6DFFFFFF"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OffersHeader" />
-
     <ImageButton
         android:id="@+id/NewOfferButton"
         android:layout_width="60dp"
@@ -73,7 +55,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TutorList"
         android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_height="600dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
@@ -81,5 +63,5 @@
         app:layout_constraintBottom_toTopOf="@+id/OffersButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+        app:layout_constraintTop_toBottomOf="@+id/NewOfferButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

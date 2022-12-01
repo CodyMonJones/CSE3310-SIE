@@ -9,10 +9,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.cse3310project.databinding.ActivityTutoringOffersBinding;
@@ -33,7 +38,7 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
     ImageButton add, requests, offers, exit;
 
-    EditText search, name, study, schedule, price;
+    EditText name, study, schedule, price;
 
     Button post;
 
@@ -55,6 +60,33 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
     ArrayList<tutorpost> tps;
 
     String email;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.transactions_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.transactions_searchbar);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +112,6 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
 
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TutoringAdapter(TutoringOffersActivity.this, tps);
-        rv.setAdapter(adapter);
 
         add.setOnClickListener(this);
         requests.setOnClickListener(this);
@@ -128,7 +158,8 @@ public class TutoringOffersActivity extends drawerActivity implements View.OnCli
                             tps.add(post);
                         }
                     }
-                    adapter.notifyDataSetChanged();
+                    adapter = new TutoringAdapter(TutoringOffersActivity.this, tps);
+                    rv.setAdapter(adapter);
                 }
             }
         });

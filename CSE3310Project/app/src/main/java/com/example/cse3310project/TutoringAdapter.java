@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -26,11 +28,13 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHolder>{
+public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHolder> implements Filterable {
     Context context;
     ArrayList<tutorpost> tutors;
+    ArrayList<tutorpost> tutorArrayList;
     AlertDialog.Builder pop;
     AlertDialog dialog;
 
@@ -39,7 +43,44 @@ public class TutoringAdapter extends RecyclerView.Adapter<TutoringAdapter.ViewHo
     public TutoringAdapter(Context context, ArrayList<tutorpost> tutors){
         this.context = context;
         this.tutors = tutors;
+        tutorArrayList = new ArrayList<>(tutors);
     }
+
+    @Override
+    public Filter getFilter() {
+        return transactionsFilter;
+    }
+
+    private Filter transactionsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<tutorpost> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(tutorArrayList);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (tutorpost item : tutorArrayList){
+                    if(item.getName().toLowerCase().contains(filterPattern) || item.getField().toLowerCase().contains(filterPattern) || item.getPrice().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            tutors.clear();
+            tutors.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @NonNull
     @Override
