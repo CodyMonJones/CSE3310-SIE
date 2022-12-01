@@ -9,15 +9,18 @@
     tools:context=".HomeActivity$LoginActivity">
 
     <TextView
+        android:id="@+id/SignInText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SignInText"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:gravity="center"
         android:text="Sign In"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="25dp"
-        android:layout_margin="25dp"
-        android:gravity="center"/>
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="match_parent"
@@ -53,11 +56,22 @@
         android:drawableLeft="@drawable/ic_baseline_lock_24"
         android:drawablePadding="10dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Forgot_Password_Button"
+        android:layout_below="@id/Password"
+        android:layout_marginLeft="20dp"
+        android:text="Forgot Password?"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textSize="10dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Password"
-        android:layout_margin="20dp">
+        android:layout_below="@id/Forgot_Password_Button"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/LoginButton"
@@ -84,8 +98,7 @@
             android:layout_weight="0.5"
             android:layout_marginLeft="20dp"
             android:text="Register"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

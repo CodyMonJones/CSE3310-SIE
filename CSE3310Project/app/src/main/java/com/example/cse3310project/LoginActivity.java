@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,13 +24,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText email;
-    EditText password;
-    MaterialButton loginButton;
-    MaterialButton registerButton;
+    private EditText email;
+    private EditText password;
+    private MaterialButton loginButton;
+    private MaterialButton registerButton;
+    private Button forgotPasswordButton;
 
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -41,14 +43,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        email = (EditText) findViewById(R.id.Email);
-        password = (EditText)  findViewById(R.id.Password);
-        loginButton = (MaterialButton) findViewById(R.id.LoginButton);
+        email = findViewById(R.id.Email);
+        password = findViewById(R.id.Password);
+        loginButton = findViewById(R.id.LoginButton);
+        forgotPasswordButton = findViewById(R.id.Forgot_Password_Button);
+        registerButton = findViewById(R.id.RegisterButton);
 
-        registerButton = (MaterialButton) findViewById(R.id.RegisterButton);
         registerButton.setOnClickListener(this);
-
         loginButton.setOnClickListener(this);
+        forgotPasswordButton.setOnClickListener(this);
 
         loginButton.setEnabled(true);
     }
@@ -96,8 +99,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     return;
                 }
 
-
                 loginUser();
+                break;
+
+            case R.id.Forgot_Password_Button:
+                Intent forgotPasswordActivity = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(forgotPasswordActivity);
                 break;
         }
     }

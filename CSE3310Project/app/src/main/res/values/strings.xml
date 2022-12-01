@@ -60,4 +60,5 @@
     <string name="club_menu">Club Menu</string>
     <string name="about">About</string>
     <string name="input_message">Input message...</string>
+    <string name="Reset_Your_Password"><u>Reset Your Password</u></string>
 </resources>
