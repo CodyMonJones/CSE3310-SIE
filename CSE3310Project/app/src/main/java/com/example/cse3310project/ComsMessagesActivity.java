@@ -276,20 +276,20 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
                                     if (doc.exists()) {
                                         if (userid.equals(doc.getString("userID"))) {
-                                            chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                                            chatname = chatname + doc.getString("firstName") + " " + doc.getString("lname").charAt(0) + ",";
                                         }
                                         if (chatter1.equals(doc.getString("email"))) {
                                             rid = doc.getString("userID");
                                             uids.add(rid);
                                             uids.add(currentUser.getUid());
-                                            chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                                            chatname = chatname + doc.getString("firstName") + " " + doc.getString("lname").charAt(0) + ",";
 
                                             rcids = doc.toObject(User.class).getChatids();
                                         }
                                         if (email2Exists) {
                                             if (chatter2.equals(doc.getString("email"))) {
                                                 rid2 = doc.getString("userID");
-                                                chatname = chatname + doc.getString("fname") + " " + doc.getString("lname").charAt(0) + ",";
+                                                chatname = chatname + doc.getString("firstName") + " " + doc.getString("lname").charAt(0) + ",";
                                                 uids.add(rid2);
 
                                                 rcids2 = doc.toObject(User.class).getChatids();

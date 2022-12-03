@@ -4,12 +4,8 @@
     package="com.example.cse3310project">
 
     <uses-permission android:name="android.permission.INTERNET" />
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-=======
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
->>>>>>> 8d8a083 (updated settings profile pic so you can choose new ones small small bug though)
 
     <application
         android:allowBackup="true"

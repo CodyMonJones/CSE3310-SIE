@@ -35,15 +35,23 @@ public class DiscussionForum extends drawerActivity{
 
     // Necessary variables needed to implement the Discussion Forum
     private ArrayList<DiscussionPost> posts = new ArrayList<>();
+
+    // Firebase variables
     private FirebaseFirestore postDatabase;
+    private StorageReference storageReference;
+
+    // Variables for the recyclerview
     private DiscussionAdapter customAdapter;
     private RecyclerView recyclerView;
     private FloatingActionButton addPostButton;
-    private StorageReference storageReference;
+
+    // Needed to bind this activity to the home drawer
     private ActivityDiscussionForumBinding activityDiscussionForumBinding;
 
+    // Sets the search bar for the activity
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.transactions_search, menu);
 
@@ -70,11 +78,11 @@ public class DiscussionForum extends drawerActivity{
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
-        // Binds this activity to the drawer layout used to navigate throughout
-        // the app
+        // Binds this activity to the drawer layout used to navigate throughout the app
         activityDiscussionForumBinding = ActivityDiscussionForumBinding.inflate(getLayoutInflater());
         setContentView(activityDiscussionForumBinding.getRoot());
         allocateActivityTitle("Discussions");
@@ -82,12 +90,10 @@ public class DiscussionForum extends drawerActivity{
         // Sets the reference needed to access photos
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        // Sets the reference needed to access the posts that users
-        // have created
+        // Sets the reference needed to access the posts that users have created
         postDatabase = FirebaseFirestore.getInstance();
 
         // Initializes the adapter and sets the RecyclerView
-
         recyclerView = findViewById(R.id.Discussion_Forum);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,9 +116,11 @@ public class DiscussionForum extends drawerActivity{
     // create their own posts
     public void EventChangeListener()
     {
-        postDatabase.collection("Posts").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        postDatabase.collection("Posts").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>()
+        {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
+            {
                 if(error != null)
                 {
                     Log.e("FIRESTORE ERROR", error.getMessage());
@@ -141,9 +149,5 @@ public class DiscussionForum extends drawerActivity{
     {
         Intent createPost = new Intent(getApplicationContext(), CreatePost.class);
         startActivity(createPost);
-    }
-
-    public void onClick(View view) {
-
     }
 }

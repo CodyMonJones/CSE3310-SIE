@@ -1,10 +1,5 @@
 package com.example.cse3310project.Discussion;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.cse3310project.R;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
@@ -53,77 +48,103 @@ public class DiscussionPost
     }
 
     // Getters and Setters
-    public Timestamp getTimestamp() {
+    public Timestamp getTimestamp()
+    {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Timestamp timestamp)
+    {
         this.timestamp = timestamp;
     }
 
-    public String getPostUsername() {
+    public String getPostUsername()
+    {
         return postUsername;
     }
 
-    public void setPostUsername(String postUsername) {
+    public void setPostUsername(String postUsername)
+    {
         this.postUsername = postUsername;
     }
 
-    public ArrayList<String> getComments() {
+    public ArrayList<String> getComments()
+    {
         return comments;
     }
 
-    public void setComments(ArrayList<String> comments) {
+    public void setComments(ArrayList<String> comments)
+    {
         this.comments = comments;
     }
 
-    public String getPostTitle() {
+    public String getPostTitle()
+    {
         return postTitle;
     }
 
-    public void setPostTitle(String postTitle) {
+    public void setPostTitle(String postTitle)
+    {
         this.postTitle = postTitle;
     }
 
-    public String getPostBody() {
+    public String getPostBody()
+    {
         return postBody;
     }
 
-    public void setPostBody(String postBody) {
+    public void setPostBody(String postBody)
+    {
         this.postBody = postBody;
     }
 
-    public String getPostCreationDate() {
+    public String getPostCreationDate()
+    {
         return postCreationDate;
     }
 
-    public void setPostCreationDate(String postCreationDate) { this.postCreationDate = postCreationDate; }
+    public void setPostCreationDate(String postCreationDate)
+    {
+        this.postCreationDate = postCreationDate;
+    }
 
-    public int getDislikes() {
+    public int getDislikes()
+    {
         return dislikes;
     }
 
-    public void setDislikes(int dislikes) {
+    public void setDislikes(int dislikes)
+    {
         this.dislikes = dislikes;
     }
 
-    public int getLikes() {
+    public int getLikes()
+    {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(int likes)
+    {
         this.likes = likes;
     }
 
-    public String getUniqueID() { return uniqueID; }
+    public String getUniqueID()
+    {
+        return uniqueID;
+    }
 
-    public void setUniqueID(String uniqueID) { this.uniqueID = uniqueID; }
+    public void setUniqueID(String uniqueID)
+    {
+        this.uniqueID = uniqueID;
+    }
 
-    public String getPosterImage() {
+    public String getPosterImage()
+    {
         return posterImage;
     }
 
-    public void setPosterImage(String posterImage) {
+    public void setPosterImage(String posterImage)
+    {
         this.posterImage = posterImage;
     }
 }

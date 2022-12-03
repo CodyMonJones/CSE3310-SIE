@@ -165,40 +165,37 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
         }
     }
 
-    public static class RegistrationActivity extends AppCompatActivity implements View.OnClickListener{
+    public static class RegistrationActivity extends AppCompatActivity implements View.OnClickListener
+    {
+        // XML variables
+        private MaterialButton cancelButton, submitButton;
+        private EditText firstName, lastName, email, phoneNumber, MavID, password;
 
-        MaterialButton cancelButton;
-        MaterialButton submitButton;
-
-        EditText firstName;
-        EditText lastName;
-        EditText email;
-        EditText phoneNumber;
-        EditText MavID;
-        EditText password;
-
-        FirebaseFirestore db;
-        FirebaseStorage storage;
-        StorageReference storageRef;
-        FirebaseAuth mAuth;
+        // Firebase variables
+        private FirebaseFirestore db;
+        private FirebaseStorage storage;
+        private StorageReference storageRef;
+        private FirebaseAuth mAuth;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState)
+        {
+            // Initializes the variables
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_registration);
 
-            cancelButton = (MaterialButton) findViewById(R.id.CancelButton);
-            submitButton = (MaterialButton) findViewById(R.id.SubmitButton);
+            cancelButton = findViewById(R.id.CancelButton);
+            submitButton = findViewById(R.id.SubmitButton);
 
             submitButton.setOnClickListener(this);
             cancelButton.setOnClickListener(this);
 
-            firstName = (EditText) findViewById(R.id.RegistrationFirstName);
-            lastName = (EditText) findViewById(R.id.RegistrationLastName);
-            email = (EditText) findViewById(R.id.RegistrationEmail);
-            phoneNumber = (EditText) findViewById(R.id.RegistrationPhoneNumber);
-            MavID = (EditText) findViewById(R.id.RegistrationMavID);
-            password = (EditText) findViewById(R.id.RegistrationPassword);
+            firstName = findViewById(R.id.RegistrationFirstName);
+            lastName = findViewById(R.id.RegistrationLastName);
+            email = findViewById(R.id.RegistrationEmail);
+            phoneNumber = findViewById(R.id.RegistrationPhoneNumber);
+            MavID = findViewById(R.id.RegistrationMavID);
+            password = findViewById(R.id.RegistrationPassword);
 
             db = FirebaseFirestore.getInstance();
             mAuth = FirebaseAuth.getInstance();
@@ -208,6 +205,7 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             submitButton.setEnabled(true);
         }
 
+        // Implements the logic for the buttons
         @Override
         public void onClick(View view)
         {
@@ -218,9 +216,6 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
                     break;
 
                 case R.id.SubmitButton:
-
-
-
                     if(firstName.getText().toString().isEmpty())
                     {
                         firstName.setError("Must enter a first name");
@@ -291,11 +286,8 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             }
         }
 
-        public void setUserDefaultImage()
-        {
-            StorageReference imageRef = storageRef.child("user-default/default-user.jpg");
-        }
-
+        // Creates an User object and uploads it to the Users collection in firebase as well
+        // as creates a new user authenticator
         public void registerUser()
         {
             User newUser= new User(firstName.getText().toString(), lastName.getText().toString(),
@@ -310,9 +302,11 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
             newUser.setProfile_picture("user-default/default-user.jpg");
 
 
-            mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>()
+            {
                 @Override
-                public void onSuccess(AuthResult authResult) {
+                public void onSuccess(AuthResult authResult)
+                {
                     Toast.makeText(RegistrationActivity.this, "User Registered", Toast.LENGTH_LONG).show();
 
                     DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
@@ -323,18 +317,24 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
                     startActivity(showHomePage);
                     finish();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            }).addOnFailureListener(new OnFailureListener()
+            {
                 @Override
-                public void onFailure(@NonNull Exception e) {
+                public void onFailure(@NonNull Exception e)
+                {
                     Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
 
-        public void showKeyboard(final EditText ettext){
+        // Shows and sets an error on the entry field if the inputted information is invalid
+        public void showKeyboard(final EditText ettext)
+        {
             ettext.requestFocus();
-            ettext.postDelayed(new Runnable(){
-                                   @Override public void run(){
+            ettext.postDelayed(new Runnable()
+                               {
+                                   @Override public void run()
+                                   {
                                        InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                                        keyboard.showSoftInput(ettext,0);
                                    }
@@ -343,114 +343,4 @@ public class HomeActivity extends drawerActivity implements View.OnClickListener
         }
     }
 
-    public static class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
-        private EditText email;
-        private EditText password;
-        private MaterialButton loginButton;
-        private MaterialButton registerButton;
-
-        private FirebaseFirestore db;
-        private FirebaseAuth mAuth;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState)
-        {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_login);
-
-            db = FirebaseFirestore.getInstance();
-            mAuth = FirebaseAuth.getInstance();
-
-            email = (EditText) findViewById(R.id.Email);
-            password = (EditText)  findViewById(R.id.Password);
-            loginButton = (MaterialButton) findViewById(R.id.LoginButton);
-
-            registerButton = (MaterialButton) findViewById(R.id.RegisterButton);
-            registerButton.setOnClickListener(this);
-
-            loginButton.setOnClickListener(this);
-
-            loginButton.setEnabled(true);
-        }
-
-        @Override
-        public void onClick(View view)
-        {
-            switch(view.getId())
-            {
-                case R.id.RegisterButton:
-                    Intent i = new Intent(LoginActivity.this, RegistrationActivity.class);
-                    startActivity(i);
-                    finish();
-                    break;
-
-                case R.id.LoginButton:
-                    if(email.getText().toString().isEmpty())
-                    {
-                        email.setError("Email Required");
-                        showKeyboard(email);
-                        email.requestFocus();
-                        return;
-                    }
-
-                    if(!Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())
-                    {
-                        email.setError("Invalid email");
-                        showKeyboard(email);
-                        email.requestFocus();
-                        return;
-                    }
-
-                    if(password.getText().toString().isEmpty())
-                    {
-                        password.setError("Password Required");
-                        showKeyboard(password);
-                        password.requestFocus();
-                        return;
-                    }
-
-                    if(password.getText().toString().length() < 6)
-                    {
-                        password.setError("Password too short must be 6 characters long");
-                        showKeyboard(password);
-                        password.requestFocus();
-                        return;
-                    }
-
-
-                    loginUser();
-                    break;
-            }
-        }
-
-        public void loginUser()
-        {
-            mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                @Override
-                public void onSuccess(AuthResult authResult) {
-                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                    Intent showHomepage = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(showHomepage);
-                    finish();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        public void showKeyboard(final EditText ettext){
-            ettext.requestFocus();
-            ettext.postDelayed(new Runnable(){
-                                   @Override public void run(){
-                                       InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                       keyboard.showSoftInput(ettext,0);
-                                   }
-                               }
-                    ,200);
-        }
-    }
 }

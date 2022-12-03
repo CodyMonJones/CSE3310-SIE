@@ -10,20 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cse3310project.R;
-import com.example.cse3310project.TransactionsProduct;
-import com.example.cse3310project.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,12 +28,14 @@ import java.util.List;
 
 public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.ViewHolder> implements Filterable
 {
+    // Instance variables
     private ArrayList<DiscussionPost> posts;
     private ArrayList<DiscussionPost> postsFull;
     private LayoutInflater mInflater;
     private Context context;
     private FirebaseFirestore postDatabase = FirebaseFirestore.getInstance();
 
+    // Constructor for the adapter class
     public DiscussionAdapter(ArrayList<DiscussionPost> posts, Context context)
     {
         this.mInflater = LayoutInflater.from(context);
@@ -47,14 +44,17 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
         postsFull = new ArrayList<>(posts);
     }
 
+    // Gets the item count of the current posts
     @Override
     public int getItemCount() { return posts.size(); }
 
+    // Returns the filtered posts from a search
     @Override
     public Filter getFilter() {
         return transactionsFilter;
     }
 
+    // Performs the search looking for keywords that the user inputted
     private Filter transactionsFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
@@ -78,6 +78,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             return results;
         }
 
+        // Sets the view to show the results of the search
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             posts.clear();
@@ -86,6 +87,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
         }
     };
 
+    // Initialization of the view when class is created
     @Override
     public DiscussionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -93,30 +95,32 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
         return new DiscussionAdapter.ViewHolder(view);
     }
 
+    // Binds the data to the recycler view
     @Override
     public void onBindViewHolder(final DiscussionAdapter.ViewHolder holder, final int position)
     {
         holder.bindData(posts.get(position));
     }
 
-    public void setItems(ArrayList<DiscussionPost> discussionPosts)
-    {
-        posts = discussionPosts;
-    }
-
+    // Inner class to handle the instructions for how to display the post information
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
+        // XML variables
         TextView postTitle, postBody, postCreationDate, username, postLikes, postDislikes;
         ShapeableImageView posterImage;
         MaterialButton likeButton, dislikeButton, commentButton;
         CardView cv;
 
+        // Firebase variables
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
 
+        // Constructor for the class
         ViewHolder(View itemView)
         {
             super(itemView);
+
+            // Sets the XML variables to their appropriate property
             postTitle = itemView.findViewById(R.id.Post_Title);
             postBody = itemView.findViewById(R.id.Post_Body);
             postCreationDate = itemView.findViewById(R.id.Post_Creation_Date);
@@ -129,12 +133,14 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             commentButton = itemView.findViewById(R.id.Comment_Button);
             cv = itemView.findViewById(R.id.cv);
 
+            // Sets onClick listeners to the buttons
             cv.setOnClickListener(this);
             likeButton.setOnClickListener(this);
             dislikeButton.setOnClickListener(this);
             commentButton.setOnClickListener(this);
         }
 
+        // Implements the logic for whenever a button is pressed on a discussion post
         @Override
         public void onClick(View view)
         {
@@ -176,6 +182,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             }
         }
 
+        // Binds the data to the item using an object of DiscussionPost
         void bindData(final DiscussionPost post)
         {
             postTitle.setText(post.getPostTitle());
@@ -187,6 +194,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             setProfileImage(post);
         }
 
+        // Updates the likes and dislikes data in the database and refreshes the data in the recyclerview
         void updateData(DiscussionPost post)
         {
             DocumentReference ref = postDatabase.collection("Posts").document(post.getUniqueID());
@@ -196,6 +204,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             notifyDataSetChanged();
         }
 
+        // Takes the user to the comment activity when they press on a post or the comment button
         void goToCommentActivity(DiscussionPost selectedPost, int requestFocus)
         {
             Intent commentActivity = new Intent(context.getApplicationContext(), CommentActivity.class);
@@ -204,6 +213,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             context.startActivity(commentActivity);
         }
 
+        // Sets the profile picture of each post to the publisher's profile picture
         void setProfileImage(DiscussionPost post)
         {
             if(post.getPosterImage().isEmpty())
@@ -212,10 +222,13 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
             // download image from firebase storage
             StorageReference imageRef = storageReference.child(post.getPosterImage());
 
-            imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>()
+            {
                 @Override
-                public void onSuccess(byte[] bytes) {
+                public void onSuccess(byte[] bytes)
+                {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
                     // assigns the downloaded image, in bitmap form, to the imageView
                     posterImage.setImageBitmap(bitmap);
                 }

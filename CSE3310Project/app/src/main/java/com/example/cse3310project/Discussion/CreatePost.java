@@ -33,17 +33,22 @@ import java.util.Locale;
 
 public class CreatePost extends AppCompatActivity implements View.OnClickListener{
 
+    // Instance variables needed to create a post
+
+    // XML variables
     private ShapeableImageView posterImage;
     private TextView username, dateCreated;
     private EditText postBody, postTitle;
     private MaterialButton cancelButton, postButton;
 
+    // Firebase variables
     private FirebaseFirestore postDatabase;
     private FirebaseAuth currentUserAuthentication;
     private FirebaseUser currentUser;
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
+    // String needed to reference the profile picture of the poster
     private String posterImageUrl;
 
     @Override
@@ -52,22 +57,18 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
+        // Initialization of the variables used
         currentUserAuthentication = FirebaseAuth.getInstance();
         currentUser = currentUserAuthentication.getCurrentUser();
-
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
         postDatabase = FirebaseFirestore.getInstance();
 
         posterImage = findViewById(R.id.Profile_Picture_Post_Header);
-
         username = findViewById(R.id.Username_Create_Post);
         dateCreated = findViewById(R.id.Post_Creation_Date);
-
         postTitle = findViewById(R.id.Post_Title_Create_Post);
         postBody = findViewById(R.id.Post_Body_Create_Post);
-
         cancelButton = findViewById(R.id.Cancel_Button_Create_Post);
         postButton = findViewById(R.id.Post_Button_Create_Post);
 
@@ -76,13 +77,14 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
-
         dateCreated.setText(currentDateandTime);
 
         checkUser();
         setPosterImage();
     }
 
+    // Handles the button clicks that can result in cancel the current process or
+    // continuing forward with the creation of the post
     @Override
     public void onClick(View view)
     {
@@ -129,6 +131,7 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    // Creates the post and uploads it to the "Posts" collection
     public void uploadPost(DiscussionPost post)
     {
         DocumentReference reference = postDatabase.collection("Posts").document();
@@ -143,10 +146,14 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
         reference.set(post);
     }
 
-    public void showKeyboard(final EditText ettext){
+    // Shows the keyboard and sets the focus to the current entry field if it does not meet
+    // conditions
+    public void showKeyboard(final EditText ettext)
+    {
         ettext.requestFocus();
         ettext.postDelayed(new Runnable(){
-                               @Override public void run(){
+                               @Override public void run()
+                               {
                                    InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                                    keyboard.showSoftInput(ettext,0);
                                }
@@ -154,6 +161,7 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
                 ,200);
     }
 
+    // Safe Guard function that checks to see if the user is currently logged in
     public void checkUser()
     {
         if(currentUser != null)
@@ -166,12 +174,15 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    // Sets the current poster's profile image to the post that they are creating
     public void setPosterImage()
     {
         DocumentReference userRef = FirebaseFirestore.getInstance().collection("Users").document(currentUser.getUid());
-        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
                 User temp = documentSnapshot.toObject(User.class);
 
                 posterImageUrl = temp.getProfile_picture();
@@ -179,10 +190,12 @@ public class CreatePost extends AppCompatActivity implements View.OnClickListene
                 // download image from firebase storage
                 StorageReference imageRef = storageReference.child(temp.getProfile_picture());
 
-                imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>()
+                {
                     @Override
                     public void onSuccess(byte[] bytes) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
                         // assigns the downloaded image, in bitmap form, to the imageView
                         posterImage.setImageBitmap(bitmap);
                     }

@@ -2,26 +2,19 @@ package com.example.cse3310project.Discussion;
 
 import static android.content.ContentValues.TAG;
 
-import static java.security.AccessController.getContext;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,17 +27,12 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -61,9 +49,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     // ArrayList to hold current post comment IDs
     private ArrayList<String> currentPostIDs = new ArrayList<>();
 
+    // Variables for the commentAdapter to handle comment updates and
+    // the recyclerView
     private CommentAdapter commentAdapter;
     private RecyclerView recyclerView;
 
+    // Firebase Variables for the different data needed
     private DocumentReference postRef;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -71,31 +62,32 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseFirestore commentDatabase;
     private FirebaseUser currentUser;
 
-    private NestedScrollView scrollView;
+    // Activity variables that are given ids in the XML file
     private ShapeableImageView posterImage;
     private TextView postTitle, postUsername, postBody, postCreationDate;
     private MaterialButton addButton;
     private EditText commentEditText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
-        scrollView = findViewById(R.id.Display_Post_And_Comments);
-
+        // Intent to receive Discussion Post Unique ID from previous activity
         Intent intent = getIntent();
 
+        // Initializes all Firebase variables
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         postDatabase = FirebaseFirestore.getInstance();
         commentDatabase = FirebaseFirestore.getInstance();
 
+        // sets the postRef to specific data for the post selected in previous activity
         postRef = postDatabase.collection("Posts").document(intent.getStringExtra("DiscussionID"));
 
+        // sets all XML variables to its proper attribute
         postTitle = findViewById(R.id.Post_Title);
         postBody = findViewById(R.id.Post_Body);
         postUsername = findViewById(R.id.Username_Discussion_Forum);
@@ -104,8 +96,10 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         addButton = findViewById(R.id.Add_Comment_Button);
         commentEditText = findViewById(R.id.Comment_EditText);
 
+        // adds a button listener needed to create a new post
         addButton.setOnClickListener(this);
 
+        // setting up the commentAdapter and the recyclerView to display and receive new comments
         commentAdapter = new CommentAdapter(comments, this);
         recyclerView = findViewById(R.id.Comment_Section);
         recyclerView.setHasFixedSize(true);
@@ -114,15 +108,20 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
                 DividerItemDecoration.VERTICAL));
 
+
         showPost();
 
         EventChangeListener();
     }
 
+    // Shows the current selected post's title, body, creation date, username, and the profile
+    // picture of the user who posted it
     public void showPost() {
-        postRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        postRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
                 DiscussionPost selectedPost = documentSnapshot.toObject(DiscussionPost.class);
 
                 postTitle.setText(selectedPost.getPostTitle());
@@ -134,12 +133,17 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    // Checks to see if the post exists
+    // If the post exists then it grabs the list of comment ids that
+    // are used to find the specific comments in the Comment database.
+    // Then the comments are downloaded and added into the recyclerView
     public void EventChangeListener()
     {
-
-        postRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        postRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+        {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task)
+            {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists())
@@ -159,7 +163,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 {
                     Log.d(TAG, "get failed with ", task.getException());
                 }
-                // downloads data from FireStore into arraylist
+
                 commentDatabase.collection("Comments")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -192,6 +196,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    // Creates the comment and adds it to the recyclerview as well as adds it the Comment database.
+    // Lastly, it adds it to the list of comments for the specific Discussion Post selected
     @Override
     public void onClick(View view)
     {
@@ -224,17 +230,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public void showKeyboard(final EditText ettext){
-        ettext.requestFocus();
-        ettext.postDelayed(new Runnable(){
-                               @Override public void run(){
-                                   InputMethodManager keyboard=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                   keyboard.showSoftInput(ettext,0);
-                               }
-                           }
-                ,200);
-    }
-
+    // Sets the Discussion Post profile picture to the owners profile picture
     void setProfileImage(DiscussionPost post)
     {
         if(post.getPosterImage().isEmpty())
@@ -243,11 +239,14 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         // download image from firebase storage
         StorageReference imageRef = storageReference.child(post.getPosterImage());
 
-        imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        imageRef.getBytes(1024*1024*10).addOnSuccessListener(new OnSuccessListener<byte[]>()
+        {
             @Override
-            public void onSuccess(byte[] bytes) {
+            public void onSuccess(byte[] bytes)
+            {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                // assigns the downloaded image, in bitmap form, to the imageView
+
+                // Assigns the downloaded image, in bitmap form, to the imageView
                 posterImage.setImageBitmap(bitmap);
             }
         });

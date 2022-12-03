@@ -4,32 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cse3310project.R;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>
+{
+    // Instance variables
     private ArrayList<Comment> comments;
     private LayoutInflater mInflater;
     private Context context;
     private FirebaseFirestore postDatabase = FirebaseFirestore.getInstance();
 
+    // Constructor for the class
     public CommentAdapter(ArrayList<Comment> comments, Context context)
     {
         this.mInflater = LayoutInflater.from(context);
@@ -37,9 +29,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         this.comments = comments;
     }
 
+    // Gets the item count of the recyclerview
     @Override
     public int getItemCount(){ return comments.size(); }
 
+    // Sets the view of the recyclerview when created
     @Override
     public CommentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -47,14 +41,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new CommentAdapter.ViewHolder(view);
     }
 
+    // Binds the data to the recyclerview
     @Override
     public void onBindViewHolder(final CommentAdapter.ViewHolder holder, final int position)
     {
         holder.bindData(comments.get(position));
     }
 
-    public void setItems(ArrayList<Comment> comments){ this.comments = comments; }
-
+    // Inner class to handle the instructions on how to display the information
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         TextView commentAuthor, commentBody, commentCreationDate;

@@ -139,7 +139,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()){
-                        profile.setText(doc.getString("fname") + " " + doc.getString("lname"));
+                        profile.setText(doc.getString("firstName") + " " + doc.getString("lname"));
                     }
                 }
             }
@@ -269,8 +269,8 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
 
         cancel = (Button) popupView.findViewById(R.id.cancel);
         confirm = (Button) popupView.findViewById(R.id.confirm);
-        firstname = (EditText) popupView.findViewById(R.id.fname);
-        lastname = (EditText) popupView.findViewById(R.id.lname);
+        firstname = (EditText) popupView.findViewById(R.id.firstName);
+        lastname = (EditText) popupView.findViewById(R.id.lastName);
         emailaddress = (EditText) popupView.findViewById(R.id.enteremail);
         phone = (EditText) popupView.findViewById(R.id.enterphone);
 
@@ -289,12 +289,12 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 String userid = currentUser.getUid();
-                String fname = firstname.getText().toString();
+                String firstName = firstname.getText().toString();
                 String lname = lastname.getText().toString();
                 String email = emailaddress.getText().toString();
                 String num = phone.getText().toString();
 
-                if(TextUtils.isEmpty(fname)){
+                if(TextUtils.isEmpty(firstName)){
                     Toast.makeText(ComsContactsActivity.this, "First Name is Required!", Toast.LENGTH_SHORT).show();
                 }
                 if(TextUtils.isEmpty(lname)){
@@ -307,7 +307,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                     Toast.makeText(ComsContactsActivity.this, "Phone Number is Required!", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    contact add = new contact(fname, lname, email, num);
+                    contact add = new contact(firstName, lname, email, num);
                     friend.add(add);
                     ff.collection("Users").document(userid).update("contactslist", friend);
                     dialog.dismiss();
@@ -322,8 +322,8 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
 
         cancel = (Button) popupView.findViewById(R.id.cancel);
         confirm = (Button) popupView.findViewById(R.id.confirm);
-        firstname = (EditText) popupView.findViewById(R.id.fname);
-        lastname = (EditText) popupView.findViewById(R.id.lname);
+        firstname = (EditText) popupView.findViewById(R.id.firstName);
+        lastname = (EditText) popupView.findViewById(R.id.lastName);
         phone = (EditText) popupView.findViewById((R.id.enterphone));
 
         pop.setView(popupView);
@@ -346,11 +346,11 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 String userid = currentUser.getUid();
-                String fname = firstname.getText().toString();
+                String firstName = firstname.getText().toString();
                 String lname = lastname.getText().toString();
                 String num = phone.getText().toString();
 
-                if(TextUtils.isEmpty(fname)){
+                if(TextUtils.isEmpty(firstName)){
                     Toast.makeText(ComsContactsActivity.this, "First Name is Required!", Toast.LENGTH_SHORT).show();
                 }
                 if(TextUtils.isEmpty(lname)){
@@ -361,7 +361,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                 }
                 else{
                     list.remove(list.indexOf(friend));
-                    friend.setFname(fname);
+                    friend.setFname(firstName);
                     friend.setLname(lname);
                     friend.setPhonenumber(num);
                     list.add(friend);
