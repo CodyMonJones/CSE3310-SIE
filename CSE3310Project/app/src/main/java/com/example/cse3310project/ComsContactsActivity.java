@@ -1,7 +1,6 @@
 package com.example.cse3310project;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,13 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,23 +23,15 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 import com.example.cse3310project.databinding.ActivityComsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -56,7 +44,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class ComsContactsActivity extends drawerActivity implements View.OnClickListener{
     ImageButton add, messages, email, exit;
-    Button profile, cancel, confirm, emailbutton, messagebutton, delete, edit, yes, no;
+    Button profile, cancel, confirm, delete, edit, yes, no;
     TextView cfname, csname, cemail, cphonenumber;
     EditText firstname, lastname, emailaddress, phone;
 
@@ -139,7 +127,7 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()){
-                        profile.setText(doc.getString("firstName") + " " + doc.getString("lname"));
+                        profile.setText(doc.getString("fname") + " " + doc.getString("lname"));
                     }
                 }
             }
@@ -177,7 +165,6 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                     }
                     adapter = new ContactAdapter(ComsContactsActivity.this, list, listener);
                     rv.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -206,8 +193,6 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         pop = new AlertDialog.Builder(this);
         final View popupView = getLayoutInflater().inflate(R.layout.contactpage, null);
 
-        emailbutton = (Button) popupView.findViewById(R.id.emailcontact);
-        messagebutton = (Button) popupView.findViewById(R.id.messagecontact);
         edit = (Button) popupView.findViewById(R.id.edit);
         delete = (Button) popupView.findViewById(R.id.delete);
         exit = (ImageButton) popupView.findViewById(R.id.exitbutton);
@@ -229,20 +214,6 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-            }
-        });
-
-        emailbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        messagebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
 
@@ -297,20 +268,39 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
                 if(TextUtils.isEmpty(firstName)){
                     Toast.makeText(ComsContactsActivity.this, "First Name is Required!", Toast.LENGTH_SHORT).show();
                 }
-                if(TextUtils.isEmpty(lname)){
+                else if(TextUtils.isEmpty(lname)){
                     Toast.makeText(ComsContactsActivity.this, "Last Name is Required!", Toast.LENGTH_SHORT).show();
                 }
-                if(TextUtils.isEmpty(email)){
+                else if(TextUtils.isEmpty(email)){
                     Toast.makeText(ComsContactsActivity.this, "Email is Required!", Toast.LENGTH_SHORT).show();
                 }
-                if(TextUtils.isEmpty(num)){
+                 else if(TextUtils.isEmpty(num)){
                     Toast.makeText(ComsContactsActivity.this, "Phone Number is Required!", Toast.LENGTH_SHORT).show();
                 }
-                else{
-                    contact add = new contact(firstName, lname, email, num);
-                    friend.add(add);
-                    ff.collection("Users").document(userid).update("contactslist", friend);
-                    dialog.dismiss();
+                else if(email.equals(currentUser.getEmail())) {
+                    Toast.makeText(ComsContactsActivity.this, "Email Cannot be User Email!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    ff.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            Boolean accept = false;
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                if (doc.exists()) {
+                                    if (email.equals(doc.getString("email"))) {
+                                        contact add = new contact(firstName, lname, email, num);
+                                        friend.add(add);
+                                        ff.collection("Users").document(userid).update("contactslist", friend);
+                                        dialog.dismiss();
+                                        accept = true;
+                                    }
+                                }
+                            }
+                            if(!accept){
+                                Toast.makeText(ComsContactsActivity.this, "Email does not exist, try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -330,9 +320,9 @@ public class ComsContactsActivity extends drawerActivity implements View.OnClick
         dialog = pop.create();
         dialog.show();
 
-        firstname.setHint(friend.getFname());
-        lastname.setHint(friend.getLname());
-        phone.setHint(friend.getPhonenumber());
+        firstname.setText(friend.getFname());
+        lastname.setText(friend.getLname());
+        phone.setText(friend.getPhonenumber());
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

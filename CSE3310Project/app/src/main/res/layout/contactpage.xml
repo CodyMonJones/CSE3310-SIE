@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="640dp"
     android:background="@color/UTA_BLUE">
 
     <ImageView
@@ -81,65 +81,34 @@
         android:id="@+id/edit"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="@color/UTA_ORANGE"
-        android:text="Edit Contact"
         android:padding="0dp"
-        android:textColor="@color/white"
+        android:text="Edit Contact"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delete"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conphonenum" />
 
     <Button
         android:id="@+id/delete"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="@color/UTA_ORANGE"
-        android:text="Delete Contact"
         android:padding="0dp"
-        android:textColor="@color/white"
+        android:text="Delete Contact"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit" />
-
-    <Button
-        android:id="@+id/messagecontact"
-        android:layout_width="150dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:text="Message"
-        android:padding="0dp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/emailcontact"
-        app:layout_constraintTop_toBottomOf="@+id/conphonenum" />
-
-    <Button
-        android:id="@+id/emailcontact"
-        android:layout_width="150dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="@color/UTA_ORANGE"
-        android:text="Email"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edit"
-        app:layout_constraintEnd_toStartOf="@+id/messagecontact"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit"
         app:layout_constraintTop_toBottomOf="@+id/conphonenum" />
 
     <ImageButton

@@ -2,8 +2,6 @@ package com.example.cse3310project;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -21,25 +19,18 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cse3310project.databinding.ActivityMessagesBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -189,7 +180,7 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
         member1 = (EditText) popupView.findViewById(R.id.recipient);
         member2 = (EditText) popupView.findViewById(R.id.recipient2);
 
-        if(currentUser.getUid().equals("GsOj1mpUeuW4yf7luJa65Tn9xik1")){
+        if(currentUser.getUid().equals("GsOj1mpUeuW4yf7luJa65Tn9xik1") || currentUser.getUid().equals("jvuSCdPex0Xr8muJmg6qwk5bWng1") || currentUser.getUid().equals("ifnRoD4fbON4jw8Mx2KYO3RXZbb2") || currentUser.getUid().equals("cMEaTJcUQXQ4sGftbY5swgZhfEn1")){
             all.setVisibility(View.VISIBLE);
             all.setClickable(true);
         } else {
@@ -361,7 +352,6 @@ public class ComsMessagesActivity extends drawerActivity implements View.OnClick
                     }
                     adapter = new ChatListAdapter(ComsMessagesActivity.this, chatlist, listener);
                     rv.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
                 }
             }
         });

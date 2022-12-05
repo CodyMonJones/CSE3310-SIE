@@ -3,8 +3,6 @@ package com.example.cse3310project;
 
 import android.app.AlertDialog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -206,7 +204,6 @@ public class ComsEmailActivity extends drawerActivity implements View.OnClickLis
                     }
                     adapter = new EmailAdapter(ComsEmailActivity.this, allemails, listener);
                     rv.setAdapter(adapter);
-                    //adapter.notifyDataSetChanged();
                 }
             }
         });
